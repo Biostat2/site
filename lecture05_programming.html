@@ -1,0 +1,2296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Introduction to programming</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Introduction to programming',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture05_programming_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Eric Koncina, Aurélien Ginolhac, Sean Sapcariu' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  /* bg-pink2 colour */
+  
+  .bg-pink2 {
+    background-color: #EEA9B8;
+    color: #000000;
+  }
+  
+  .bg-pink2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-pink2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-pink2 {
+    border: 2px solid #77545C;
+  }
+  
+  .box.bg-pink2 > h3:first-child {
+    background-color: #77545C;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-pink2::before {
+    color : #77545C;
+  }
+   
+  blockquote.bg-pink2 {
+    color: #000000;
+    border-color: #77545C;
+  }
+  
+  .box.bg-pink2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-pink2 > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-pink2 > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-pink2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-pink2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-pink2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-aquamarine2 colour */
+  
+  .bg-aquamarine2 {
+    background-color: #76EEC6;
+    color: #000000;
+  }
+  
+  .bg-aquamarine2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-aquamarine2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-aquamarine2 {
+    border: 2px solid #3B7763;
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child {
+    background-color: #3B7763;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-aquamarine2::before {
+    color : #3B7763;
+  }
+   
+  blockquote.bg-aquamarine2 {
+    color: #000000;
+    border-color: #3B7763;
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-aquamarine2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-aquamarine2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-aquamarine2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-grayblue colour */
+  
+  .bg-grayblue {
+    background-color: #BFCCD7;
+    color: #000000;
+  }
+  
+  .bg-grayblue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-grayblue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-grayblue {
+    border: 2px solid #5F666B;
+  }
+  
+  .box.bg-grayblue > h3:first-child {
+    background-color: #5F666B;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-grayblue::before {
+    color : #5F666B;
+  }
+   
+  blockquote.bg-grayblue {
+    color: #000000;
+    border-color: #5F666B;
+  }
+  
+  .box.bg-grayblue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-grayblue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-grayblue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-grayblue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-grayblue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-grayblue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-grgold colour */
+  
+  .bg-grgold {
+    background-color: #008B45;
+    color: #FFFFFF;
+  }
+  
+  .bg-grgold a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-grgold a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-grgold {
+    border: 2px solid #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child {
+    background-color: #004522;
+    color: #FFD700;
+  }
+                          
+  blockquote.bg-grgold::before {
+    color : #004522;
+  }
+   
+  blockquote.bg-grgold {
+    color: #FFFFFF;
+    border-color: #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-grgold > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-grgold > h3:first-child > a:hover {
+    color: #FFD700 !important;
+  }
+    
+  slide.bg-grgold > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-grgold > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-grgold code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  /* bg-yellow2 colour */
+  
+  .bg-yellow2 {
+    background-color: #EEB422;
+    color: #000000;
+  }
+  
+  .bg-yellow2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow2 {
+    border: 2px solid #EEB422;
+  }
+  
+  .box.bg-yellow2 > h3:first-child {
+    background-color: #EEB422;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow2::before {
+    color : #EEB422;
+  }
+   
+  blockquote.bg-yellow2 {
+    color: #000000;
+    border-color: #EEB422;
+  }
+  
+  .box.bg-yellow2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow2 > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow2 > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-orange colour */
+  
+  .bg-orange {
+    background-color: #FFA500;
+    color: #000000;
+  }
+  
+  .bg-orange a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-orange a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-orange {
+    border: 2px solid #7F5200;
+  }
+  
+  .box.bg-orange > h3:first-child {
+    background-color: #7F5200;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-orange::before {
+    color : #7F5200;
+  }
+   
+  blockquote.bg-orange {
+    color: #000000;
+    border-color: #7F5200;
+  }
+  
+  .box.bg-orange > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-orange > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-orange > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-orange > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-orange > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-orange code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-red colour */
+  
+  .bg-red {
+    background-color: #FFAD99;
+    color: #000000;
+  }
+  
+  .bg-red a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-red a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-red {
+    border: 2px solid #991F00;
+  }
+  
+  .box.bg-red > h3:first-child {
+    background-color: #991F00;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-red::before {
+    color : #991F00;
+  }
+   
+  blockquote.bg-red {
+    color: #000000;
+    border-color: #991F00;
+  }
+  
+  .box.bg-red > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-red > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-red > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-red > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-red > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-red code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-green colour */
+  
+  .bg-green {
+    background-color: #ADEBAD;
+    color: #000000;
+  }
+  
+  .bg-green a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-green a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-green {
+    border: 2px solid #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child {
+    background-color: #1F7A1F;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-green::before {
+    color : #1F7A1F;
+  }
+   
+  blockquote.bg-green {
+    color: #000000;
+    border-color: #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-green > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-green > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-green > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-green > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-green code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-blue colour */
+  
+  .bg-blue {
+    background-color: #99D6FF;
+    color: #000000;
+  }
+  
+  .bg-blue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-blue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-blue {
+    border: 2px solid #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child {
+    background-color: #005C99;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-blue::before {
+    color : #005C99;
+  }
+   
+  blockquote.bg-blue {
+    color: #000000;
+    border-color: #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-blue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-blue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-blue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-blue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-blue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-yellow colour */
+  
+  .bg-yellow {
+    background-color: #FFEC8B;
+    color: #000000;
+  }
+  
+  .bg-yellow a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow {
+    border: 2px solid #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child {
+    background-color: #EEB422;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow::before {
+    color : #EEB422;
+  }
+   
+  blockquote.bg-yellow {
+    color: #000000;
+    border-color: #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-gray colour */
+  
+  .bg-gray {
+    background-color: #FAFAFA;
+    color: #000000;
+  }
+  
+  .bg-gray a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-gray a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-gray {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-gray::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-gray {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-gray > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-gray > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-gray > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-gray > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-gray code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-white colour */
+  
+  .bg-white {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  
+  .bg-white a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-white a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-white {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-white::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-white {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-white > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-white > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-white > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-white > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-white code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-cobalt colour */
+  
+  .bg-cobalt {
+    background-color: #2B557A;
+    color: #FFFFFF;
+  }
+  
+  .bg-cobalt a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-cobalt a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-cobalt {
+    border: 2px solid #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child {
+    background-color: #002240;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-cobalt::before {
+    color : #002240;
+  }
+   
+  blockquote.bg-cobalt {
+    color: #FFFFFF;
+    border-color: #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-cobalt > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-cobalt > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-cobalt code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture05_programming_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">9 October 2017</p>
+          </hgroup>
+  </slide>
+
+<!-- 1 hour in 2016, add Cubetto in 2017 -->
+
+<slide class=''><hgroup class = 'title-bar'><h2>Hardware vs Software</h2></hgroup><article  id="hardware-vs-software" class="smaller vs2">
+
+<!-- Media were downloaded from pixabay under the Creative Commons CC0 license -->
+
+<div class = 'box col col-6 bg-gray stretch vs1'><h3><strong>Hardware</strong>: <strong>body</strong> of a computer</h3><div class = 'box-body'>
+
+<img src='img/05/hardware.png' title='fig:'/>
+
+</div></div><div class = 'box col col-6 bg-gray'><h3><strong>Software</strong>: <strong>soul</strong> of a computer</h3><div class = 'box-body'>
+
+<img src='img/05/software.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Hardware vs Software</h2></hgroup><article  id="hardware-vs-software-1" class="smaller vs2">
+
+<div class = 'col col-6 offset-4'>
+
+<img src='img/05/hwsw.svg' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>How information is stored</h2></hgroup><article  id="how-information-is-stored" class="smaller ">
+
+<!-- remove in 2018 depending on the lecture in 2017 -->
+
+<!--  lecture took ~ 1 h, could expand the function with more exercices -->
+
+<div class = 'box col col-6 offset-3 bg-blue'><h3>binary</h3><div class = 'box-body'>
+
+<ul>
+<li>1 or 0 (on or off)</li>
+<li>This is how everything is stored! Even music and pictures!</li>
+<li>bit = 1 binary digit</li>
+<li>byte = 8 bits</li>
+<li>Two digits are easier to manipulate</li>
+<li>Less complexity = less errors or chances to fail (permutations of bits)</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>How do we get to binary?</h2></hgroup><article  id="how-do-we-get-to-binary" class="smaller vs2">
+
+<div class = 'col col-6 compact-table vs2'><h3>Decimal vs binary</h3>
+
+<div id="unnamed-chunk-1">
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="right">Decimal</th>
+<th align="left">Binary</th>
+</tr>
+<tr class="odd">
+<td align="right">0</td>
+<td align="left">0000</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">0001</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="left">0010</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="left">0011</td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="left">0100</td>
+</tr>
+<tr class="even">
+<td align="right">5</td>
+<td align="left">0101</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="left">1111</td>
+</tr>
+</table></div>
+
+</div><div class = 'col col-6 middle'>
+
+<img src='img/05/base2.png' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>How do we get to binary?</h2></hgroup><article  id="how-do-we-get-to-binary-1" class="smaller ">
+
+<div class = 'box col col-7 bg-blue'><h3>Example</h3><div class = 'box-body'>
+
+<ul>
+<li>107 (decimal, base 10) corresponds to <strong>01101011</strong> in binary (base 2)</li>
+<li>Is 107 odd or even? (Is there no remainder after dividing by 2?)
+
+<ul>
+<li>If it is <strong>odd</strong>: put a <strong>1</strong> in the row</li>
+<li>If it is <strong>even</strong>: put a <strong>0</strong> in the row</li>
+</ul></li>
+<li>In the next row use the integer division by 2 (<code>floor()</code> or <code>%/%</code>)</li>
+<li>Write all the bits from the bottom to top to get the binary value</li>
+</ul>
+
+</div></div><div class = 'col col-5 compact-table'>
+
+<div id="unnamed-chunk-2">
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Divide last integer value (floor)</th>
+<th align="left">Even or odd?</th>
+</tr>
+<tr class="odd">
+<td align="left">107 / 2 = 53.5</td>
+<td align="left">+ 1</td>
+</tr>
+<tr class="even">
+<td align="left">53 / 2 = 26.5</td>
+<td align="left">+ 1</td>
+</tr>
+<tr class="odd">
+<td align="left">26 / 2 = 13</td>
+<td align="left">+ 0</td>
+</tr>
+<tr class="even">
+<td align="left">13 / 2 = 6.5</td>
+<td align="left">+ 1</td>
+</tr>
+<tr class="odd">
+<td align="left">6 / 2 = 3</td>
+<td align="left">+ 0</td>
+</tr>
+<tr class="even">
+<td align="left">3 / 2 = 1.5</td>
+<td align="left">+ 1</td>
+</tr>
+<tr class="odd">
+<td align="left">1 / 2 = 0.5</td>
+<td align="left">+ 1</td>
+</tr>
+<tr class="even">
+<td align="left">0 / 2 = 0</td>
+<td align="left">+ 0</td>
+</tr>
+</table></div>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>What is a program?</h2></hgroup><article  id="what-is-a-program" class="smaller build">
+
+<div class = 'offset-1 box col col-10 bg-blue'><h3>recipe analogy</h3><div class = 'box-body'>
+
+<ul>
+<li>A program is a set of instructions that tell a computer what to do!</li>
+<li>A recipe for a computer</li>
+<li>Written example: how do you make a ham and cheese sandwich? (Think about making consistent results!)</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-grayblue stretch'><h3>Recipe: bake a sandwich</h3><div class = 'box-body'>
+
+<ul>
+<li>shop groceries with a list</li>
+<li>Preheat oven to 450 F</li>
+<li>Put ham in a baking pan</li>
+<li>Put honey glaze on the ham</li>
+<li>Pour cheese</li>
+<li>Put ham in oven for 1 hour</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-grgold stretch'><h3>efficient/great chef</h3><div class = 'box-body'>
+
+<ul>
+<li>An efficient chef can use an ingredient without worrying about exactly how it is made</li>
+<li>A great chef ultimately understand how each component is made and interactions among the parts.</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>What is a source code?</h2></hgroup><article  id="what-is-a-source-code" class="smaller vs2">
+
+<ul>
+<li>We can&#39;t tell a computer general statements of what we want to do&#8230;
+
+<ul>
+<li>&quot;Do my taxes!&quot;</li>
+<li>&quot;Write my thesis!&quot;</li>
+</ul></li>
+<li>Code is a way of telling the computer what we want to do in words that it understands&#8230;</li>
+</ul>
+
+<!-- from [wikimedia](https://commons.wikimedia.org/wiki/File:Prog-languages.png) -->
+
+<div class = 'col col-10 offset-2'>
+
+<img src='img/05/prog_languages.png' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-4" class="smaller nvs1">
+
+<div class = 'box col col-12 icon bg-blue'><h3>Workflow</h3><div class = 'box-body'>
+
+<img src='img/05/high_level_to_low.png' title='fig:'/>
+
+<ul>
+<li>We edit the program</li>
+<li>A compiler translates this program</li>
+<li>The computer runs the translated program</li>
+<li>We analyze the output and go back to editing until our program is finished</li>
+<li>Source code can be:
+
+<ul>
+<li>Compilated</li>
+<li>Interpreted</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Syntax</h2></hgroup><article  id="syntax" class="smaller nvs3">
+
+<div class = 'box col col-5 bg-blue middle'><h3>superficial</h3><div class = 'box-body'>
+
+<ul>
+<li>Some differences are superficial:
+
+<ul>
+<li>BASIC: <code>print</code></li>
+<li>Java: <code>System.out.print();</code></li>
+<li>C++: <code>printf();</code></li>
+</ul></li>
+</ul>
+
+<div id="unnamed-chunk-3">
+<style type="text/css">
+.tabular-list ul {
+  display: table;
+  wdith: 100%;
+}
+
+.tabular-list ul > li {
+  display: table-row;
+}
+
+.tabular-list ul > li > p {
+  display: table-cell;
+  width: 25%;
+  border-bottom: 1px solid black;
+}
+
+.tabular-list ul > li > pre {
+  display: table-cell;
+  width: 75%;
+  border-bottom: 1px solid black;
+}
+</style></div>
+
+</div></div><div class = 'box col col-7 bg-gray tabular-list'><h3>High level <em>vs</em> low level programming languages</h3><div class = 'box-body'>
+
+<ul>
+<li><p><a href='https://www.python.org/' title=''>Python</a></p>
+
+<pre >#!/usr/bin/env python
+print &quot;Hello from Biostat2!&quot;;</pre></li>
+<li><p><a href='https://en.wikipedia.org/wiki/C%2B%2B' title=''>C++</a></p>
+
+<pre >#include &lt;stdio.h&gt;
+
+int main(void)
+{      
+printf(&quot;Hello from Biostat2!\n&quot;);
+return 0; 
+} </pre></li>
+<li><p><a href='https://en.wikipedia.org/wiki/GNU_Assembler' title=''>GNU assembler</a></p>
+
+<pre >.LC0:
+    .string &quot;Hello from Biostat2!&quot;
+    .text
+    .globl  main
+    .type   main, @function
+main:
+.LFB0:
+    .cfi_startproc
+    pushq   %rbp
+    .cfi_def_cfa_offset 16
+    .cfi_offset 6, -16
+    movq    %rsp, %rbp
+    .cfi_def_cfa_register 6
+    movl    $.LC0, %edi
+    call    puts
+    movl    $0, %eax
+    popq    %rbp
+    .cfi_def_cfa 7, 8
+    ret
+    .cfi_endproc</pre></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Errors </h2><h3> run-time errors</h3></hgroup><article  id="errors-run-time-errors" class="smaller vs1">
+
+<ul>
+<li>Errors are detected during execution causing it to crash like <strong>division by 0</strong></li>
+</ul>
+
+<div class = 'box col col-6 bg-aquamarine2'><h3>C</h3><div class = 'box-body'>
+
+<pre >#include &lt;stdio.h&gt;
+ 
+int main(void)
+{   
+    int a = 8;
+    int b = 4;
+    int c = 0;
+    int average = (a + b) / 2;
+    int result = average / c;
+    
+    printf(&quot;Dividing the mean of %d and %d by %d gives: %d\n&quot;, a, b, c, result);
+    return 0; 
+} 
+
+Floating point exception</pre>
+
+</div></div><div class = 'box col col-6 bg-cobalt stretch'><h3>R</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-4" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>a &lt;- 8
+b &lt;- 4
+c &lt;- 0
+average &lt;- (a + b) / 2
+result &lt;- average / c
+result</pre>
+
+<pre >[1] Inf</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Errors </h2><h3> logical errors</h3></hgroup><article  id="errors-logical-errors" class="smaller build vs1">
+
+<ul>
+<li>Errors are not detected, execution <strong>continues</strong></li>
+</ul>
+
+<div class = 'box col col-6 bg-gray'><h3>C, spot the mistake</h3><div class = 'box-body'>
+
+<pre >#include &lt;stdio.h&gt;
+ 
+int main(void)
+{   
+    int a = 8;
+    int b = 4;
+    int c = 2;
+    int average = a + (b / 2);
+    int result = average / c;
+    
+    printf(&quot;Dividing the mean of %d and %d by %d gives: %d\n&quot;, a, b, c, result);
+    return 0; 
+} 
+</pre>
+
+</div></div><div class = 'box col col-6 bg-grgold stretch'><h3>Solution</h3><div class = 'box-body'>
+
+<ul>
+<li>average defined as <code>a + (b / 2)</code></li>
+<li>and not <code>(a + b) / 2</code></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Algorithm </h2><h3> definition</h3></hgroup><article  id="algorithm-definition" class="smaller vs2">
+
+<blockquote class = "bg-grgold">
+<p>An algorithm is a <strong>well-ordered</strong> collection of <strong>unambiguous</strong> and <strong>effectively computable</strong> operations that when executed <strong>produces a result</strong> and <strong>halts in a finite amount of time</strong> <cite> Schneider and Gersting 1995 </p></cite>
+</blockquote>
+
+<div class = 'col col-10 offset-2'>
+
+<img src='img/05/algorithm.jpg' title='fig:'/>
+
+<p><span class="small">
+<a href='http://dilbert.com/strip/1994-10-19' title=''>© Dilbert by Scott Adams</a></span></p>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Algorithm</h2></hgroup><article  id="algorithm" class="smaller vs2">
+
+<div class = 'box col col-6 bg-blue'><h3>well-ordered</h3><div class = 'box-body'>
+
+<ul>
+<li>All of the steps must be in a logical order.</li>
+<li>Otherwise errors could occur:
+
+<ul>
+<li><em>example:</em> You can&#39;t bake a frozen pizza before you take the plastic wrap off!</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-grgold'><h3>unambiguous</h3><div class = 'box-body'>
+
+<p>The directions have to make sense to be as simple as possible</p>
+
+<p>If you can break down the step into two or more simpler steps, it is too complex</p>
+
+<p>example: If the directions on the frozen pizza box say:</p>
+
+<ul>
+<li>Step 1: Bake the pizza <em>What does this mean?</em></li>
+<li>Step 2: Eat the pizza</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Pseudocode</h2></hgroup><article  id="pseudocode" class="smaller vs2 build">
+
+<div class = 'box col col-10 offset-1 bg-blue'><h3>method</h3><div class = 'box-body'>
+
+<ul>
+<li>A method to organize a program in advance, and plan what you want to do</li>
+<li>Not written in normal language, but not in pure code either</li>
+<li>recipe for your program, someone else should be able to understand and utilize!</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-aquamarine2 stretch'><h3>example</h3><div class = 'box-body'>
+
+<blockquote>
+<p>Get the users test and work grades. Tell the user they passed if their overall average is 60% or above.</p>
+</blockquote>
+
+</div></div><div class = 'box col col-6 bg-yellow stretch'><h3>pseudocode</h3><div class = 'box-body'>
+
+<pre >print &quot;Enter test average:&quot;
+testGrade = getInputFromUser()
+print &quot;Enter work average:&quot;
+workGrade = getInputFromUser()
+overallGrade = (testGrade + workGrade) / 2
+if (overallGrade &gt;= 60)
+  print &quot;You passed&quot;</pre>
+
+</div></div>
+
+<p><span class="small">
+<a href='http://computerscience.chemeketa.edu/cs160Reader/ProgrammingLanguages/Pseudocode.html' title=''>source: CS160 site</a></span></p>
+
+</article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Variables</h2></hgroup><article  id="variables" class="smaller ">
+
+<div class = 'box col col-6 bg-blue'><h3>Definitions</h3><div class = 'box-body'>
+
+<ul>
+<li>Variables store information for later use</li>
+<li>Variable names should be clear and understandable</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-yellow'><h3>naming</h3><div class = 'box-body'>
+
+<ul>
+<li><strong>Be consistent with naming!</strong>, use <a href='https://journal.r-project.org/archive/2012-2/RJournal_2012-2_Baaaath.pdf' title=''>naming conventions</a>:
+
+<ul>
+<li>alllowercase</li>
+<li>period.separated</li>
+<li><strong>underscore_separated</strong> (<em>recommended by <a href='http://adv-r.had.co.nz/Style.html' title=''>Hadley Wickham</a></em>)</li>
+<li>lowerCamelCase</li>
+<li>UpperCamelCase</li>
+</ul></li>
+</ul>
+
+</div></div>
+
+<div class = 'box col col-6 bg-aquamarine2 offset-6'><h3>naming</h3><div class = 'box-body'>
+
+<ul>
+<li><code>my_age</code>, <code>my_name</code>, <code>class_size</code>, <code>name_list</code>, <code>is_taller</code></li>
+<li><code>my_age</code> to store a number</li>
+<li><code>my_name</code> to store letters (a &quot;string&quot;)</li>
+<li><code>add_footer</code> for a function (action)</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Control statements </h2><h3> IF, THEN, ELSE</h3></hgroup><article  id="control-statements-if-then-else" class="smaller vs1">
+
+<div class = 'box col col-6 offset-3 bg-blue'><h3>definition</h3><div class = 'box-body'>
+
+<ul>
+<li>IF, THEN, ELSE statements:
+
+<ul>
+<li>Require boolean entries (<code>TRUE</code>/<code>FALSE</code>)</li>
+<li>Use <strong>indentations</strong> in the pseudocode</li>
+</ul></li>
+</ul>
+
+</div></div>
+
+<div class = 'box col col-4 offset-2 bg-aquamarine2 stretch'><h3>pseudocode</h3><div class = 'box-body'>
+
+<pre >IF condition THEN
+    do_task()
+ELSE
+    do_something_else()
+ENDIF</pre>
+
+</div></div><div class = 'box col col-4 bg-yellow'><h3>flowchart</h3><div class = 'box-body'>
+
+<img src='img/05/flow_if.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Logical/boolean operators </h2><h3> AND, OR, NOT</h3></hgroup><article  id="logicalboolean-operators-and-or-not" class="smaller vs3">
+
+<div id="unnamed-chunk-5">
+<style type="text/css">
+.table {
+  width: 100%;
+}
+
+article .table tr td {
+  padding: 1em;
+}
+
+article .table tr td, article .table tr th {
+  font-size: 18px;
+}
+
+/* kableExtra does not change header colours */
+.table > thead > tr > th:first-child, .table > thead > tr:nth-child(2) > th:nth-child(2) {
+  color: green;
+}
+</style></div>
+
+<div class = 'box col col-6'><h3>3 types</h3><div class = 'box-body'>
+
+<img src='img/05/logical.png' title='fig:'/>
+
+</div></div><div class = 'box col col-6 middle bg-blue'><div class = 'box-body'>
+
+<div id="unnamed-chunk-6">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="text-align:center; border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;" colspan="2">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+Variables</div>
+
+</th>
+
+<th style="text-align:center; border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;" colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+Logical tests</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th style="text-align:center;">
+
+A
+
+</th>
+
+<th style="text-align:center;">
+
+B
+
+</th>
+
+<th style="text-align:center;">
+
+A AND B
+
+</th>
+
+<th style="text-align:center;">
+
+A OR B
+
+</th>
+
+<th style="text-align:center;">
+
+NOT A
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:center;font-weight: bold;color: green;">
+
+False
+
+</td>
+
+<td style="text-align:center;font-weight: bold;color: green;border-right:1px solid;">
+
+False
+
+</td>
+
+<td style="text-align:center;">
+
+False
+
+</td>
+
+<td style="text-align:center;">
+
+False
+
+</td>
+
+<td style="text-align:center;">
+
+True
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;font-weight: bold;color: green;">
+
+False
+
+</td>
+
+<td style="text-align:center;font-weight: bold;color: green;border-right:1px solid;">
+
+True
+
+</td>
+
+<td style="text-align:center;">
+
+False
+
+</td>
+
+<td style="text-align:center;">
+
+True
+
+</td>
+
+<td style="text-align:center;">
+
+True
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;font-weight: bold;color: green;">
+
+True
+
+</td>
+
+<td style="text-align:center;font-weight: bold;color: green;border-right:1px solid;">
+
+False
+
+</td>
+
+<td style="text-align:center;">
+
+False
+
+</td>
+
+<td style="text-align:center;">
+
+True
+
+</td>
+
+<td style="text-align:center;">
+
+False
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:center;font-weight: bold;color: green;">
+
+True
+
+</td>
+
+<td style="text-align:center;font-weight: bold;color: green;border-right:1px solid;">
+
+True
+
+</td>
+
+<td style="text-align:center;">
+
+True
+
+</td>
+
+<td style="text-align:center;">
+
+True
+
+</td>
+
+<td style="text-align:center;">
+
+False
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table></div>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Conditional blocks in <em>R</em></h2></hgroup><article  id="conditional-blocks-in-r" class="smaller vs1 build">
+
+<div class = 'offset-1 box col col-10 bg-yellow'><h3><code>if</code>, <code>else if</code> and <code>else</code></h3><div class = 'box-body'>
+
+<ul>
+<li>blocks are delimited with curly braces <code>{</code> and <code>}</code></li>
+<li><strong>indent</strong> your code after <code>{</code>, rstudio does it for you</li>
+</ul>
+
+<div id="unnamed-chunk-7" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+demo
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>n1 &lt;- 11
+n2 &lt;- 7
+if (n1 == n2) {
+  print(paste(n1, &quot;and&quot;, n2, &quot;are equal&quot;))
+} else if (n1 &gt; n2) {
+  print(paste(n1, &quot;is greater than&quot;, n2))
+} else {
+  print(paste(n1, &quot;is smaller than&quot;, n2))
+}</pre>
+
+<pre >[1] &quot;11 is greater than 7&quot;</pre></div>
+
+</div></div>
+
+<div class = 'offset-2 box col col-8 bg-yellow2'><div class = 'box-body'>
+
+<p>We will see <code>dplyr::case_when()</code> for multiple <code>if / else</code> statements</p>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>For loops</h2></hgroup><article  id="for-loops" class="smaller ">
+
+<div class = 'col col-6'>
+
+<img src='img/05/for_loop.png' title='fig:'/>
+
+</div><div class = 'box col col-6 bg-gray'><h3>for loops in <em>R</em></h3><div class = 'box-body'>
+
+<ul>
+<li>loop on <strong>values</strong></li>
+</ul>
+
+<div id="unnamed-chunk-8" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>v &lt;- c(3:7)
+for (i in v) {
+  print(i)
+}</pre>
+
+<pre >[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7</pre></div>
+
+<ul>
+<li>loop on <strong>indices</strong></li>
+</ul>
+
+<div id="unnamed-chunk-9" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>for (i in seq_along(v)) {
+  print(paste(&quot;indice&quot;, i, &quot;=&quot;, v[i]))
+}</pre>
+
+<pre >[1] &quot;indice 1 = 3&quot;
+[1] &quot;indice 2 = 4&quot;
+[1] &quot;indice 3 = 5&quot;
+[1] &quot;indice 4 = 6&quot;
+[1] &quot;indice 5 = 7&quot;</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>for loops in R, the &quot;are slow&quot; myth</h2></hgroup><article  id="for-loops-in-r-the-are-slow-myth" class="smaller build">
+
+<div class = 'box col col-6 stretch bg-yellow'><h3>for loop with vector growing</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-10" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>for_loop &lt;- function(lgt) {
+  res &lt;- c()
+  for (i in seq_len(lgt)) {
+    res[i] &lt;- i
+  }
+  length(res)
+}</pre></div>
+
+</div></div><div class = 'box col col-6 stretch bg-aquamarine2'><h3>for loop with allocated vector</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-11" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>for_loop_alloc &lt;- function(lgt) {
+  res &lt;- vector(&quot;integer&quot;, length = lgt)
+  for (i in seq_len(lgt)) {
+    res[i] &lt;- i
+  }
+  length(res)
+}</pre></div>
+
+</div></div><div class = 'box col col-6 stretch bg-grgold'><h3>for loop with <code>Rcpp</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-12" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>library(Rcpp)
+cppFunction(
+&quot;NumericVector for_rcpp(int x) {
+  NumericVector res(x);
+  for (int i=0; i &lt; x; i++) {
+    res[i] = i;
+  }
+  return res;
+}&quot;)</pre></div>
+
+</div></div><div class = 'col col-6'>
+
+<img src='img/05/mb_for_loops.png' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>history &amp; fiction</h2></hgroup><article  id="history-fiction" class="smaller vs2">
+
+<div class = 'col col-5'>
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+<a href="https://twitter.com/EmEmEff?ref_src=twsrc%5Etfw"><span class="cite">@EmEmEff</span></a> <a href="https://twitter.com/quominus?ref_src=twsrc%5Etfw"><span class="cite">@quominus</span></a> the slowness of for() loops is legendary: a mixture of history and fiction.
+
+</p>
+
+— Thomas Lumley (<span class="cite">@tslumley</span>) <a href="https://twitter.com/tslumley/status/609248533435133952?ref_src=twsrc%5Etfw">12 June 2015</a>
+
+</blockquote>
+
+<script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</div><div class = 'col col-7'>
+
+<img src='img/05/mb_for_iterations.png' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Other loops, <code>while</code> and <code>repeat</code></h2></hgroup><article  id="other-loops-while-and-repeat" class="smaller ">
+
+<p>Exist in <em>R</em> but not covered in this course</p>
+
+<img src='img/05/repeat_while_for_loops_Datacamp.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Objects have no names</h2></hgroup><article  id="objects-have-no-names" class="smaller vs1 build">
+
+<div class = 'col col-6 middle'>
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+In <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a>, it&#39;s surprisingly important to realise that names have objects; objects don&#39;t have names <a href="https://t.co/bEMO1YVZX0">pic.twitter.com/bEMO1YVZX0</a>
+
+</p>
+
+— Hadley Wickham (<span class="cite">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/732288980549390336?ref_src=twsrc%5Etfw">16 May 2016</a>
+
+</blockquote>
+
+<script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</div><div class = 'box col col-6 bg-yellow'><h3>impact on memory</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-13" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>a &lt;- matrix(0, ncol = 1000, nrow = 1000)
+b &lt;- a</pre></div>
+
+<ul>
+<li><code>a</code> is ~ 8 Mb in RAM</li>
+</ul>
+
+<div id="unnamed-chunk-14" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>pryr::object_size(a)
+&gt; 8 MB</pre></div>
+
+<ul>
+<li>creating <code>b</code> does <strong>not</strong> consume 16 Mb in RAM</li>
+</ul>
+
+<div id="unnamed-chunk-15" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>pryr::mem_change(b &lt;- a)
+&gt; 920 B</pre></div>
+
+<ul>
+<li>not a pointer, if <code>a</code> or <code>b</code> are further altered, a <strong>copy</strong> is made</li>
+</ul>
+
+<div id="unnamed-chunk-16" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>pryr::mem_change(b[1, 1] &lt;- 1)
+&gt; 8 MB</pre></div>
+
+<p><span class="small">
+source: David Smith on <a href='http://blog.revolutionanalytics.com/2016/05/an-object-has-no-name.html' title=''>his blog</a></span></p>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Functions</h2></hgroup><article  id="functions" class="smaller build">
+
+<blockquote class = "bg-grgold">
+<p>Everything that exists is an object. Everything that happens is a function call. <cite> John Chambers </p></cite>
+</blockquote>
+
+</article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Functions</h2></hgroup><article  id="functions-1" class="smaller ">
+
+<blockquote class = "bg-aquamarine2">
+<p>The most important thing to understand about R is that functions are objects in their own right. You can work with them exactly the same way you work with any other type of object. <cite> Hadley Wickam, Advanced R </p></cite>
+</blockquote>
+
+<div class = 'box col col-6 bg-gray'><h3>everything is a function</h3><div class = 'box-body'>
+
+<p>type names without <code>()</code></p>
+
+<div id="unnamed-chunk-17" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>`+`</pre>
+
+<pre >function (e1, e2)  .Primitive(&quot;+&quot;)</pre>
+
+<pre class = 'prettyprint lang-r'>is.infinite</pre>
+
+<pre >function (x)  .Primitive(&quot;is.infinite&quot;)</pre></div>
+
+<ul>
+<li>same thing:</li>
+</ul>
+
+<div id="unnamed-chunk-18" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>1 + 2 * 3</pre>
+
+<pre >[1] 7</pre>
+
+<pre class = 'prettyprint lang-r'>`+`(1, `*`(2, 3))</pre>
+
+<pre >[1] 7</pre></div>
+
+</div></div><div class = 'box col col-6 bg-blue stretch'><h3>chunk of code to repeat a task</h3><div class = 'box-body'>
+
+<ul>
+<li>that does “something”</li>
+<li>useful when you have to repeat some work (&gt; 2)</li>
+<li>In <em>R</em> you already used some functions that are already provided:
+
+<ul>
+<li><em>e.g.</em> <code>sum()</code>, <code>sd()</code></li>
+</ul></li>
+</ul>
+
+<div id="unnamed-chunk-19" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>map_dbl(1:3, `+`, 3)</pre>
+
+<pre >[1] 4 5 6</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Functions in <em>R</em> </h2><h3> minimal function</h3></hgroup><article  id="functions-in-r-minimal-function" class="smaller vs1 build">
+
+<ul>
+<li>Use the assignement <code>&lt;-</code> and the keyword <code>function</code> to store a function in an object (name of function)</li>
+</ul>
+
+<div class = 'box col col-6 bg-blue stretch'><h3>minimal example, does nothing</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-20" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>f &lt;- function() {}
+f</pre>
+
+<pre >function() {}</pre></div>
+
+<ul>
+<li>Calling <code>f</code> will not execute the code inside the function</li>
+<li>A function is called with parenthesis <code>()</code> <em>i.e.</em> <code>f()</code> in our example</li>
+</ul>
+
+<div id="unnamed-chunk-21" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>f()</pre>
+
+<pre >NULL</pre></div>
+
+<ul>
+<li>In R a function <strong>will always return</strong> something: Here <code>f()</code> returns <code>NULL</code></li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-yellow stretch'><h3>all functions have 3 parts</h3><div class = 'box-body'>
+
+<ul>
+<li><code>body()</code>, the inside code</li>
+<li><code>formals()</code>, the list of arguments</li>
+<li><code>environment()</code>, location of the function’s variables.</li>
+</ul>
+
+<div id="unnamed-chunk-22" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>f &lt;- function(x) x^2
+f</pre>
+
+<pre >function(x) x^2</pre>
+
+<pre class = 'prettyprint lang-r'>formals(f) # assign is &#39;=&#39;</pre>
+
+<pre >$x</pre>
+
+<pre class = 'prettyprint lang-r'>body(f)</pre>
+
+<pre >x^2</pre>
+
+<pre class = 'prettyprint lang-r'>environment(f)</pre>
+
+<pre >&lt;environment: R_GlobalEnv&gt;</pre></div>
+
+<p><span class="small">
+source: Hadley Wickham, <a href='https://adv-r.hadley.nz/' title=''>Advanced R</a></span></p>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Functions in <em>R</em> </h2><h3> putting some code inside the function</h3></hgroup><article  id="functions-in-r-putting-some-code-inside-the-function" class="smaller vs2">
+
+<div id="unnamed-chunk-23" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>f &lt;- function() {
+  print(&quot;Hello from biostat2!&quot;)
+}</pre></div>
+
+<ul>
+<li>The code isn&#39;t executed yet: it is &quot;stored&quot; as an <strong>object</strong> for later use</li>
+<li>We can call the function as before using <code>f()</code></li>
+</ul>
+
+<div id="unnamed-chunk-24" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>f()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >[1] &quot;Hello from biostat2!&quot;</pre></div></div>
+
+</article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Functions in <em>R</em> </h2><h3> <strong>returning</strong> a result</h3></hgroup><article  id="functions-in-r-returning-a-result" class="smaller vs1 build">
+
+<div id="unnamed-chunk-25" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+Example
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>f &lt;- function() {
+  1 + 1
+  print(&quot;Hello from biostat2!&quot;)
+  3 + 2
+}
+f()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >[1] &quot;Hello from biostat2!&quot;</pre>
+
+<pre >[1] 5</pre></div></div>
+
+<div id="unnamed-chunk-26" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+Save function&#39; output
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>result &lt;- f()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >[1] &quot;Hello from biostat2!&quot;</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'># display the content
+result</pre></div>
+
+<div class="col col-6 r-output">
+<pre >[1] 5</pre></div></div>
+
+<div class = 'bg-aquamarine2 box col col-8 offset-2'><h3>with no explicit <code>return</code></h3><div class = 'box-body'>
+
+<ul>
+<li>The function <em>returns</em> the output of the <strong>last</strong> command</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Functions in <em>R</em> </h2><h3> <strong>returning</strong> a result</h3></hgroup><article  id="functions-in-r-returning-a-result-1" class="smaller build vs1">
+
+<p>You can explicitly use the <strong><code>return()</code></strong> command to <strong>exit the function earlier</strong> and return a specified value</p>
+
+<div class = 'col col-6'><h3><code>return()</code> without argument</h3>
+
+<div id="unnamed-chunk-27" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>f &lt;- function() {
+  1 + 1
+  3 + 2
+}
+f()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >[1] 5</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>f &lt;- function() {
+  1 + 1
+  return()
+  3 + 2 
+}
+f()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >NULL</pre></div></div>
+
+</div><div class = 'col col-6'><h3><code>return()</code> with <strong>value</strong></h3>
+
+<p>makes function little useless</p>
+
+<div id="unnamed-chunk-28" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>f &lt;- function() {
+  1 + 1
+  return(6)
+  3 + 2
+}
+f()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >[1] 6</pre></div></div>
+
+</div><div class = 'col col-6 offset-6'><h3><code>return()</code> with <strong>variable</strong></h3>
+
+<p>makes more sense</p>
+
+<div id="unnamed-chunk-29" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>f &lt;- function() {
+  res &lt;- 1 + 1
+  return(res)
+  3 + 2
+}
+f()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >[1] 2</pre></div></div>
+
+</div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Functions in <em>R</em> </h2><h3> arguments</h3></hgroup><article  id="functions-in-r-arguments" class="smaller vs1 build">
+
+<ul>
+<li>You can specify the objects/variables your function will use as <strong>arguments</strong></li>
+</ul>
+
+<div class = 'box col col-6 bg-orange stretch'><h3><strong>without</strong> default</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-30" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>rm(z) # Removing any z object from global env</pre>
+
+<pre >Warning in rm(z): object &#39;z&#39; not found</pre>
+
+<pre class = 'prettyprint lang-r'>f &lt;- function(z) { # Note the &#39;z&#39;
+  z &lt;- z + 1
+  return(z)
+}
+
+f()</pre>
+
+<pre >Error in f(): argument &quot;z&quot; is missing, with no default</pre>
+
+<pre class = 'prettyprint lang-r'>f(2)</pre>
+
+<pre >[1] 3</pre></div>
+
+</div></div><div class = 'box col col-6 bg-yellow stretch'><h3><strong>with</strong> default</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-31" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>rm(z) </pre>
+
+<pre >Warning in rm(z): object &#39;z&#39; not found</pre>
+
+<pre class = 'prettyprint lang-r'>f &lt;- function(z = 0) { 
+  z &lt;- z + 1
+  return(z)
+}
+
+f()</pre>
+
+<pre >[1] 1</pre>
+
+<pre class = 'prettyprint lang-r'>f(2)</pre>
+
+<pre >[1] 3</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Exercice</h2></hgroup><article  id="exercice" class="smaller  vs2 build">
+
+<div class = 'box col col-6 bg-yellow stretch'><h3>what are the <strong>4</strong> <code>c</code>&#39;s?</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-32" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>c &lt;- 10
+c(c = c)</pre></div>
+
+</div></div><div class = 'box col col-6 bg-blue'><h3>solution</h3><div class = 'box-body'>
+
+<ul>
+<li><code>c &lt;- 10</code> assign scalar 10 to name <code>c</code> in global env</li>
+<li><code>c()</code> concatenate function</li>
+<li><code>(c = c)</code>, 1st is named vector, 2nd is scalar (10)</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-yellow'><h3>explain the output</h3><div class = 'box-body'>
+
+<ul>
+<li>look at help pages</li>
+</ul>
+
+<div id="unnamed-chunk-33" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>c &lt;- 10
+c(c = c)</pre>
+
+<pre > c 
+10 </pre></div>
+
+</div></div><div class = 'box col col-6 bg-blue stretch'><h3>solution</h3><div class = 'box-body'>
+
+<ul>
+<li>vector named, index 1 = &quot;c&quot;, value <code>10</code></li>
+<li>unamend version:</li>
+</ul>
+
+<div id="unnamed-chunk-34" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>c(c = c, use.names = FALSE)</pre>
+
+<pre >[1] 10</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Environments and promises</h2></hgroup><article  id="environments-and-promises" class="smaller vs1 build">
+
+<ul>
+<li>when called, functions create their own <strong>environnment</strong></li>
+<li>arguments are evaluated <strong>only</strong> when function is called, it&#39;s a <strong>promise</strong></li>
+</ul>
+
+<div id="unnamed-chunk-35" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+ls() list loaded objects
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>ls()</pre></div>
+
+<div class="col col-6 r-output">
+<pre > [1] &quot;a&quot;       &quot;average&quot; &quot;b&quot;       &quot;c&quot;       &quot;f&quot;       &quot;i&quot;       &quot;n1&quot;     
+ [8] &quot;n2&quot;      &quot;result&quot;  &quot;v&quot;      </pre></div></div>
+
+<div class = 'bg-blue box col col-6'><h3>ls() evaluated inside f()</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-36" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>f &lt;- function(x = ls()) {
+  a &lt;- 1
+  x
+}
+f()</pre>
+
+<pre >[1] &quot;a&quot; &quot;x&quot;</pre></div>
+
+</div></div><div class = 'bg-aquamarine2 box col col-6 stretch'><h3>ls() evaluated in global environment</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-37" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>f(ls())</pre>
+
+<pre > [1] &quot;a&quot;       &quot;average&quot; &quot;b&quot;       &quot;c&quot;       &quot;f&quot;       &quot;i&quot;       &quot;n1&quot;     
+ [8] &quot;n2&quot;      &quot;result&quot;  &quot;v&quot;      </pre></div>
+
+<p><span class="small">
+source: Hadley Wickam <a href='https://adv-r.hadley.nz/functions.html' title=''>Advanced R</a></span></p>
+
+</div></div><div class = 'bg-orange offset-2 box col col-8'><h3>Don&#39;t worry</h3><div class = 'box-body'>
+
+<p>Advanced topic, this is for your own knowledge!</p>
+
+</div></div></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Functions in R, named arguments </h2><h3> example</h3></hgroup><article  id="functions-in-r-named-arguments-example" class="smaller vs2">
+
+<p>Going back to our <code>if</code>, <code>if else</code>, <code>else</code> example and wrapping it in a function:</p>
+
+<div id="unnamed-chunk-38" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+2 arguments
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>my_compare &lt;- function(n1, n2) {
+  if (n1 == n2) {
+    message(paste(n1, &quot;and&quot;, n2, &quot;are equal&quot;))
+  } else if (n1 &gt; n2) {
+    message(paste(n1, &quot;is greater than&quot;, n2))
+  } else {
+    message(paste(n1, &quot;is smaller than&quot;, n2))
+  }
+}
+my_compare(10, 10)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >10 and 10 are equal</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>message(&quot;unnamed the arguments: R use order&quot;)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >unnamed the arguments: R use order</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>my_compare(2, 10)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >2 is smaller than 10</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>my_compare(11, 10)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >11 is greater than 10</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>message(&quot;named the arguments: safer&quot;)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >named the arguments: safer</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>my_compare(n1 = 11, n2 = 10)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >11 is greater than 10</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>message(&quot;named arg allows you to switch them&quot;)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >named arg allows you to switch them</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>my_compare(n2 = 10, n1 = 11)</pre></div>
+
+<div class="col col-6 r-output">
+<pre >11 is greater than 10</pre></div></div>
+
+</article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Manage exceptions</h2></hgroup><article  id="manage-exceptions" class="smaller vs1">
+
+<!-- remove or do better in 2018, tryCatch -->
+
+<ul>
+<li>It is unlikely that your code will crash <em>R</em> (runtime error)
+
+<ul>
+<li>Try the classical division by 0 (<code>1/0</code>)</li>
+<li>Many exceptions are catched and handled by <em>R</em></li>
+</ul></li>
+</ul>
+
+<div id="unnamed-chunk-39" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>my_function &lt;- function(v) {
+  result &lt;- v / 2;
+  print(result)
+}
+
+my_function(10)</pre>
+
+<pre >[1] 5</pre>
+
+<pre class = 'prettyprint lang-r'>my_function(TRUE)</pre>
+
+<pre >[1] 0.5</pre>
+
+<pre class = 'prettyprint lang-r'>my_function(&quot;a&quot;)</pre>
+
+<pre >Error in v/2: non-numeric argument to binary operator</pre></div>
+
+</article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Manage exceptions</h2></hgroup><article  id="manage-exceptions-1" class="smaller vs1">
+
+<ul>
+<li>It is better to implement tests to avoid <em>runtime errors</em> or <em>logical errors</em>. Helps the debugging process.
+
+<ul>
+<li><em>R</em> provides useful functions to test your variables: <code>is.numeric()</code>, <code>is.character()</code></li>
+<li><em>R</em> provides also useful functions to manage exceptions: <code>stop()</code>, <code>warning()</code></li>
+</ul></li>
+</ul>
+
+<div id="unnamed-chunk-40" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>my_function &lt;- function(v) {
+  if (!is.numeric(v)) stop(&quot;argument v should be a number!&quot;)
+  result &lt;- v / 2;
+  print(result)
+}
+
+my_function(10)</pre>
+
+<pre >[1] 5</pre>
+
+<pre class = 'prettyprint lang-r'>my_function(TRUE)</pre>
+
+<pre >Error in my_function(TRUE): argument v should be a number!</pre>
+
+<pre class = 'prettyprint lang-r'>my_function(&quot;a&quot;)</pre>
+
+<pre >Error in my_function(&quot;a&quot;): argument v should be a number!</pre></div>
+
+</article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Now: cubetto</h2></hgroup><article  id="now-cubetto" class="smaller ">
+
+<img src='img/05/cubetto.jpg' title='fig:'/></article><div class = "footer"><img src="lecture05_programming_files/logo.png"><a href='index.html'>biostat2</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

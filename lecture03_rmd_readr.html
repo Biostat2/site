@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rmarkdown and data import</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+  <meta name="date" content="2017-09-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Rmarkdown and data import',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture03_rmd_readr_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'E. Koncina, A. Ginolhac' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  /* bg-yellow colour */
+  
+  .bg-yellow {
+    background-color: #FFEC8B;
+    color: #000000;
+  }
+  
+  .bg-yellow a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow {
+    border: 2px solid #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child {
+    background-color: #EEB422;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow::before {
+    color : #EEB422;
+  }
+   
+  blockquote.bg-yellow {
+    color: #000000;
+    border-color: #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-pink2 colour */
+  
+  .bg-pink2 {
+    background-color: #EEA9B8;
+    color: #000000;
+  }
+  
+  .bg-pink2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-pink2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-pink2 {
+    border: 2px solid #77545C;
+  }
+  
+  .box.bg-pink2 > h3:first-child {
+    background-color: #77545C;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-pink2::before {
+    color : #77545C;
+  }
+   
+  blockquote.bg-pink2 {
+    color: #000000;
+    border-color: #77545C;
+  }
+  
+  .box.bg-pink2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-pink2 > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-pink2 > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-pink2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-pink2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-pink2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-aquamarine2 colour */
+  
+  .bg-aquamarine2 {
+    background-color: #76EEC6;
+    color: #000000;
+  }
+  
+  .bg-aquamarine2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-aquamarine2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-aquamarine2 {
+    border: 2px solid #3B7763;
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child {
+    background-color: #3B7763;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-aquamarine2::before {
+    color : #3B7763;
+  }
+   
+  blockquote.bg-aquamarine2 {
+    color: #000000;
+    border-color: #3B7763;
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-aquamarine2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-aquamarine2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-aquamarine2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-grayblue colour */
+  
+  .bg-grayblue {
+    background-color: #BFCCD7;
+    color: #000000;
+  }
+  
+  .bg-grayblue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-grayblue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-grayblue {
+    border: 2px solid #5F666B;
+  }
+  
+  .box.bg-grayblue > h3:first-child {
+    background-color: #5F666B;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-grayblue::before {
+    color : #5F666B;
+  }
+   
+  blockquote.bg-grayblue {
+    color: #000000;
+    border-color: #5F666B;
+  }
+  
+  .box.bg-grayblue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-grayblue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-grayblue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-grayblue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-grayblue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-grayblue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-red colour */
+  
+  .bg-red {
+    background-color: #FFAD99;
+    color: #000000;
+  }
+  
+  .bg-red a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-red a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-red {
+    border: 2px solid #991F00;
+  }
+  
+  .box.bg-red > h3:first-child {
+    background-color: #991F00;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-red::before {
+    color : #991F00;
+  }
+   
+  blockquote.bg-red {
+    color: #000000;
+    border-color: #991F00;
+  }
+  
+  .box.bg-red > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-red > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-red > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-red > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-red > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-red code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-green colour */
+  
+  .bg-green {
+    background-color: #ADEBAD;
+    color: #000000;
+  }
+  
+  .bg-green a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-green a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-green {
+    border: 2px solid #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child {
+    background-color: #1F7A1F;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-green::before {
+    color : #1F7A1F;
+  }
+   
+  blockquote.bg-green {
+    color: #000000;
+    border-color: #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-green > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-green > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-green > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-green > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-green code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-blue colour */
+  
+  .bg-blue {
+    background-color: #99D6FF;
+    color: #000000;
+  }
+  
+  .bg-blue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-blue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-blue {
+    border: 2px solid #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child {
+    background-color: #005C99;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-blue::before {
+    color : #005C99;
+  }
+   
+  blockquote.bg-blue {
+    color: #000000;
+    border-color: #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-blue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-blue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-blue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-blue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-blue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-yellow colour */
+  
+  .bg-yellow {
+    background-color: #FFEC8B;
+    color: #000000;
+  }
+  
+  .bg-yellow a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow {
+    border: 2px solid #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child {
+    background-color: #EEB422;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow::before {
+    color : #EEB422;
+  }
+   
+  blockquote.bg-yellow {
+    color: #000000;
+    border-color: #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-gray colour */
+  
+  .bg-gray {
+    background-color: #FAFAFA;
+    color: #000000;
+  }
+  
+  .bg-gray a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-gray a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-gray {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-gray::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-gray {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-gray > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-gray > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-gray > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-gray > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-gray code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-white colour */
+  
+  .bg-white {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  
+  .bg-white a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-white a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-white {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-white::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-white {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-white > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-white > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-white > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-white > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-white code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-cobalt colour */
+  
+  .bg-cobalt {
+    background-color: #2B557A;
+    color: #FFFFFF;
+  }
+  
+  .bg-cobalt a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-cobalt a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-cobalt {
+    border: 2px solid #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child {
+    background-color: #002240;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-cobalt::before {
+    color : #002240;
+  }
+   
+  blockquote.bg-cobalt {
+    color: #FFFFFF;
+    border-color: #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-cobalt > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-cobalt > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-cobalt code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture03_rmd_readr_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">27 September 2017</p>
+          </hgroup>
+  </slide>
+
+<div id="unnamed-chunk-1">
+<style type="text/css">
+/* my css codes. Some might get integrated in a future iosp version...*/
+
+article .my-flex > .box-body > p {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  font-size: 50px;
+}
+
+.box li {
+  line-height: 1.1em; /* should be optimized in the main iosp css... */
+}
+
+article .code-transparent > pre {
+  background: none;
+  /*border-left: none;*/
+}
+
+.code-transparent pre {
+  color: #c7254e;
+  background: none;
+  border-left: none;
+  padding-left: 50px;
+}
+
+.center img {
+  display: block;
+  margin: auto;
+  float: none;
+}
+</style></div>
+
+<slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Rmarkdown</h2></hgroup><article  id="rmarkdown" class="smaller ">
+
+</article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
+
+<div class = 'box col col-10 offset-1 bg-red icon'><h3>You will learn to:</h3><div class = 'box-body'>
+
+<img src='img/00/kt.png' title='fig:'/>
+
+<ul>
+<li>use the markdown syntax</li>
+<li>create <em>Rmarkdown</em> documents</li>
+<li>define the output format you expect to render</li>
+<li>use the interactive RStudio interface to
+
+<ul>
+<li>create your documents</li>
+<li>insert R code</li>
+<li>build your final document</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>RMarkdown</h2></hgroup><article  id="rmarkdown-1" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-blue icon'><h3>Why using <code>rmarkdown</code>?</h3><div class = 'box-body'>
+
+<img src='img/03/rmarkdown_output.png' title='fig:'/>
+
+<ul>
+<li>write detailed reports</li>
+<li>ensure reproducibility</li>
+<li>keep track of your analyses</li>
+<li>comment/describe each step of your analysis</li>
+<li>export a single (Rmd) document to various formats (Pdf, Html&#8230;)</li>
+<li>text file that can be managed by a version control system (like <a href='https://git-scm.com/' title=''>git</a>)</li>
+</ul>
+
+</div></div><div class = 'box col col-8 offset-2 bg-red my-flex vs1'><h3>Rmarkdown</h3><div class = 'box-body'>
+
+<p><img src='img/00/logo_r.png' title=''/> + <img src='img/03/knit.png' title=''/> + <img src='img/03/logo_md.png' title=''/></p>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Markdown</h2></hgroup><article  id="markdown" class="smaller build">
+
+<p><strong>Markdown</strong> is used to <strong>format the text</strong></p>
+
+<div class = 'box col col-6 bg-blue'><h3>Markup language</h3><div class = 'box-body'>
+
+<ul>
+<li>Such as Xml, HTML</li>
+<li>A coding system used to structure text</li>
+<li>Uses markup tags (<em>e.g.</em> <code>&lt;h1&gt;&lt;/h1&gt;</code> in HTML)</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-green my_code stretch'><h3>HTML</h3><div class = 'box-body'>
+
+<pre >&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1&gt;This is a heading&lt;/h1&gt;
+
+&lt;p&gt;This is some text in a paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+</div></div><div class = 'box col col-6 bg-blue'><h3><strong>Lightweight</strong> markup language</h3><div class = 'box-body'>
+
+<ul>
+<li>Easy to read and write as it uses simple tags (<em>e.g.</em> <code>#</code>)</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-green my_code stretch'><h3>MD</h3><div class = 'box-body'>
+
+<pre ># This is a heading
+
+This is some text in a paragraph</pre>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Markdown </h2><h3> common text formatting <strong>tags</strong></h3></hgroup><article  id="markdown-common-text-formatting-tags" class="smaller ">
+
+<div class = 'box col col-6 bg-pink2 stretch'><h3>Headers</h3><div class = 'box-body'>
+
+<ul>
+<li>Levels are defined using <code>#</code>, <code>##</code>, <code>###</code> &#8230;</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-aquamarine2 stretch'><h3>Text style</h3><div class = 'box-body'>
+
+<ul>
+<li><strong>bold</strong> (<code>**</code>This will be bold<code>**</code>)</li>
+<li><em>italic</em> (<code>*</code>This will be italic<code>*</code>)</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-yellow stretch'><h3>Links and images</h3><div class = 'box-body'>
+
+<ul>
+<li><code>[description](http://example.com)</code></li>
+<li><code>![](path/to/image.jpg)</code></li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-blue stretch code-transparent'><h3>Verbatim code</h3><div class = 'box-body'>
+
+<ul>
+<li><code>code</code> (<code>`</code>This will be some inline coding stuff<code>`</code>)</li>
+<li>triple backticks are delimiting code blocks</li>
+</ul>
+
+<pre >```
+This is *verbatim* code
+# Even headers are not interpreted
+```</pre>
+
+</div></div><div class = 'box col col-12 bg-green icon stretch'><h3>Rmarkdown cheatsheet</h3><div class = 'box-body'>
+
+<img src='img/03/rmarkdown_cheatsheet.png' title='fig:'/>
+
+<ul>
+<li>Have a look at the online documents on the <a href='http://rmarkdown.rstudio.com/lesson-8.html' title=''>Rmarkdown website</a></li>
+<li>Use the Cheatsheet in the <code>Help &gt; Cheatsheets</code> menu.</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Exercise </h2><h3> Markdown</h3></hgroup><article  id="exercise-markdown" class="smaller  vs3">
+
+<div class = 'box col col-8 offset-2 bg-white icon'><h3>Learn to use the markdown syntax</h3><div class = 'box-body'>
+
+<img src='img/03/logo_md.png' title='fig:'/>
+
+<p>Before writing your own Rmarkdown document, use the excellent ressource on <a href='http://commonmark.org/help/tutorial/' title=''>commonmark.org</a> to learn the basics of markdown formatting.</p>
+
+<p><span class="vs2 small">
+An alternative online ressource can be found on <a href='http://www.markdowntutorial.com/' title=''>www.markdowntutorial.com</a></span></p>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Including <em>R</em> code</h2></hgroup><article  id="including-r-code" class="smaller ">
+
+<div class = 'box col col-5 bg-red icon'><h3>Rmarkdown</h3><div class = 'box-body'>
+
+<img src='img/00/logo_rmarkdown.png' title='fig:'/>
+
+<ul>
+<li>extends markdown</li>
+<li>allows to integrate code chunks that will be interpreted
+
+<ul>
+<li><strong>R code</strong></li>
+<li>bash</li>
+<li>python</li>
+<li>css</li>
+<li>&#8230;</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'box col col-7 bg-red icon'><h3>Knitr</h3><div class = 'box-body'>
+
+<img src='img/00/logo_knitr.png' title='fig:'/>
+
+<ul>
+<li>R chunks are extracted, interpreted separately</li>
+<li>The result is formatted (with or without the source code) and integrated into the markdown document</li>
+<li>The markdown document is converted to the desired document format (Pdf, Html&#8230;)</li>
+<li>Relies on the powerful <a href='http://pandoc.org/' title=''>pandoc</a> converter</li>
+<li>Fully integrated in Rstudio (Knit button)</li>
+</ul>
+
+<div id="unnamed-chunk-2">
+<div class="center">
+<div class="figure">
+<p><img src="img/03/rstudio_knit.png" /></p></div></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rmarkdown document </h2><h3> Create, step 1</h3></hgroup><article  id="rmarkdown-document-create-step-1" class="smaller nvs1">
+
+<div class = 'col col-10 offset-1'>
+
+<img src='img/03/rstudio_rmd_create_1.jpg' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rmarkdown document </h2><h3> Create, step 2</h3></hgroup><article  id="rmarkdown-document-create-step-2" class="smaller nvs1">
+
+<div class = 'col col-10 offset-1'>
+
+<img src='img/03/rstudio_rmd_create_2.jpg' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rmarkdown document </h2><h3> Structure</h3></hgroup><article  id="rmarkdown-document-structure" class="smaller ">
+
+<p>A Rmarkdown document document contains 3 elements:</p>
+
+<div class = 'col col-6'>
+
+<img src='img/03/rmd_example.png' title='fig:'/>
+
+</div><div class = 'col col-6'>
+
+<ul>
+<li>A <strong><span class="red">
+YAML header</span></strong> to define document wide options</li>
+<li>Text which is formatted using the <strong><span class="blue">
+markdown</span></strong> syntax</li>
+<li><strong><span class="green">
+chunks</span></strong> containing the code to be interpreted by <em>R</em></li>
+</ul>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rmarkdown document </h2><h3> Navigation</h3></hgroup><article  id="rmarkdown-document-navigation" class="smaller nvs2">
+
+<div class = 'col col-10 offset-1'>
+
+<img src='img/03/rstudio_index.jpg' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rmarkdown document </h2><h3> Insert a chunk</h3></hgroup><article  id="rmarkdown-document-insert-a-chunk" class="smaller build">
+
+<div class = 'box col col-5 bg-blue'><h3>Inserting a code chunk</h3><div class = 'box-body'>
+
+<img src='img/03/rstudio_chunk_add.png' title='fig:'/>
+
+</div></div><div class = 'box col col-7 bg-blue'><h3>R code chunks</h3><div class = 'box-body'>
+
+<img src='img/03/chunk_example.png' title='fig:'/>
+
+<ul>
+<li>chunks are defined between two lines starting with a 3 backticks tag (<code>```</code>)</li>
+<li>curly brackets define how to interprete the content (<em>R</em> code but other languages such as Python are also supported)</li>
+<li><code>```{r}</code> is the minimum to define a starting <em>R</em> chunk</li>
+<li>can contain more options (name of chunk, whether to show it or not, evaluate it or not)</li>
+</ul>
+
+</div></div><div class = 'box col col-10 bg-blue offset-1'><h3>Inline code</h3><div class = 'box-body'>
+
+<p>To integrate small pieces of <em>R</em> codes</p>
+
+<ul>
+<li>Use backticks (<code>`</code>) combined to the keyword r (<code>`r &lt;your R code&gt;`</code>)</li>
+<li>Example: type in <code>1 + 1 = `r 1+1`</code> to render 1 + 1 = 2.</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rmarkdown document </h2><h3> generate</h3></hgroup><article  id="rmarkdown-document-generate" class="smaller ">
+
+<div class = 'box col col-6 offset-3 bg-blue center vs2'><h3>Creating the output document</h3><div class = 'box-body'>
+
+<ul>
+<li>use the integrated <strong>Knit</strong> button.</li>
+<li>call <code>rmarkdown::render()</code></li>
+</ul>
+
+<img src='img/03/rstudio_knit.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Popular output formats</h2></hgroup><article  id="popular-output-formats" class="smaller ">
+
+<div class = 'box col col-6 bg-green stretch'><h3>HTML</h3><div class = 'box-body'>
+
+<ul>
+<li>fast rendering</li>
+<li>by default embeds binaries (pictures etc.)</li>
+<li>customise styles using your own <code>css</code> files
+
+<ul>
+<li>change headers</li>
+<li>fonts</li>
+<li>&#8230;</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-red stretch'><h3>Pdf</h3><div class = 'box-body'>
+
+<ul>
+<li>single file</li>
+<li>preserves original aspect</li>
+<li>requires \(\LaTeX\)</li>
+<li>customise using your own
+
+<ul>
+<li>\(\LaTeX\) document class</li>
+<li>pandoc template (<code>.tex</code>)</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'box col col-6 offset-3 bg-blue stretch'><h3>Word document</h3><div class = 'box-body'>
+
+<ul>
+<li>Widely used</li>
+<li>Easily editable</li>
+<li>Collaborate with people not using Rmarkdown</li>
+<li>Prepare even scientific manuscripts suitable for submission</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Growing variety of output formats</h2></hgroup><article  id="growing-variety-of-output-formats" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-blue icon'><h3>Output documents</h3><div class = 'box-body'>
+
+<img src='img/03/rmarkdown_output.png' title='fig:'/>
+
+<ul>
+<li>Look on the <a href='http://rmarkdown.rstudio.com/gallery.html' title=''>rmarkdown website</a></li>
+<li>Documents (HTML, PDF, MS Word&#8230;)</li>
+<li><strong>interactive</strong> documents (<code>shiny</code> package)</li>
+<li>websites (like the <a href='http://biostat2.uni.lu' title=''>Biostat2</a> or <a href='http://rmarkdown.rstudio.com' title=''>rmarkdown</a> sites)</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-green icon'><h3>Books</h3><div class = 'box-body'>
+
+<img src='img/00/book.png' title='fig:'/>
+
+<ul>
+<li>Bookdown package. Go on the <a href='https://bookdown.org/yihui/bookdown/' title=''>website</a> to learn more about it.</li>
+<li>Generate books as PDF, EPUB or MOBI files.</li>
+<li>Have a look at the <a href='http://r4ds.had.co.nz/' title=''>R for Data Science</a> website.</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-yellow'><h3>Slideshow presentations</h3><div class = 'box-body'>
+
+<ul>
+<li><strong>ioslides_presentation</strong> (HTML)
+
+<ul>
+<li><a href='https://github.com/koncina/iosp' title=''>iosp</a> used for this presentation.</li>
+</ul></li>
+<li>slidy_presentation (HTML)</li>
+<li>beamer_presentation (pdf, \(\LaTeX\))</li>
+<li>&#8230;</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Wrap up</h2></hgroup><article  id="wrap-up" class="smaller vs2">
+
+<div class = 'box col col-10 offset-1 bg-red icon'><h3>You learned to:</h3><div class = 'box-body'>
+
+<img src='img/00/kt.png' title='fig:'/>
+
+<ul>
+<li>create <em>Rmarkdown</em> documents</li>
+<li>format your text using the markdown syntax</li>
+<li>insert your R code in chunks</li>
+<li>adapt some rendering options of R code chunks</li>
+<li>define the output format you expect to render</li>
+<li>use the interactive RStudio interface to
+
+<ul>
+<li>create your documents</li>
+<li>insert R code</li>
+<li>build your final document</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Import data using <code>readr</code></h2></hgroup><article  id="import-data-using-readr" class="smaller ">
+
+</article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Learning objectives</h2></hgroup><article  id="learning-objectives-1" class="smaller vs2">
+
+<div class = 'box col col-10 offset-1 bg-red icon'><h3>You will learn to:</h3><div class = 'box-body'>
+
+<img src='img/00/kt.png' title='fig:'/>
+
+<ul>
+<li>use <code>readr</code> to import your data into <em>R</em></li>
+<li>use the interactive RStudio interface to visualise your data</li>
+<li>appreciate tibbles</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Importing data</h2></hgroup><article  id="importing-data" class="smaller vs3 build">
+
+<div class = 'box col col-6 bg-blue offset-0 stretch'><div class = 'box-body'>
+
+<ul>
+<li>Represents probably the first step of your work</li>
+<li>R can handle multiple data types
+
+<ul>
+<li>flat files (<code>.csv</code>, <code>.tsv</code>, &#8230;)</li>
+<li>excel files (<code>.xls</code>, <code>.xlsx</code>)</li>
+<li>foreign statistical formats (<code>.sas</code> from SAS, <code>.sav</code> from SPSS, <code>.dta</code> from Stata)</li>
+<li>databases (SQL, SQLite &#8230;)</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-yellow offset-0 icon'><h3>Tidyverse implementation</h3><div class = 'box-body'>
+
+<img src='img/00/logo_tidyverse.png' title='fig:'/>
+
+<ul>
+<li>R base already provides functions for text files (<em>i.e.</em> <code>read.csv()</code>, <code>read.delim()</code>)</li>
+<li>tidyverse redefines these functions:
+
+<ul>
+<li><strong>speed</strong></li>
+<li><strong>characters are not coerced to factors by default</strong></li>
+<li>generates tibbles</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tibbles</h2></hgroup><article  id="tibbles" class="smaller build">
+
+<div class = 'box col col-8 bg-blue offset-2 icon'><h3>Tibbles</h3><div class = 'box-body'>
+
+<img src='img/00/logo_tibble.png' title='fig:'/>
+
+<ul>
+<li>have a refined print method that shows only the first 10 rows.</li>
+<li>show all the columns that fit on screen and list the name of remaining ones.</li>
+<li>each column reports its type.</li>
+<li>makes it much easier to work with large data.</li>
+</ul>
+
+</div></div><div class = 'box col col-6 offset-3 bg-yellow icon-small vs1'><h3>Hint</h3><div class = 'box-body'>
+
+<img src='img/00/tip.png' title='fig:'/>
+
+<p>Use <code>as_tibble()</code> to convert a <code>data.frame</code> to a tibble</p>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tibbles </h2><h3> <code>tibble</code> vs <code>data.frame</code></h3></hgroup><article  id="tibbles-tibble-vs-data.frame" class="smaller ">
+
+<div class = 'col col-8 offset-2 compact-output'>
+
+<div id="unnamed-chunk-3" class="col col-12 box chunk bg-cobalt build">
+<h3>
+
+<code>data.frame</code>
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>iris</pre>
+
+<pre >    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1            5.1         3.5          1.4         0.2     setosa
+2            4.9         3.0          1.4         0.2     setosa
+3            4.7         3.2          1.3         0.2     setosa
+4            4.6         3.1          1.5         0.2     setosa
+5            5.0         3.6          1.4         0.2     setosa
+6            5.4         3.9          1.7         0.4     setosa
+7            4.6         3.4          1.4         0.3     setosa
+8            5.0         3.4          1.5         0.2     setosa
+9            4.4         2.9          1.4         0.2     setosa
+10           4.9         3.1          1.5         0.1     setosa
+11           5.4         3.7          1.5         0.2     setosa
+12           4.8         3.4          1.6         0.2     setosa
+13           4.8         3.0          1.4         0.1     setosa
+14           4.3         3.0          1.1         0.1     setosa
+15           5.8         4.0          1.2         0.2     setosa
+16           5.7         4.4          1.5         0.4     setosa
+17           5.4         3.9          1.3         0.4     setosa
+18           5.1         3.5          1.4         0.3     setosa
+19           5.7         3.8          1.7         0.3     setosa
+20           5.1         3.8          1.5         0.3     setosa
+21           5.4         3.4          1.7         0.2     setosa
+22           5.1         3.7          1.5         0.4     setosa
+23           4.6         3.6          1.0         0.2     setosa
+24           5.1         3.3          1.7         0.5     setosa
+25           4.8         3.4          1.9         0.2     setosa
+26           5.0         3.0          1.6         0.2     setosa
+27           5.0         3.4          1.6         0.4     setosa
+28           5.2         3.5          1.5         0.2     setosa
+29           5.2         3.4          1.4         0.2     setosa
+30           4.7         3.2          1.6         0.2     setosa
+31           4.8         3.1          1.6         0.2     setosa
+32           5.4         3.4          1.5         0.4     setosa
+33           5.2         4.1          1.5         0.1     setosa
+34           5.5         4.2          1.4         0.2     setosa
+35           4.9         3.1          1.5         0.2     setosa
+36           5.0         3.2          1.2         0.2     setosa
+37           5.5         3.5          1.3         0.2     setosa
+38           4.9         3.6          1.4         0.1     setosa
+39           4.4         3.0          1.3         0.2     setosa
+40           5.1         3.4          1.5         0.2     setosa
+41           5.0         3.5          1.3         0.3     setosa
+42           4.5         2.3          1.3         0.3     setosa
+43           4.4         3.2          1.3         0.2     setosa
+44           5.0         3.5          1.6         0.6     setosa
+45           5.1         3.8          1.9         0.4     setosa
+46           4.8         3.0          1.4         0.3     setosa
+47           5.1         3.8          1.6         0.2     setosa
+48           4.6         3.2          1.4         0.2     setosa
+49           5.3         3.7          1.5         0.2     setosa
+50           5.0         3.3          1.4         0.2     setosa
+51           7.0         3.2          4.7         1.4 versicolor
+52           6.4         3.2          4.5         1.5 versicolor
+53           6.9         3.1          4.9         1.5 versicolor
+54           5.5         2.3          4.0         1.3 versicolor
+55           6.5         2.8          4.6         1.5 versicolor
+56           5.7         2.8          4.5         1.3 versicolor
+57           6.3         3.3          4.7         1.6 versicolor
+58           4.9         2.4          3.3         1.0 versicolor
+59           6.6         2.9          4.6         1.3 versicolor
+60           5.2         2.7          3.9         1.4 versicolor
+61           5.0         2.0          3.5         1.0 versicolor
+62           5.9         3.0          4.2         1.5 versicolor
+63           6.0         2.2          4.0         1.0 versicolor
+64           6.1         2.9          4.7         1.4 versicolor
+65           5.6         2.9          3.6         1.3 versicolor
+66           6.7         3.1          4.4         1.4 versicolor
+67           5.6         3.0          4.5         1.5 versicolor
+68           5.8         2.7          4.1         1.0 versicolor
+69           6.2         2.2          4.5         1.5 versicolor
+70           5.6         2.5          3.9         1.1 versicolor
+71           5.9         3.2          4.8         1.8 versicolor
+72           6.1         2.8          4.0         1.3 versicolor
+73           6.3         2.5          4.9         1.5 versicolor
+74           6.1         2.8          4.7         1.2 versicolor
+75           6.4         2.9          4.3         1.3 versicolor
+76           6.6         3.0          4.4         1.4 versicolor
+77           6.8         2.8          4.8         1.4 versicolor
+78           6.7         3.0          5.0         1.7 versicolor
+79           6.0         2.9          4.5         1.5 versicolor
+80           5.7         2.6          3.5         1.0 versicolor
+81           5.5         2.4          3.8         1.1 versicolor
+82           5.5         2.4          3.7         1.0 versicolor
+83           5.8         2.7          3.9         1.2 versicolor
+84           6.0         2.7          5.1         1.6 versicolor
+85           5.4         3.0          4.5         1.5 versicolor
+86           6.0         3.4          4.5         1.6 versicolor
+87           6.7         3.1          4.7         1.5 versicolor
+88           6.3         2.3          4.4         1.3 versicolor
+89           5.6         3.0          4.1         1.3 versicolor
+90           5.5         2.5          4.0         1.3 versicolor
+91           5.5         2.6          4.4         1.2 versicolor
+92           6.1         3.0          4.6         1.4 versicolor
+93           5.8         2.6          4.0         1.2 versicolor
+94           5.0         2.3          3.3         1.0 versicolor
+95           5.6         2.7          4.2         1.3 versicolor
+96           5.7         3.0          4.2         1.2 versicolor
+97           5.7         2.9          4.2         1.3 versicolor
+98           6.2         2.9          4.3         1.3 versicolor
+99           5.1         2.5          3.0         1.1 versicolor
+100          5.7         2.8          4.1         1.3 versicolor
+101          6.3         3.3          6.0         2.5  virginica
+102          5.8         2.7          5.1         1.9  virginica
+103          7.1         3.0          5.9         2.1  virginica
+104          6.3         2.9          5.6         1.8  virginica
+105          6.5         3.0          5.8         2.2  virginica
+106          7.6         3.0          6.6         2.1  virginica
+107          4.9         2.5          4.5         1.7  virginica
+108          7.3         2.9          6.3         1.8  virginica
+109          6.7         2.5          5.8         1.8  virginica
+110          7.2         3.6          6.1         2.5  virginica
+111          6.5         3.2          5.1         2.0  virginica
+112          6.4         2.7          5.3         1.9  virginica
+113          6.8         3.0          5.5         2.1  virginica
+114          5.7         2.5          5.0         2.0  virginica
+115          5.8         2.8          5.1         2.4  virginica
+116          6.4         3.2          5.3         2.3  virginica
+117          6.5         3.0          5.5         1.8  virginica
+118          7.7         3.8          6.7         2.2  virginica
+119          7.7         2.6          6.9         2.3  virginica
+120          6.0         2.2          5.0         1.5  virginica
+121          6.9         3.2          5.7         2.3  virginica
+122          5.6         2.8          4.9         2.0  virginica
+123          7.7         2.8          6.7         2.0  virginica
+124          6.3         2.7          4.9         1.8  virginica
+125          6.7         3.3          5.7         2.1  virginica
+126          7.2         3.2          6.0         1.8  virginica
+127          6.2         2.8          4.8         1.8  virginica
+128          6.1         3.0          4.9         1.8  virginica
+129          6.4         2.8          5.6         2.1  virginica
+130          7.2         3.0          5.8         1.6  virginica
+131          7.4         2.8          6.1         1.9  virginica
+132          7.9         3.8          6.4         2.0  virginica
+133          6.4         2.8          5.6         2.2  virginica
+134          6.3         2.8          5.1         1.5  virginica
+135          6.1         2.6          5.6         1.4  virginica
+136          7.7         3.0          6.1         2.3  virginica
+137          6.3         3.4          5.6         2.4  virginica
+138          6.4         3.1          5.5         1.8  virginica
+139          6.0         3.0          4.8         1.8  virginica
+140          6.9         3.1          5.4         2.1  virginica
+141          6.7         3.1          5.6         2.4  virginica
+142          6.9         3.1          5.1         2.3  virginica
+143          5.8         2.7          5.1         1.9  virginica
+144          6.8         3.2          5.9         2.3  virginica
+145          6.7         3.3          5.7         2.5  virginica
+146          6.7         3.0          5.2         2.3  virginica
+147          6.3         2.5          5.0         1.9  virginica
+148          6.5         3.0          5.2         2.0  virginica
+149          6.2         3.4          5.4         2.3  virginica
+150          5.9         3.0          5.1         1.8  virginica</pre></div>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tibbles </h2><h3> <code>tibble</code> vs <code>data.frame</code></h3></hgroup><article  id="tibbles-tibble-vs-data.frame-1" class="smaller build">
+
+<div class = 'col col-8 compact-output'>
+
+<div id="unnamed-chunk-4" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+<code>tibble</code>
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>as_tibble(iris)</pre>
+
+<pre ># A tibble: 150 x 5
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;fctr&gt;
+ 1          5.1         3.5          1.4         0.2  setosa
+ 2          4.9         3.0          1.4         0.2  setosa
+ 3          4.7         3.2          1.3         0.2  setosa
+ 4          4.6         3.1          1.5         0.2  setosa
+ 5          5.0         3.6          1.4         0.2  setosa
+ 6          5.4         3.9          1.7         0.4  setosa
+ 7          4.6         3.4          1.4         0.3  setosa
+ 8          5.0         3.4          1.5         0.2  setosa
+ 9          4.4         2.9          1.4         0.2  setosa
+10          4.9         3.1          1.5         0.1  setosa
+# ... with 140 more rows</pre></div>
+
+</div><div class = 'col col-4 bg-cobalt compact-output'>
+
+<div id="unnamed-chunk-5" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+<code>tibble</code> adjusts to width
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>as_tibble(iris)</pre>
+
+<pre ># A tibble: 150 x 5
+   Sepal.Length Sepal.Width
+          &lt;dbl&gt;       &lt;dbl&gt;
+ 1          5.1         3.5
+ 2          4.9         3.0
+ 3          4.7         3.2
+ 4          4.6         3.1
+ 5          5.0         3.6
+ 6          5.4         3.9
+ 7          4.6         3.4
+ 8          5.0         3.4
+ 9          4.4         2.9
+10          4.9         3.1
+# ... with 140 more rows, and
+#   3 more variables:
+#   Petal.Length &lt;dbl&gt;,
+#   Petal.Width &lt;dbl&gt;,
+#   Species &lt;fctr&gt;</pre></div>
+
+</div><div class = 'box col col-6 offset-3 bg-yellow'><h3>tibble printing enhancements</h3><div class = 'box-body'>
+
+<ul>
+<li>column type is visible</li>
+<li>shows only the first 10 rows</li>
+<li>shows only the columns that fit on the screen</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Create tibbles</h2></hgroup><article  id="create-tibbles" class="smaller build">
+
+<div class = 'box col col-6 bg-blue'><h3><code>tibble()</code></h3><div class = 'box-body'>
+
+<ul>
+<li>similar to <code>base::data.frame()</code> but
+
+<ul>
+<li>does not coerce characters to factors</li>
+<li>does not change column names</li>
+<li>never uses rownames</li>
+</ul></li>
+</ul>
+
+</div></div>
+
+<div id="unnamed-chunk-6" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>data.frame(`bad name` = 1:4,
+           x = rep(letters[1:2], 2)) %&gt;%
+  str()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >&#39;data.frame&#39;:   4 obs. of  2 variables:
+ $ bad.name: int  1 2 3 4
+ $ x       : Factor w/ 2 levels &quot;a&quot;,&quot;b&quot;: 1 2 1 2</pre></div></div>
+
+<div id="unnamed-chunk-7" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>tibble(`bad name` = 1:4,
+       x = rep(letters[1:2], 2)) %&gt;%
+  str()</pre></div>
+
+<div class="col col-6 r-output">
+<pre >Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   4 obs. of  2 variables:
+ $ bad name: int  1 2 3 4
+ $ x       : chr  &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot;</pre></div></div>
+
+</article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>The tidyverse packages to import your data</h2></hgroup><article  id="the-tidyverse-packages-to-import-your-data" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-blue icon'><h3>Tidyverse packages to import your data</h3><div class = 'box-body'>
+
+<img src='img/00/logo_readr.png' title='fig:'/>
+
+<p>Seven file formats are supported by the readr package:</p>
+
+<ul>
+<li><code>read_csv()</code>: comma separated (CSV) files</li>
+<li><code>read_tsv()</code>: tab separated files</li>
+<li><code>read_delim()</code>: general delimited files</li>
+<li><code>read_fwf()</code>: fixed width files</li>
+<li><code>read_table()</code>: tabular files where colums are separated by white-space.</li>
+<li><code>read_log()</code>: web log files</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-green icon'><h3>readxl</h3><div class = 'box-body'>
+
+<img src='img/00/logo_readxl.png' title='fig:'/>
+
+<p>To import excel files (<code>.xls</code> and <code>.xlsx</code>):</p>
+
+<ul>
+<li><code>read_excel()</code>
+
+<ul>
+<li><code>read_xls()</code></li>
+<li><code>read_xlsx()</code></li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-red icon stretch'><h3>haven</h3><div class = 'box-body'>
+
+<img src='img/00/logo_haven.png' title='fig:'/>
+
+<ul>
+<li><code>read_sas()</code> for SAS</li>
+<li><code>read_sav()</code> for SPSS</li>
+<li><code>read_dta()</code> for Stata</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Importing flat files</h2></hgroup><article  id="importing-flat-files" class="smaller ">
+
+</article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Reading flat files</h2></hgroup><article  id="reading-flat-files" class="smaller build ">
+
+<div id="unnamed-chunk-8">
+<style type="text/css">
+.flatfile pre {
+  background: white;
+  width: 100%;
+}
+</style></div>
+
+<div class = 'box col col-10 offset-1 bg-grayblue flatfile'><h3>Flat file example: <em>mtcars.csv</em></h3><div class = 'box-body'>
+
+<ul>
+<li>Create a new project (finding your files will be easier)</li>
+<li>Download the <a href='data/mtcars.csv' title=''><code>mtcars.csv</code></a> file to your project folder (using your favourite browser)</li>
+<li>Open the file with a text viewer and have a look at its content</li>
+</ul>
+
+<pre >&quot;mpg&quot;,&quot;cyl&quot;,&quot;disp&quot;,&quot;hp&quot;,&quot;drat&quot;,&quot;wt&quot;,&quot;qsec&quot;,&quot;vs&quot;,&quot;am&quot;,&quot;gear&quot;,&quot;carb&quot;
+21,6,160,110,3.9,2.62,16.46,0,1,4,4
+21,6,160,110,3.9,2.875,17.02,0,1,4,4
+22.8,4,108,93,3.85,2.32,18.61,1,1,4,1
+21.4,6,258,110,3.08,3.215,19.44,1,0,3,1
+18.7,8,360,175,3.15,3.44,17.02,0,0,3,2
+...</pre>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rstudio data import </h2><h3> interactive call to <code>readr</code></h3></hgroup><article  id="rstudio-data-import-interactive-call-to-readr" class="smaller ">
+
+<div id="unnamed-chunk-9">
+<style type="text/css">
+/* Center two images in boxes*/
+.center-pair p {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.center-pair p > img {
+  max-width: 45%;
+  margin: auto;
+}
+</style></div>
+
+<div class = 'box col col-8 offset-2 bg-blue center-pair'><h3>Import button</h3><div class = 'box-body'>
+
+<ul>
+<li>Use the <code>Import Dataset</code> button in the upper right panel or click on the file in the lower right panel</li>
+</ul>
+
+<p><img src='img/03/rstudio_import_option_1.jpg' title=''/> <img src='img/03/rstudio_import_option_2.jpg' title=''/></p>
+
+<ul>
+<li>Will interactively select the appropriate function</li>
+<li>Copy paste the generated command to your Rmarkdown document</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Exercise</h2></hgroup><article  id="exercise" class="smaller ">
+
+<div class = 'box col col-8 offset-2 bg-white'><h3>Import the <code>mtcars.csv</code> dataset</h3><div class = 'box-body'>
+
+<ul>
+<li>Use the interactive <code>Import Dataset</code> button to import the <code>mtcars.csv</code> file.</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Rstudio data import </h2><h3> preview window</h3></hgroup><article  id="rstudio-data-import-preview-window" class="smaller ">
+
+<div class = 'col col-10 offset-1'>
+
+<img src='img/03/rstudio_import_preview.jpg' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Reading flat files </h2><h3> comma separated values</h3></hgroup><article  id="reading-flat-files-comma-separated-values" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-blue'><h3><code>read_csv()</code></h3><div class = 'box-body'>
+
+<ul>
+<li>to import <strong>comma separated values</strong></li>
+<li>is able to read <strong>local</strong> and <strong>remote</strong> files</li>
+<li>is able to read compressed files (<code>.zip</code>, <code>.gz</code>, &#8230;)</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Reading flat files </h2><h3> comma separated values</h3></hgroup><article  id="reading-flat-files-comma-separated-values-1" class="smaller ">
+
+<div class = 'col col-10 offset-1 compact-output'>
+
+<div id="unnamed-chunk-10" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+Using <code>read_csv()</code>
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/mtcars.csv&quot;)</pre>
+
+<pre >Parsed with column specification:
+cols(
+  mpg = col_double(),
+  cyl = col_integer(),
+  disp = col_double(),
+  hp = col_integer(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_integer(),
+  am = col_integer(),
+  gear = col_integer(),
+  carb = col_integer()
+)</pre>
+
+<pre ># A tibble: 32 x 11
+     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1  21.0     6 160.0   110  3.90 2.620 16.46     0     1     4     4
+ 2  21.0     6 160.0   110  3.90 2.875 17.02     0     1     4     4
+ 3  22.8     4 108.0    93  3.85 2.320 18.61     1     1     4     1
+ 4  21.4     6 258.0   110  3.08 3.215 19.44     1     0     3     1
+ 5  18.7     8 360.0   175  3.15 3.440 17.02     0     0     3     2
+ 6  18.1     6 225.0   105  2.76 3.460 20.22     1     0     3     1
+ 7  14.3     8 360.0   245  3.21 3.570 15.84     0     0     3     4
+ 8  24.4     4 146.7    62  3.69 3.190 20.00     1     0     4     2
+ 9  22.8     4 140.8    95  3.92 3.150 22.90     1     0     4     2
+10  19.2     6 167.6   123  3.92 3.440 18.30     1     0     4     4
+# ... with 22 more rows</pre></div>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Column types</h2></hgroup><article  id="column-types" class="smaller ">
+
+<div class = 'box col col-7 bg-blue'><h3>Column types</h3><div class = 'box-body'>
+
+<ul>
+<li>are guessed from the <strong>1000</strong> first rows
+
+<ul>
+<li>adjustable <code>guess_max</code> option</li>
+</ul></li>
+<li>guessed types are displayed as a <em>message</em></li>
+<li>to hide this message:
+
+<ul>
+<li><strong>lazy method 1</strong>: set <code>message = FALSE</code> in your rmarkdown chunk option.</li>
+<li><strong>lazy method 2</strong>: set <code>col_types = cols()</code></li>
+<li>Hadley Wickham recommends to adjust the <code>col_types</code> to avoid any problem</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'col col-5 stretch'>
+
+<div id="unnamed-chunk-11" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+Message
+
+</h3>
+
+<pre >Parsed with column specification:
+cols(
+  mpg = col_double(),
+  cyl = col_integer(),
+  disp = col_double(),
+  hp = col_integer(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_integer(),
+  am = col_integer(),
+  gear = col_integer(),
+  carb = col_integer()
+)</pre></div>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Column types</h2></hgroup><article  id="column-types-2" class="smaller ">
+
+<div class = 'box col col-8 offset-2 bg-blue'><h3>The <code>col_types</code> argument</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-12" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;,
+         col_types = cols())</pre>
+
+<pre ># A tibble: 3 x 3
+   animal colour value
+    &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
+1     dog    red     1
+2     cat   blue     2
+3 chicken  green     6</pre></div>
+
+<ul>
+<li>Let&#39;s start with a <a href='data/example.csv' title=''>file</a> containing only 3 columns: <code>animal</code>, <code>colour</code> and <code>value</code></li>
+<li>Column types are specified using the <code>cols()</code> function</li>
+<li>Types can be one of <code>double</code>, <code>integer</code>, <code>character</code>, <code>logical</code>, <code>factor</code>, <code>date</code>, <code>datetime</code> or <code>time</code></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Column types</h2></hgroup><article  id="column-types-3" class="smaller ">
+
+<div id="unnamed-chunk-13">
+<style type="text/css">
+/* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
+.col-list ul {
+  overflow: hidden;
+  border-top: 1px solid #005c99;
+  padding-top: 10px;
+}
+
+.col-list li {
+  line-height: 1.1em;
+  border-bottom: 1px solid #005c99;
+  float: left;
+  display: inline;
+}
+
+.c2 li {
+  width: 50%;
+}
+
+.c3 li {
+  width: 33.333%;
+}
+
+.chunk > .r-output > pre {
+  font-size: 14px;
+}
+
+</style></div>
+
+<div class = 'box col col-6 bg-blue col-list c2'><h3>Explicit method</h3><div class = 'box-body'>
+
+<p>Using a function defining each type:</p>
+
+<ul>
+<li><code>col_double()</code></li>
+<li><code>col_integer()</code></li>
+<li><code>col_character()</code></li>
+<li><code>col_logical()</code></li>
+<li><code>col_factor()</code></li>
+<li><code>col_date()</code></li>
+<li><code>col_datetime()</code></li>
+<li><code>col_time()</code></li>
+</ul>
+
+<p>Or telling to <strong>guess</strong> or <strong>skip</strong> a column:</p>
+
+<ul>
+<li><code>col_guess()</code></li>
+<li><code>col_skip()</code></li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-green'><h3>Example</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-14" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;,
+         col_types = cols(
+           animal = col_character(),
+           colour = col_character(),
+           value = col_integer()
+         ))</pre>
+
+<pre ># A tibble: 3 x 3
+   animal colour value
+    &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
+1     dog    red     1
+2     cat   blue     2
+3 chicken  green     6</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Column types</h2></hgroup><article  id="column-types-4" class="smaller build">
+
+<div class = 'box col col-6 bg-blue col-list c2'><h3>Compact shortcuts</h3><div class = 'box-body'>
+
+<p>Using a single character to define each type:</p>
+
+<ul>
+<li><code>c</code> = character</li>
+<li><code>i</code> = integer</li>
+<li><code>n</code> = number</li>
+<li><code>d</code> = double</li>
+<li><code>l</code> = logical</li>
+<li><code>D</code> = date</li>
+<li><code>T</code> = date time</li>
+<li><code>t</code> = time</li>
+</ul>
+
+<p>Or telling to <strong>guess</strong> or <strong>skip</strong> a column:</p>
+
+<ul>
+<li><code>?</code> = guess</li>
+<li><code>_</code> or <code>-</code> = skip</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-green stretch'><h3>Example</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-15" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;,
+         col_types = cols(
+           animal = &quot;c&quot;,
+           colour = &quot;c&quot;,
+           value = &quot;i&quot;
+         ))</pre>
+
+<pre ># A tibble: 3 x 3
+   animal colour value
+    &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
+1     dog    red     1
+2     cat   blue     2
+3 chicken  green     6</pre></div>
+
+</div></div><div class = 'box col col-8 offset-2 bg-yellow'><h3>Even more compact</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-16" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;, col_types = &quot;cci&quot;)</pre></div>
+
+<ul>
+<li>Use the single character code in the order of appearance of each column</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Exercise</h2></hgroup><article  id="exercise-1" class="smaller  vs3">
+
+<div id="unnamed-chunk-17">
+</div>
+
+<div class = 'box col col-10 offset-1 bg-white'><h3>Override the detected column types</h3><div class = 'box-body'>
+
+<ul>
+<li>import the <code>example.csv</code> file <strong>but</strong>
+
+<ul>
+<li><strong>skip</strong> the <code>colour</code> column</li>
+<li>read in the <code>value</code> column as <strong>double</strong></li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Exercise</h2></hgroup><article  id="exercise-2" class="smaller ">
+
+<div class = 'col col-12'>
+
+<div id="unnamed-chunk-18" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+Answer
+
+</h3>
+
+<div class="col col-9 r-source">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;, col_types = cols(animal = col_character(),
+                                              colour = col_skip(),
+                                              value = col_double()))</pre></div>
+
+<div class="col col-3 r-output">
+<pre ># A tibble: 3 x 2
+   animal value
+    &lt;chr&gt; &lt;dbl&gt;
+1     dog     1
+2     cat     2
+3 chicken     6</pre></div>
+
+<div class="col col-9 r-source">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;, col_types = cols(animal = &quot;c&quot;,
+                                              colour = &quot;_&quot;,
+                                              value = &quot;d&quot;))</pre></div>
+
+<div class="col col-3 r-output">
+<pre ># A tibble: 3 x 2
+   animal value
+    &lt;chr&gt; &lt;dbl&gt;
+1     dog     1
+2     cat     2
+3 chicken     6</pre></div>
+
+<div class="col col-9 r-source">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;, col_types = &quot;c_d&quot;)</pre></div>
+
+<div class="col col-3 r-output">
+<pre ># A tibble: 3 x 2
+   animal value
+    &lt;chr&gt; &lt;dbl&gt;
+1     dog     1
+2     cat     2
+3 chicken     6</pre></div></div>
+
+</div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Column names</h2></hgroup><article  id="column-names" class="smaller compact-output">
+
+<div class = 'box col col-6 bg-blue'><h3>The <code>col_names</code> argument</h3><div class = 'box-body'>
+
+<ul>
+<li>can be either <code>TRUE</code>, <code>FALSE</code> or a character vector.</li>
+<li>default value is <code>TRUE</code></li>
+<li>if <code>TRUE</code>, the first row will be used as column names</li>
+<li>if <code>FALSE</code>, names are generated (X1, X2, X3, &#8230;)</li>
+<li>if it is a character vector, it will define the column names</li>
+</ul>
+
+</div></div><div class = 'box col col-6 bg-green'><h3>Example</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-19" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;,
+         col_names = TRUE)</pre>
+
+<pre ># A tibble: 3 x 3
+   animal colour value
+    &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
+1     dog    red     1
+2     cat   blue     2
+3 chicken  green     6</pre>
+
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;,
+         col_names = FALSE)</pre>
+
+<pre ># A tibble: 4 x 3
+       X1     X2    X3
+    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;
+1  animal colour value
+2     dog    red     1
+3     cat   blue     2
+4 chicken  green     6</pre>
+
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;,
+         col_names = c(&quot;name&quot;, &quot;colname&quot;, &quot;number&quot;))</pre>
+
+<pre ># A tibble: 4 x 3
+     name colname number
+    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;
+1  animal  colour  value
+2     dog     red      1
+3     cat    blue      2
+4 chicken   green      6</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Column names</h2></hgroup><article  id="column-names-1" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-yellow icon-small'><h3>Hint</h3><div class = 'box-body'>
+
+<img src='img/00/tip.png' title='fig:'/>
+
+<ul>
+<li><code>col_names</code> is handy if they are no column names in the file</li>
+<li>If you would like to rename columns, use <code>dplyr::rename()</code> (see upcoming <code>dplyr</code> lecture).</li>
+</ul>
+
+<div id="unnamed-chunk-20" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;,
+         col_names = c(&quot;name&quot;, &quot;colname&quot;, &quot;number&quot;))</pre>
+
+<pre ># A tibble: 4 x 3
+     name colname number
+    &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;
+1  animal  colour  value
+2     dog     red      1
+3     cat    blue      2
+4 chicken   green      6</pre>
+
+<pre class = 'prettyprint lang-r'>read_csv(&quot;data/example.csv&quot;, col_names = TRUE) %&gt;%
+  rename(name = animal,
+         colname = colour,
+         number = value)</pre>
+
+<pre ># A tibble: 3 x 3
+     name colname number
+    &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt;
+1     dog     red      1
+2     cat    blue      2
+3 chicken   green      6</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Skipping lines</h2></hgroup><article  id="skipping-lines" class="smaller compact-output">
+
+<div id="unnamed-chunk-21">
+<style type="text/css">
+#skip_example > .r-source:not(:nth-last-child(2)), #skip_example > .r-output:not(:nth-last-child(1)) {
+  border-bottom: 2px solid #002240;
+  padding-bottom: 10px;
+}
+</style></div>
+
+<div class = 'box col col-4 offset-1 bg-blue'><h3><code>skip</code> argument</h3><div class = 'box-body'>
+
+<p>To skip the first <em>n</em> rows</p>
+
+</div></div><div class = 'box col col-4 offset-2 bg-red'><h3><code>n_max</code> argument</h3><div class = 'box-body'>
+
+<p>To stop reading after <em>n</em> rows</p>
+
+</div></div><div class = 'box col col-6 offset-3 bg-yellow icon-small'><h3>Hint</h3><div class = 'box-body'>
+
+<img src='img/00/tip.png' title='fig:'/>
+
+<p>You might want to adjust <code>col_names</code> to get what you want</p>
+
+</div></div>
+
+<div id="skip_example" class="col col-12 box chunk bg-cobalt">
+<div class="col col-4 r-source">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(skip = 3,
+           n_max = 3,
+           col_names = FALSE)</pre></div>
+
+<div class="col col-8 r-output">
+<pre ># A tibble: 3 x 11
+     X1    X2    X3    X4    X5    X6    X7    X8    X9   X10   X11
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+2  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+3  18.7     8   360   175  3.15 3.440 17.02     0     0     3     2</pre></div>
+
+<div class="col col-4 r-source">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(skip = 3, n_max = 3,
+           col_names = c(&quot;mpg&quot;, &quot;cyl&quot;, &quot;disp&quot;, &quot;hp&quot;, &quot;drat&quot;, &quot;wt&quot;, &quot;qsec&quot;, &quot;vs&quot;, &quot;am&quot;, &quot;gear&quot;, &quot;carb&quot;))</pre></div>
+
+<div class="col col-8 r-output">
+<pre ># A tibble: 3 x 11
+    mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+2  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+3  18.7     8   360   175  3.15 3.440 17.02     0     0     3     2</pre></div></div>
+
+</article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>readr</code> functions</h2></hgroup><article  id="readr-functions" class="smaller build">
+
+<div class = 'box col col-4 bg-gray'><h3><code>read_csv()</code></h3><div class = 'box-body'>
+
+<ul>
+<li><strong>Comma</strong> delimited files</li>
+</ul>
+
+<img src='img/03/readr_read_csv.png' title='fig:'/>
+
+</div></div><div class = 'box col col-4 bg-gray'><h3><code>read_csv2()</code></h3><div class = 'box-body'>
+
+<ul>
+<li><strong>Semi-colon</strong> delimited files</li>
+</ul>
+
+<img src='img/03/readr_read_csv2.png' title='fig:'/>
+
+</div></div><div class = 'box col col-4 bg-gray'><h3><code>read_tsv()</code></h3><div class = 'box-body'>
+
+<ul>
+<li><strong>tab</strong> delimited files</li>
+</ul>
+
+<img src='img/03/readr_read_fwf_tsv.png' title='fig:'/>
+
+</div></div><div class = 'box col col-6 offset-1 bg-gray vs2'><h3><code>read_delim()</code></h3><div class = 'box-body'>
+
+<ul>
+<li><strong>any delimiter</strong>:</li>
+</ul>
+
+<img src='img/03/readr_read_delim.png' title='fig:'/>
+
+<div id="unnamed-chunk-22" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>read_delim(file, delim = &quot;|&quot;, ...)</pre></div>
+
+</div></div><div class = 'box col col-4 bg-gray vs2 stretch'><h3><code>read_fwf()</code></h3><div class = 'box-body'>
+
+<ul>
+<li><strong>fixed width</strong> files</li>
+</ul>
+
+<img src='img/03/readr_read_fwf_tsv.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Wrap up</h2></hgroup><article  id="wrap-up-1" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-red icon'><h3>You learned to:</h3><div class = 'box-body'>
+
+<img src='img/00/kt.png' title='fig:'/>
+
+<ul>
+<li>appreciate the tibble printing features
+
+<ul>
+<li><strong>column types</strong> are displayed</li>
+</ul></li>
+<li>use <code>readr</code> to import your flat file data into <em>R</em>
+
+<ul>
+<li>using the command line</li>
+<li>using the interactive RStudio interface</li>
+</ul></li>
+<li>adjust the imported data types</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Before we stop</h2></hgroup><article  id="before-we-stop" class="smaller ">
+
+<div class = 'box col col-8 offset-2 bg-blue icon'><h3>Further reading</h3><div class = 'box-body'>
+
+<img src='img/00/book.png' title='fig:'/>
+
+<ul>
+<li><a href='http://r4ds.had.co.nz/data-import.html' title=''>R for Data Science</a></li>
+<li><a href='http://readr.tidyverse.org/' title=''>http://readr.tidyverse.org/</a>
+
+<ul>
+<li><code>vignette(&quot;readr&quot;)</code></li>
+</ul></li>
+<li><a href='https://www.datacamp.com/courses/importing-data-in-r-part-1' title=''>Datacamp course</a></li>
+</ul>
+
+</div></div><div class = 'box col col-8 offset-2 vs1 bg-yellow'><h3>Acknowledgments</h3><div class = 'box-body'>
+
+<ul>
+<li>Hadley Wickham</li>
+</ul></article><div class = "footer"><img src="lecture03_rmd_readr_files/logo.png"><a href='index.html'>biostat2</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

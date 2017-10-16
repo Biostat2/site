@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tidyverse</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+  <meta name="date" content="2017-09-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Tidyverse',
+                        subtitle: 'tidy data',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture02_tidyverse_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Aurélien Ginolhac, Eric Koncina, Roland Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  /* bg-orange colour */
+  
+  .bg-orange {
+    background-color: #FF8C00;
+    color: #000000;
+  }
+  
+  .bg-orange a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-orange a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-orange {
+    border: 2px solid #7F4600;
+  }
+  
+  .box.bg-orange > h3:first-child {
+    background-color: #7F4600;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-orange::before {
+    color : #7F4600;
+  }
+   
+  blockquote.bg-orange {
+    color: #000000;
+    border-color: #7F4600;
+  }
+  
+  .box.bg-orange > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-orange > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-orange > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-orange > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-orange > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-orange code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-slate colour */
+  
+  .bg-slate {
+    background-color: #7A67EE;
+    color: #FFFFFF;
+  }
+  
+  .bg-slate a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-slate a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-slate {
+    border: 2px solid #3D3377;
+  }
+  
+  .box.bg-slate > h3:first-child {
+    background-color: #3D3377;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-slate::before {
+    color : #3D3377;
+  }
+   
+  blockquote.bg-slate {
+    color: #FFFFFF;
+    border-color: #3D3377;
+  }
+  
+  .box.bg-slate > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-slate > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-slate > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-slate > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-slate > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-slate code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  /* bg-yellow colour */
+  
+  .bg-yellow {
+    background-color: #FFFF00;
+    color: #000000;
+  }
+  
+  .bg-yellow a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow {
+    border: 2px solid #EEC900;
+  }
+  
+  .box.bg-yellow > h3:first-child {
+    background-color: #EEC900;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow::before {
+    color : #EEC900;
+  }
+   
+  blockquote.bg-yellow {
+    color: #000000;
+    border-color: #EEC900;
+  }
+  
+  .box.bg-yellow > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-grgold colour */
+  
+  .bg-grgold {
+    background-color: #008B45;
+    color: #FFFFFF;
+  }
+  
+  .bg-grgold a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-grgold a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-grgold {
+    border: 2px solid #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child {
+    background-color: #004522;
+    color: #FFD700;
+  }
+                          
+  blockquote.bg-grgold::before {
+    color : #004522;
+  }
+   
+  blockquote.bg-grgold {
+    color: #FFFFFF;
+    border-color: #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-grgold > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-grgold > h3:first-child > a:hover {
+    color: #FFD700 !important;
+  }
+    
+  slide.bg-grgold > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-grgold > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-grgold code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  /* bg-darkorange colour */
+  
+  .bg-darkorange {
+    background-color: #FF8C00;
+    color: #000000;
+  }
+  
+  .bg-darkorange a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-darkorange a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-darkorange {
+    border: 2px solid #7F4600;
+  }
+  
+  .box.bg-darkorange > h3:first-child {
+    background-color: #7F4600;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-darkorange::before {
+    color : #7F4600;
+  }
+   
+  blockquote.bg-darkorange {
+    color: #000000;
+    border-color: #7F4600;
+  }
+  
+  .box.bg-darkorange > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-darkorange > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-darkorange > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-darkorange > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-darkorange > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-darkorange code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-red colour */
+  
+  .bg-red {
+    background-color: #FFAD99;
+    color: #000000;
+  }
+  
+  .bg-red a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-red a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-red {
+    border: 2px solid #991F00;
+  }
+  
+  .box.bg-red > h3:first-child {
+    background-color: #991F00;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-red::before {
+    color : #991F00;
+  }
+   
+  blockquote.bg-red {
+    color: #000000;
+    border-color: #991F00;
+  }
+  
+  .box.bg-red > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-red > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-red > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-red > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-red > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-red code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-green colour */
+  
+  .bg-green {
+    background-color: #ADEBAD;
+    color: #000000;
+  }
+  
+  .bg-green a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-green a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-green {
+    border: 2px solid #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child {
+    background-color: #1F7A1F;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-green::before {
+    color : #1F7A1F;
+  }
+   
+  blockquote.bg-green {
+    color: #000000;
+    border-color: #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-green > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-green > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-green > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-green > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-green code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-blue colour */
+  
+  .bg-blue {
+    background-color: #99D6FF;
+    color: #000000;
+  }
+  
+  .bg-blue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-blue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-blue {
+    border: 2px solid #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child {
+    background-color: #005C99;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-blue::before {
+    color : #005C99;
+  }
+   
+  blockquote.bg-blue {
+    color: #000000;
+    border-color: #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-blue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-blue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-blue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-blue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-blue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-gray colour */
+  
+  .bg-gray {
+    background-color: #FAFAFA;
+    color: #000000;
+  }
+  
+  .bg-gray a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-gray a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-gray {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-gray::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-gray {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-gray > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-gray > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-gray > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-gray > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-gray code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-white colour */
+  
+  .bg-white {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  
+  .bg-white a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-white a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-white {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-white::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-white {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-white > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-white > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-white > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-white > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-white code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-cobalt colour */
+  
+  .bg-cobalt {
+    background-color: #2B557A;
+    color: #FFFFFF;
+  }
+  
+  .bg-cobalt a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-cobalt a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-cobalt {
+    border: 2px solid #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child {
+    background-color: #002240;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-cobalt::before {
+    color : #002240;
+  }
+   
+  blockquote.bg-cobalt {
+    color: #FFFFFF;
+    border-color: #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-cobalt > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-cobalt > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-cobalt code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture02_tidyverse_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">25 September 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> workflow</h3></hgroup><article  id="tidyverse-workflow" class="smaller ">
+
+<div class = 'col col-9'><h3>Pipeline</h3>
+
+<img src='img/01/drob_r_pipeline_600.png' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> packages in processes</h3></hgroup><article  id="tidyverse-packages-in-processes" class="smaller ">
+
+<img src='img/01/tidyverse_data_science.png' title='fig:'/>
+
+<div class = 'offset-2 box col col-10'><h3>website: <a href='https://www.tidyverse.org/' title=''>https://www.tidyverse.org/</a></h3><div class = 'box-body'>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse components </h2><h3> core / extended</h3></hgroup><article  id="tidyverse-components-core-extended" class="smaller nvs1">
+
+<div class = 'box col col-6 bg-green'><h3>Core</h3><div class = 'box-body'>
+
+<ul>
+<li><code>ggplot2</code>, for data visualization</li>
+<li><code>dplyr</code>, for data manipulation</li>
+<li><code>tidyr</code>, for data tidying</li>
+<li><code>readr</code>, for data import</li>
+<li><code>purrr</code>, for functional programming</li>
+<li><code>tibble</code>, for tibbles, a modern re-imagining of data frames</li>
+</ul>
+
+<p><span class="small">
+ source: <a href='http://tidyverse.tidyverse.org/' title=''>http://tidyverse.tidyverse.org/</a>. H.Wickham</span></p>
+
+</div></div><div class = 'box col col-6 bg-yellow'><h3>Extended</h3><div class = 'box-body'>
+
+<ul>
+<li>Working with specific types of vectors:
+
+<ul>
+<li><code>hms</code>, for times</li>
+<li><code>stringr</code>, for strings</li>
+<li><code>lubridate</code>, for date/times</li>
+<li><code>forcats</code>, for factors</li>
+</ul></li>
+<li>Importing other types of data:
+
+<ul>
+<li><code>feather</code>, for sharing data</li>
+<li><code>haven</code>, for SPSS, SAS and Stata files</li>
+<li><code>httr</code>, for web apis</li>
+<li><code>jsonlite</code> for JSON</li>
+<li><code>readxl</code>, for <code>.xls</code> and <code>.xlsx</code> files</li>
+<li><code>rvest</code>, for web scraping</li>
+<li><code>xml2</code>, for XML files</li>
+</ul></li>
+<li>Modelling
+
+<ul>
+<li><code>modelr</code>, for modelling within a pipeline</li>
+<li><code>broom</code>, for models -&gt; tidy data</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse criticism </h2><h3> dialect</h3></hgroup><article  id="tidyverse-criticism-dialect" class="smaller vs3">
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+<a href="https://twitter.com/ucfagls"><span class="cite">@ucfagls</span></a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick
+
+</p>
+
+— Hadley Wickham (<span class="cite">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a>
+
+</blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse criticism </h2><h3> controversy</h3></hgroup><article  id="tidyverse-criticism-controversy" class="smaller vs2">
+
+<ul>
+<li><a href='http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr' title=''>In StackOverflow&#39;s comment</a></li>
+</ul>
+
+<img src='img/02/tidyverse_contreversy.png' title='fig:'/>
+
+<ul>
+<li>See the popularity of the <a href='http://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly' title=''>data.table versus dplyr</a> question.</li>
+</ul>
+
+<div class = 'offset-2 box col col-8 bg-yellow'><h3>Easily summarized</h3><div class = 'box-body'>
+
+<p><a href='https://github.com/Rdatatable/data.table/wiki' title=''><code>data.table</code></a> is faster, for less than 10 m rows, negligible.</p>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse criticism </h2><h3> jobs</h3></hgroup><article  id="tidyverse-criticism-jobs" class="smaller vs2">
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for job which requires knowledge of R.
+
+</p>
+
+— Yeedle N. (<span class="cite">@Yeedle</span>) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a>
+
+</blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<div class = 'box col col-12 bg-orange build'><h3>Personal complains</h3><div class = 'box-body'>
+
+<ul>
+<li>still young so change quickly and drastically. Backward compatibility is not always maintained.</li>
+<li><code>tibbles</code> are nice but a lot of non-tidyverse packages require <code>matrices</code>. <code>rownames</code> still an issue.</li>
+</ul>
+
+<p>Anyway, learning the <em>tidyverse</em> does not prevent to learn <em>R base</em>, it helps to get things done early in the process</p>
+
+</div></div>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends" class="smaller ">
+
+<img src='img/02/r_documentation_trends_20170418.png' title='fig:'/>
+
+<div class = 'offset-4 col col-6'>
+
+<p><span class="small">
+source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
+
+</div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends-1" class="smaller ">
+
+<img src='img/02/r_documentation_trends_20170418_tv.png' title='fig:'/>
+
+<div class = 'col col-6 offset-4'>
+
+<p><span class="small">
+source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
+
+</div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>The dream team</h2></hgroup><article  id="the-dream-team" class="smaller ">
+
+<img src='img/02/r_community_rstudio.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Pipes with magrittr </h2><h3> developed by Stefan Milton Bache</h3></hgroup><article  id="pipes-with-magrittr-developed-by-stefan-milton-bache" class="smaller ">
+
+<div class = 'icon col col-6 offset-3'><h3>compare the approaches</h3>
+
+<img src='img/00/magrittr.png' title='fig:'/>
+
+<ul>
+<li>classic parenthesis</li>
+<li><a href='https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html' title=''>magrittr</a> pipeline</li>
+</ul>
+
+</div><div class = 'bg-yellow box col col-6'><h3>R base</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-1" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>set.seed(12)
+round(mean(rnorm(5)), 2)</pre>
+
+<pre >[1] -0.76</pre></div>
+
+</div></div><div class = 'bg-green box col col-6'><h3>magrittr</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-2" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>set.seed(12)
+rnorm(5) %&gt;%
+  mean() %&gt;%
+  round(2)</pre>
+
+<pre >[1] -0.76</pre></div>
+
+<p>Of note, <code>magrittr</code> needs to loaded with either:</p>
+
+<div id="unnamed-chunk-3" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>library(magrittr)
+library(dplyr)
+library(tidyverse)</pre></div>
+
+</div></div>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Règles de la tuyauterie </h2><h3> Bob Rudis (hrbrmstr)</h3></hgroup><article  id="regles-de-la-tuyauterie-bob-rudis-hrbrmstr" class="smaller ">
+
+<img src='img/02/rudis_pipe_rules.png' title='fig:'/>
+
+<p><span class="small">
+<a href='https://www.rstudio.com/resources/videos/writing-readable-code-with-pipes/' title=''>source from studio::conf17</a></span></p>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>tidy data</h2></hgroup><article  id="tidy-data" class="smaller ">
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
+
+<div class = 'box col col-8 offset-2 bg-green'><h3>Definitions</h3><div class = 'box-body'>
+
+<ul>
+<li>Principles of <em>tidy data</em></li>
+<li>Find errors in existing datasets</li>
+<li>Structure data in rectangle</li>
+</ul>
+
+</div></div><div class = 'box col col-8 offset-2 bg-blue build'><h3>Comments</h3><div class = 'box-body'>
+
+<ul>
+<li>Cleaning data also requires the package <code>dplyr</code></li>
+<li><code>tidyr</code> and <code>dplyr</code> are intertwined</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Basic: everything in the data rectangle </h2><h3> with header</h3></hgroup><article  id="basic-everything-in-the-data-rectangle-with-header" class="smaller ">
+
+<p><img src='img/02/data_rectangle.png' title=''/> <span class="small">
+<a href='https://speakerdeck.com/jennybc/data-rectangling' title=''>Jenny Bryan</a> in Jeff Leek <a href='https://simplystatistics.org/2017/05/24/toward-tidy-analysis/' title=''>blog post</a></span></p>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rationale</h2></hgroup><article  id="rationale" class="smaller vs3">
+
+<img src='img/02/tidy_dataset.png' title='fig:'/>
+
+<blockquote>
+<p>All happy families are alike; each unhappy family is unhappy in its own way. <cite> Leo Tolstoy, Anna Karenina</p></cite>
+</blockquote>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Semantics</h2></hgroup><article  id="semantics" class="smaller vs2">
+
+<div class = 'box col col-8 offset-2 bg-blue'><h3>Definitions</h3><div class = 'box-body'>
+
+<ul>
+<li><strong>Variable</strong>: A quantity, quality, or property that you can measure.</li>
+<li><strong>Observation</strong>: A set of values that display the relationship between variables. To be an observation, values need to be measured under similar conditions, usually measured on the same observational unit at the same time.</li>
+<li><strong>Value</strong>: The state of a variable that you observe when you measure it.</li>
+</ul>
+
+<p><span class="small">
+<a href='http://garrettgman.github.io/tidying/' title=''>source: Garret Grolemund</a> and <code>vignette(&quot;tidy-data&quot;)</code></span></p>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Definition</h2></hgroup><article  id="definition" class="smaller vs2">
+
+<div class = 'col col-8 offset-2 box bg-yellow'><h3>Tidy data</h3><div class = 'box-body'>
+
+<ol>
+<li>Each variable is in its own column</li>
+<li>Each observation is in its own row</li>
+<li>Each value is in its own cell</li>
+</ol>
+
+<img src='img/02/tidy_data.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Bad data exercise </h2><h3> online</h3></hgroup><article  id="bad-data-exercise-online" class="smaller ">
+
+<div class = 'col col-12 box bg-blue icon'><div class = 'box-body'>
+
+<img src='img/02/excel_icon.png' title='fig:'/>
+
+<ul>
+<li>The following table lists missense variants in a gene in a group of patients</li>
+<li>What&#39;s wrong with <a href='https://cdn.rawgit.com/LSRU/tv_course/15c83c5e/lectures/data/badtable.xlsx' title=''>this Excel</a> sheet?</li>
+<li>Which problems are <em>tidy</em> issues</li>
+</ul>
+
+</div></div>
+
+<img src='img/02/tidy_excelbad.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-3" class="smaller ">
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Tidy error</th>
+<th align="left">Tidy violation</th>
+<th align="left">Comment</th>
+</tr>
+<tr class="odd">
+<td align="left">Patient names</td>
+<td align="left">No</td>
+<td align="left">Data protection violation</td>
+</tr>
+<tr class="even">
+<td align="left">Identical column names</td>
+<td align="left"><strong>Yes</strong></td>
+<td align="left">Variable error</td>
+</tr>
+<tr class="odd">
+<td align="left">Inconsistent variables names</td>
+<td align="left">No</td>
+<td align="left">Bad practice</td>
+</tr>
+<tr class="even">
+<td align="left">Non-English columns names</td>
+<td align="left">No</td>
+<td align="left">Bad practice</td>
+</tr>
+<tr class="odd">
+<td align="left">Color coding</td>
+<td align="left">No</td>
+<td align="left">The horror, the horror</td>
+</tr>
+<tr class="even">
+<td align="left">Inconsistent dates</td>
+<td align="left">No</td>
+<td align="left">Use ISO8601</td>
+</tr>
+<tr class="odd">
+<td align="left">Multiple columns for one item</td>
+<td align="left"><strong>Yes</strong></td>
+<td align="left">One observation per line</td>
+</tr>
+<tr class="even">
+<td align="left">Redundant information</td>
+<td align="left"><strong>Yes</strong></td>
+<td align="left">Each variable is in its own column</td>
+</tr>
+<tr class="odd">
+<td align="left">Repeated rows</td>
+<td align="left"><strong>Yes</strong></td>
+<td align="left">Each observation is in its own row</td>
+</tr>
+<tr class="even">
+<td align="left">Uncoded syndromes</td>
+<td align="left"><strong>Yes</strong>/No</td>
+<td align="left">Each value in its own cell</td>
+</tr>
+<tr class="odd">
+<td align="left">Unnecessary information</td>
+<td align="left">No</td>
+<td align="left">like <em>birthdate</em>, <em>comments</em>: bad practice</td>
+</tr>
+<tr class="even">
+<td align="left">Name of the table</td>
+<td align="left">No</td>
+<td align="left">You&#39;ll see this often</td>
+</tr>
+</table>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>Data cleaning exercise </h2><h3> offline</h3></hgroup><article  id="data-cleaning-exercise-offline" class="smaller vs2 ">
+
+<div class = 'box col col-8 offset-2 bg-blue icon'><h3>Clean the &quot;bad table&quot;</h3><div class = 'box-body'>
+
+<ul>
+<li>Bring data into shape such that it conforms to tidy data requirements</li>
+<li>Pay attention to details of format, less to actual data</li>
+<li>Do not use <strong>R</strong> for doing the manipulations</li>
+</ul>
+
+</div></div>
+
+<p>10 min, discuss</p>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Common tidy data violations</h2></hgroup><article  id="common-tidy-data-violations" class="smaller vs3">
+
+<div class = 'box col col-10 bg-grgold build offset-1'><h3>Problems</h3><div class = 'box-body'>
+
+<ul>
+<li>Column headers are values, not variable names (<code>gather</code>)</li>
+<li>Multiple variables stored in one column (<code>separate</code>)</li>
+<li>Variables are stored in both rows and columns (<code>gather</code>-<code>spread</code>)</li>
+<li>Repeated observations (<code>nest</code> or table)</li>
+<li>Multiple types in one table (<code>dplyr</code> data transformation)</li>
+<li>One type in multiple tables (<code>dplyr</code>, combine into single table)</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>tidyr, introduction </h2><h3> <a href='https://www.rstudio.com/resources/cheatsheets/' title=''>cheatsheet</a></h3></hgroup><article  id="tidyr-introduction-cheatsheet" class="smaller ">
+
+<img src='img/02/tidyr_cheatsheet.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Convert long / wide format</h2></hgroup><article  id="convert-long-wide-format" class="smaller vs3">
+
+<p>The wide format is generally <strong>untidy</strong> <em>but</em> found in the majority of datasets</p>
+
+<div class = 'col col-6'><h3>gather</h3>
+
+<img src='img/02/tidy_gather_600.png' title='fig:'/>
+
+</div><div class = 'col col-6'><h3>spread</h3>
+
+<img src='img/02/tidy_spread_600.png' title='fig:'/>
+
+</div>
+
+<p>the <strong>wide</strong> format makes computation on columns sometimes easier</p>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Demo with the iris dataset </h2><h3> gather</h3></hgroup><article  id="demo-with-the-iris-dataset-gather" class="smaller ">
+
+<div id="unnamed-chunk-4" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>head(iris, 3)</pre>
+
+<pre >  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa</pre></div>
+
+<div id="unnamed-chunk-5" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>library(&quot;tidyverse&quot;)
+iris_melt &lt;- iris %&gt;%
+  rownames_to_column(var = &quot;number&quot;) %&gt;%
+  as_tibble() %&gt;%
+  gather(flower, measure, contains(&quot;al&quot;))
+iris_melt</pre>
+
+<pre ># A tibble: 600 x 4
+   number Species       flower measure
+    &lt;chr&gt;  &lt;fctr&gt;        &lt;chr&gt;   &lt;dbl&gt;
+ 1      1  setosa Sepal.Length     5.1
+ 2      2  setosa Sepal.Length     4.9
+ 3      3  setosa Sepal.Length     4.7
+ 4      4  setosa Sepal.Length     4.6
+ 5      5  setosa Sepal.Length     5.0
+ 6      6  setosa Sepal.Length     5.4
+ 7      7  setosa Sepal.Length     4.6
+ 8      8  setosa Sepal.Length     5.0
+ 9      9  setosa Sepal.Length     4.4
+10     10  setosa Sepal.Length     4.9
+# ... with 590 more rows</pre></div>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Demo with the iris dataset </h2><h3> spread</h3></hgroup><article  id="demo-with-the-iris-dataset-spread" class="smaller vs2">
+
+<div id="unnamed-chunk-6" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>iris_melt %&gt;%
+  spread(flower, measure)</pre>
+
+<pre ># A tibble: 150 x 6
+   number    Species Petal.Length Petal.Width Sepal.Length Sepal.Width
+ *  &lt;chr&gt;     &lt;fctr&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+ 1      1     setosa          1.4         0.2          5.1         3.5
+ 2     10     setosa          1.5         0.1          4.9         3.1
+ 3    100 versicolor          4.1         1.3          5.7         2.8
+ 4    101  virginica          6.0         2.5          6.3         3.3
+ 5    102  virginica          5.1         1.9          5.8         2.7
+ 6    103  virginica          5.9         2.1          7.1         3.0
+ 7    104  virginica          5.6         1.8          6.3         2.9
+ 8    105  virginica          5.8         2.2          6.5         3.0
+ 9    106  virginica          6.6         2.1          7.6         3.0
+10    107  virginica          4.5         1.7          4.9         2.5
+# ... with 140 more rows</pre></div>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Why tidy is useful?</h2></hgroup><article  id="why-tidy-is-useful" class="smaller ">
+
+<div id="unnamed-chunk-7" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>iris %&gt;%
+  gather(flower, measure, 1:4) %&gt;%
+  ggplot() +
+  geom_boxplot(aes(x = Species, y = measure, fill = flower))</pre>
+
+<p><img src="lecture02_tidyverse_files/figure-html/unnamed-chunk-7-1.png" width="50%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>separate / unite</h2></hgroup><article  id="separate-unite" class="smaller ">
+
+<div id="unnamed-chunk-8" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>demo_tibble &lt;- tibble(year  = c(2015, 2014, 2014),
+                      month = c(11L, 2L, 4L),    # create a vector of integers
+                      day   = c(23, 1, 30),      # default is double
+                      value = c(&quot;high&quot;, &quot;low&quot;, &quot;low&quot;))
+demo_tibble</pre>
+
+<pre ># A tibble: 3 x 4
+   year month   day value
+  &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;
+1  2015    11    23  high
+2  2014     2     1   low
+3  2014     4    30   low</pre></div>
+
+<div class = 'col col-6 build'><h3>unite</h3>
+
+<div id="unnamed-chunk-9" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>demo_tibble %&gt;%
+  unite(date, c(year, month, day), sep = &quot;-&quot;) -&gt; demo_tibble_unite
+demo_tibble_unite</pre>
+
+<pre ># A tibble: 3 x 2
+        date value
+*      &lt;chr&gt; &lt;chr&gt;
+1 2015-11-23  high
+2   2014-2-1   low
+3  2014-4-30   low</pre></div>
+
+</div><div class = 'col col-6 build'><h3>separate</h3>
+
+<p>use <strong>quotes</strong> since we are not refering to objects</p>
+
+<div id="unnamed-chunk-10" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>demo_tibble_unite %&gt;%
+  separate(date, c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))</pre>
+
+<pre ># A tibble: 3 x 4
+   year month   day value
+* &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1  2015    11    23  high
+2  2014     2     1   low
+3  2014     4    30   low</pre></div>
+
+</div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Basic data cleaning</h2></hgroup><article  id="basic-data-cleaning" class="smaller ">
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Separate rows </h2><h3> from ugly tables</h3></hgroup><article  id="separate-rows-from-ugly-tables" class="smaller build">
+
+<div class = 'box col col-6 bg-grgold stretch'><h3>Multiple values per cell</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-11" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>patient_df &lt;- tibble(
+    subject_id = 1001:1003, 
+    visit_id = c(&quot;1,2,3&quot;, &quot;1,2&quot;, &quot;1&quot;),
+    measured = c(&quot;9,0, 11&quot;, &quot;11, 3&quot; , &quot;12&quot;)  )
+patient_df</pre>
+
+<pre ># A tibble: 3 x 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;chr&gt;    &lt;chr&gt;
+1       1001    1,2,3  9,0, 11
+2       1002      1,2    11, 3
+3       1003        1       12</pre></div>
+
+<p>Note the incoherent white space</p>
+
+</div></div><div class = 'box col col-6 bg-blue stretch'><h3>Combinations of variables</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-12" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>separate_rows(patient_df,
+              visit_id, measured,
+              convert = TRUE) # chr -&gt; int</pre>
+
+<pre ># A tibble: 6 x 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1003        1       12</pre></div>
+
+</div></div><div class = 'box col col-6 bg-yellow stretch'><h3>Comment</h3><div class = 'box-body'>
+
+<p>To split single variables use <code>separate</code></p>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>separate()</code> </h2><h3> splitting values</h3></hgroup><article  id="separate-splitting-values" class="smaller build">
+
+<div class = 'box col col-12 bg-grgold'><h3>some dummy data</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-13" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>patient &lt;- tibble(
+  subject_id = 1001:1006,
+  gender_age = paste(c(&quot;m&quot;, &quot;f&quot;), floor(runif(6, 21,65 )),
+                     sep = &quot;-&quot;))
+patient</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 6 x 2
+  subject_id gender_age
+       &lt;int&gt;      &lt;chr&gt;
+1       1001       m-38
+2       1002       f-56
+3       1003       m-37
+4       1004       f-37
+5       1005       m-32
+6       1006       f-40</pre></div></div>
+
+</div></div><div class = 'box col col-12 bg-blue'><h3>splitting by key-value pairs</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-14" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>separate(patient,
+         gender_age, c(&quot;sex&quot;, &quot;age&quot;),
+         convert = TRUE)</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 6 x 3
+  subject_id   sex   age
+*      &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+1       1001     m    38
+2       1002     f    56
+3       1003     m    37
+4       1004     f    37
+5       1005     m    32
+6       1006     f    40</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2><code>separate()</code> and <code>unite()</code> </h2><h3> exercice</h3></hgroup><article  id="separate-and-unite-exercice" class="smaller vs1 build ">
+
+<div class = 'box col col-12 bg-blue'><h3>create valid dates format YYYY-MM-DD</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-15" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>dummy &lt;- data_frame(year = c(2015, 2014, 2014),
+                    month = c(11, 2, 4),
+                    day = c(23, 1, 30),
+                    value = c(&quot;high&quot;, &quot;low&quot;, &quot;low&quot;))
+dummy</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 3 x 4
+   year month   day value
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1  2015    11    23  high
+2  2014     2     1   low
+3  2014     4    30   low</pre></div></div>
+
+</div></div><div class = 'box col col-12 bg-gray'><h3>solution <code>unite()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-16" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>dummy %&gt;%
+  unite(date,
+        year, month, day,
+        sep = &quot;-&quot;) -&gt; dummy_unite
+dummy_unite</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 3 x 2
+        date value
+*      &lt;chr&gt; &lt;chr&gt;
+1 2015-11-23  high
+2   2014-2-1   low
+3  2014-4-30   low</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2><code>separate()</code> and <code>unite()</code> </h2><h3> exercice</h3></hgroup><article  id="separate-and-unite-exercice-1" class="smaller vs1 build ">
+
+<div class = 'box col col-12 bg-blue'><h3>explod YYYY-MM-DD by the &#39;-&#39;</h3><div class = 'box-body'>
+
+</div></div><div class = 'box col col-12 bg-gray'><h3>solution <code>separate()</code></h3><div class = 'box-body'>
+
+<ul>
+<li>Use <strong>quotes</strong> since we are not refering to objects</li>
+<li>Default split on non-alphanumeric characters</li>
+</ul>
+
+<div id="unnamed-chunk-17" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>dummy_unite %&gt;%
+  separate(date, c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 3 x 4
+   year month   day value
+* &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1  2015    11    23  high
+2  2014     2     1   low
+3  2014     4    30   low</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>fill all combinations 1/3 </h2><h3> from tidyr</h3></hgroup><article  id="fill-all-combinations-13-from-tidyr" class="smaller build">
+
+<div id="unnamed-chunk-18" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>kelpdf &lt;- data.frame(
+  Year = c(1999, 2000, 2004, 1999, 2004),
+  Taxon = c(&quot;Saccharina&quot;, &quot;Saccharina&quot;, &quot;Saccharina&quot;, &quot;Agarum&quot;, &quot;Agarum&quot;),
+  Abundance = c(4, 5, 2, 1, 8)
+)
+kelpdf</pre></div>
+
+<div class="col col-4 r-output">
+<pre >  Year      Taxon Abundance
+1 1999 Saccharina         4
+2 2000 Saccharina         5
+3 2004 Saccharina         2
+4 1999     Agarum         1
+5 2004     Agarum         8</pre></div></div>
+
+<div class = 'box col col-12 bg-darkorange'><h3><em>Agarum</em> not recorded in 2000</h3><div class = 'box-body'>
+
+<p>how to fill out this missing info?</p>
+
+</div></div><div class = 'box col col-12 bg-blue'><h3>solution: <code>complete()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-19" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>complete(kelpdf,
+         Year, Taxon)</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 6 x 3
+   Year      Taxon Abundance
+  &lt;dbl&gt;     &lt;fctr&gt;     &lt;dbl&gt;
+1  1999     Agarum         1
+2  1999 Saccharina         4
+3  2000     Agarum        NA
+4  2000 Saccharina         5
+5  2004     Agarum         8
+6  2004 Saccharina         2</pre></div></div>
+
+<p><span class="small">
+example from <a href='http://www.imachordata.com/you-complete-me/' title=''>imachorda.com</a></span></p>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>fill all combinations 2/3 </h2><h3> from tidyr</h3></hgroup><article  id="fill-all-combinations-23-from-tidyr" class="smaller build">
+
+<div class = 'box col col-12 bg-yellow'><h3>Actually, <em>Agarum</em> was recorded in 2000, but <strong>absent</strong></h3><div class = 'box-body'>
+
+<p>how to fill out this info with 0s?</p>
+
+</div></div><div class = 'box col col-12 bg-blue'><h3>solution: <code>complete()</code>, option <code>fill</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-20" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>complete(kelpdf,
+         Year, Taxon,
+         fill = list(Abundance = 0))</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 6 x 3
+   Year      Taxon Abundance
+  &lt;dbl&gt;     &lt;fctr&gt;     &lt;dbl&gt;
+1  1999     Agarum         1
+2  1999 Saccharina         4
+3  2000     Agarum         0
+4  2000 Saccharina         5
+5  2004     Agarum         8
+6  2004 Saccharina         2</pre></div></div>
+
+<p><span class="small">
+example from <a href='http://www.imachordata.com/you-complete-me/' title=''>imachorda.com</a></span></p>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>fill all combinations 3/3 </h2><h3> from tidyr</h3></hgroup><article  id="fill-all-combinations-33-from-tidyr" class="smaller build">
+
+<div class = 'box col col-12 bg-yellow'><h3>Wait, what happen between 2000 and 2004?</h3><div class = 'box-body'>
+
+<p>how to fill out this info with 0s?</p>
+
+</div></div><div class = 'box col col-12 bg-blue'><h3>solution: <code>complete()</code>, option <code>fill</code> and helper <code>full_seq()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-21" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>complete(kelpdf,
+         # helper tidyr::full_seq
+         Year = full_seq(Year, period = 1),
+         Taxon,
+         fill = list(Abundance = 0))</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 12 x 3
+    Year      Taxon Abundance
+   &lt;dbl&gt;     &lt;fctr&gt;     &lt;dbl&gt;
+ 1  1999     Agarum         1
+ 2  1999 Saccharina         4
+ 3  2000     Agarum         0
+ 4  2000 Saccharina         5
+ 5  2001     Agarum         0
+ 6  2001 Saccharina         0
+ 7  2002     Agarum         0
+ 8  2002 Saccharina         0
+ 9  2003     Agarum         0
+10  2003 Saccharina         0
+11  2004     Agarum         8
+12  2004 Saccharina         2</pre></div></div>
+
+<p><span class="small">
+example from <a href='http://www.imachordata.com/you-complete-me/' title=''>imachorda.com</a></span></p>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>nesting completion </h2><h3> combinations of variables</h3></hgroup><article  id="nesting-completion-combinations-of-variables" class="smaller nvs1 build">
+
+<div class = 'box col col-12 bg-grgold'><h3>Do we have all visits per patient?</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-22" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>separate_rows(patient_df,
+              visit_id, measured,
+              convert = TRUE)</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 6 x 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1003        1       12</pre></div></div>
+
+</div></div><div class = 'box col col-12 bg-blue compact-output'><h3>solution: <code>complete()</code>, with helper <code>nesting()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-23" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>separate_rows(patient_df,
+              visit_id, measured,
+              convert = TRUE) %&gt;% 
+  complete(subject_id, 
+           nesting(visit_id)) -&gt; patient_complete
+patient_complete</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 9 x 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1002        3       NA
+7       1003        1       12
+8       1003        2       NA
+9       1003        3       NA</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>How to keep hierachical data in a rectangle? </h2><h3> nesting tables</h3></hgroup><article  id="how-to-keep-hierachical-data-in-a-rectangle-nesting-tables" class="smaller build">
+
+<div class = 'box col col-6 bg-blue'><h3>solution: <code>nest()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-24" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>patient_complete %&gt;% 
+  nest(visit_id, measured) -&gt; patient_nested
+patient_nested</pre>
+
+<pre ># A tibble: 3 x 2
+  subject_id             data
+       &lt;int&gt;           &lt;list&gt;
+1       1001 &lt;tibble [3 x 2]&gt;
+2       1002 &lt;tibble [3 x 2]&gt;
+3       1003 &lt;tibble [3 x 2]&gt;</pre></div>
+
+</div></div><div class = 'box col col-6 bg-green stretch'><h3>Advantages</h3><div class = 'box-body'>
+
+<ul>
+<li>common data structures are hierarchical, e.g. patient-centric with repeat observations</li>
+<li><strong>nesting</strong> allows to store <em>collapsed</em> tibbles and simplifies data management</li>
+<li><strong>unnesting</strong> unfold the data</li>
+</ul>
+
+</div></div><div class = 'box col col-12 bg-blue compact-output'><h3><code>unnest()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-25" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>patient_nested %&gt;% 
+  unnest()</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 9 x 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1002        3       NA
+7       1003        1       12
+8       1003        2       NA
+9       1003        3       NA</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>better described as grouped data</h2></hgroup><article  id="better-described-as-grouped-data" class="smaller vs2">
+
+<div class = 'box col col-12 bg-blue'><h3><code>group_by</code> and <code>nest()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-26" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>patient_complete %&gt;%
+  group_by(subject_id) %&gt;%
+  nest(.key = &quot;visit&quot;)</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 3 x 2
+  subject_id            visit
+       &lt;int&gt;           &lt;list&gt;
+1       1001 &lt;tibble [3 x 2]&gt;
+2       1002 &lt;tibble [3 x 2]&gt;
+3       1003 &lt;tibble [3 x 2]&gt;</pre></div></div>
+
+</div></div>
+
+<ul>
+<li>nested column (<a href='https://github.com/rstudio/cheatsheets/raw/master/old/pdfs/list-columns-cheatsheet.pdf' title=''>list-column</a>) is named <code>data</code> by default</li>
+</ul>
+
+</article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Wrap up</h2></hgroup><article  id="wrap-up" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-blue'><h3>Covered here</h3><div class = 'box-body'>
+
+<ul>
+<li>tidyverse, introduction</li>
+<li>tidy data
+
+<ul>
+<li><a href='http://tidyr.tidyverse.org/' title=''>http://tidyr.tidyverse.org/</a></li>
+<li><code>vignette(&quot;tidy-data&quot;)</code></li>
+</ul></li>
+<li><code>tidyr</code>
+
+<ul>
+<li>long / wide with <code>gather</code> / <code>spread</code></li>
+<li>data cleaning</li>
+<li>present helpers: <code>complete</code>, <code>separate_rows</code> and <code>nest()</code></li>
+</ul></li>
+<li>switch from <code>base</code> to <code>tidyverse</code>, <a href='http://www.significantdigits.org/2017/10/switching-from-base-r-to-tidyverse/' title=''>Rajesh Korde, blog&#39; post</a></li>
+</ul>
+
+</div></div><div class = 'box col col-4 offset-3 bg-grgold'><h3>Acknowledgments</h3><div class = 'box-body'>
+
+<ul>
+<li>Hadley Wickham</li>
+<li>Roland Krause</li>
+<li>Jeremy Stanley</li>
+</ul></article><div class = "footer"><img src="lecture02_tidyverse_files/logo.png"><a href='index.html'>biostat2</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Aurélien Ginolhac" />
+
+
+<title>Human Genome</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="shortcut icon" href="favicon.ico">
+<!-- <a href="http://bio.uni.lu/" target="_blank"><img class="img-responsive center-block header-image" src="LSRU_uni_extern.jpg"></a> -->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/site.css" type="text/css" />
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="img/uni-logo.png"></a><a class="navbar-brand" href="index.html"><img src="img/bs2.png"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="details.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Details
+  </a>
+</li>
+<li>
+  <a href="lectures.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+  </a>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="exam.html">Exams</a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Tips
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="schedule.html">
+    <span class="fa fa-calendar"></span>
+     
+    Schedule
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Human Genome</h1>
+<h4 class="author"><em>Aurélien Ginolhac</em></h4>
+<h4 class="date"><em>project 2017</em></h4>
+
+</div>
+
+
+<div id="human-genes-analysis" class="section level2">
+<h2>Human genes analysis</h2>
+<blockquote>
+<p>Parse <a href="http://www.gencodegenes.org/">GENCODE</a> data to summarise some key features of the human genome</p>
+</blockquote>
+<div id="download-data-set-up" class="section level3">
+<h3>Download data, set-up</h3>
+<p>Go on the <a href="http://www.gencodegenes.org/releases/current.html">latest release</a> of <strong>GENCODE</strong> .</p>
+<p>Download the <strong>Comprehensive gene annotation</strong> as <em>Content</em> and <strong>CHR</strong> as <em>Regions</em>. Of note, between <code>GTF</code> and <code>GFF3</code> formats, pick the <strong><code>GFF3</code></strong> one.</p>
+<ul>
+<li>install the bioconductor package <a href="http://bioconductor.org/packages/release/bioc/html/rtracklayer.html"><code>rtracklayer</code></a> to parse GFF files</li>
+</ul>
+</div>
+<div id="import-gff" class="section level3">
+<h3>import GFF</h3>
+<ul>
+<li>import the GFF from GENCODE using the <code>import()</code> function from the package <code>rtracklayer</code>. Assign the result as <code>gencode</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(238, 92, 66, 0.3); border:2px solid rgba(238, 92, 66, 1);">
+<div class="panel-heading" style="background-color:rgba(238, 92, 66, 1);">
+<h4 class="panel-title">
+Warning
+</h4>
+</div>
+<div class="panel-body">
+This steps requires some large memory, such as ~ 4 Gb. So your computer needs at least 8 Gb to perform this project. The object <code>gencode</code> below is 1.09 Gb alone.
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<code>import</code> returns an object of class GRanges. Converting to a <code>tibble</code> is more than encouraged Of note, this operation takes like 2-3 minutes. You may want to save the object while testing your workflow
+</div>
+</div>
+</div>
+</div>
+<div id="explore" class="section level3">
+<h3>Explore</h3>
+<ul>
+<li><p>What are the dimensions of this table?</p></li>
+<li><p>That is way too many lines for the number of genes we expect. Look at the column <code>type</code>. What kind of data is this column?</p></li>
+<li><p>display the levels of <code>type</code></p></li>
+<li><p>plot the count of each level from the <code>type</code> column.</p></li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+Even if counting can be done manually with <code>dplyr</code>, try to be lazy and let <code>ggplot2</code> doing the job
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class = "panel" style = "background-color:rgba(255, 193, 37, 0.3); border:2px solid rgba(255, 193, 37, 1);">
+<div class="panel-heading" style="background-color:rgba(255, 193, 37, 1);">
+<h4 class="panel-title">
+Viz suggestions
+</h4>
+</div>
+<div class="panel-body">
+<ul>
+<li>sorting the x-axis elements based on the count greatly help the reader to appreciate numbers. forcats::infreq() is your friend</li>
+<li>flipping coordinates help to read the x-axis labels</li>
+<li>reporting the numbers on top of the bars highlight them</li>
+<li>a lighter theme is usually better</li>
+<li>title and subtitle in the <code>labs()</code> give some context</li>
+<li>axis labels such as <code>type</code> might be useless</li>
+<li>large numbers are usually easier to read with thousand comma separators. <code>scales::comma()</code> does it for you
+</div>
+</div>
+</div></li>
+<li><p>from the previous plot, how many <strong>gene</strong> entries do you have?</p></li>
+<li><p>what is the rare event of stop_codon_redefined_as_selenocysteine?</p></li>
+<li><p>plot the distribution of the number of transcripts per gene, highlight the mean and median</p></li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+depending on the distribution shape, log-transforming the counts is an option
+</div>
+</div>
+</div>
+<ul>
+<li><p>roughly, how many transcripts per gene do you observe using either the mean or the median in linear scale?</p></li>
+<li><p>how do you explain the discrepancy between mean or median?</p></li>
+</ul>
+</div>
+<div id="focus-on-genes" class="section level3">
+<h3>Focus on genes</h3>
+<p>Now, let’s look at genes only.</p>
+<ul>
+<li><p>filter the <code>gencode</code> to restrict rows where type is <strong>gene</strong>, save as <code>genes</code></p></li>
+<li><p>plot the counts of <code>gene_type</code> for <code>genes</code> in the same way you did the <code>type</code>. Sorting the counts. You can restrict to counts &gt; 500 to avoid showing all the smaller categories</p></li>
+</ul>
+<p>We can observe quite many unique <code>gene_type</code>, even restriction to the ones that are present &gt; 500 times.</p>
+<ul>
+<li>Collapse the levels of <code>gene_type</code> to create 4 meta-categories:
+<ul>
+<li>protein_coding as <strong>prot_coding</strong></li>
+<li>pseudogene as <strong>pseudo</strong></li>
+<li><strong>RNA</strong></li>
+<li>lump the rest as <strong>rest</strong></li>
+</ul></li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<code>fct_collapse</code> from the <code>forcats</code> package is your best friend
+</div>
+</div>
+</div>
+</div>
+<div id="annotations" class="section level3">
+<h3>Annotations</h3>
+<p>Gene annotations are from either predicted or curated. The latter is from the <a href="http://www.sanger.ac.uk/science/groups/vertebrate-annotation">HAVANA consortium</a>, where annotations are mostly manual.</p>
+<ul>
+<li><p>count how many are from Ensembl or HAVANA in the <code>source</code> column for the <code>genes</code> sub-dataset</p></li>
+<li><p>reuse the 4 meta-categories and show each is decomposed between HAVANA or ENSEMBL. To make comparable, better to use <em>proportions</em> than absolute counts.</p></li>
+<li><p>what can you conclude on the work of the HAVANA team?</p></li>
+</ul>
+</div>
+<div id="genes-per-chromosome" class="section level3">
+<h3>Genes per chromosome</h3>
+<p>Are the genes uniformly distributed across the genome? To address this question, we want to count the number of genes per chromosome and normalizing by the chromosome length.</p>
+<p>You can use this <a href="http://hgdownload-test.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.chrom.sizes">file from USCS</a> to get the chromosome sizes.</p>
+<ul>
+<li>plot the gene density per chromosome and facet per the 4 meta categories</li>
+</ul>
+<div class="panel-group">
+<div class = "panel" style = "background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<ul>
+<li>for the chromosome sizes, the file is a tabulated file with no header. You can delete all the random and unplaced contigs and keep only the 23 chromosomes + the mitochondria</li>
+<li>for the density, express the number of genes per mega-bases</li>
+<li>for facets, one column makes the plot easier to read
+</div>
+</div>
+</div></li>
+<li><p>leaving out the <strong>pseudogene</strong> and <strong>other</strong> categories, what is striking in the results? What is so special with the MT?</p></li>
+<li><p>re-plot filtering out the mitochondria and keeping only <strong>prot_coding</strong> and <strong>RNA</strong></p></li>
+<li><p>what is the chromosome with the highest gene density?</p></li>
+</ul>
+</div>
+<div id="gene-sizes" class="section level3">
+<h3>Gene sizes</h3>
+<p>How the gene sizes distribution look like? Here we are several questions, we are need to split sequentially. Also, we keep the 4 meta-categories previously obtained since they represent different kind of genes.</p>
+<ul>
+<li>plot the distribution of <strong>gene</strong> sizes using a density geometry filled by meta-category. The column <code>width</code> is directly giving you the length in base pairs.</li>
+</ul>
+<div class="panel-group">
+<div class = "panel" style = "background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<ul>
+<li>some genes have an extreme lengths, log-transformation must be evaluated.</li>
+<li>to keep the axis info in linear scale, you can use the function <code>annotation_logticks()</code></li>
+<li>densities have by default no transparency, you should play with the <code>alpha</code> parameter
+</div>
+</div>
+</div></li>
+<li><p>Which meta-category has the most normal distribution after log-transformation? And the largest average size?</p></li>
+<li><p>What is roughly the <strong>mode</strong> of this normal distribution after log-transformation?</p></li>
+</ul>
+</div>
+<div id="exon-sizes" class="section level3">
+<h3>Exon sizes</h3>
+<p>Now we want to compute the gene sizes, <strong>excluding</strong> the introns. Thus, we need to sum up the <strong>exons</strong> sizes. Of note, <strong>exon</strong> in the <code>type</code> terminology includes also the <strong>UTR</strong>. Do make things easier, we ignore this inclusion and work on the <strong>exon</strong> whatever it encompasses.</p>
+<ul>
+<li><p>plot the density of the exon sizes, for this you need to look for the lines with the appropriate <code>type</code></p></li>
+<li><p>do the distributions of exon sizes appear different for the 4 meta-categories?</p></li>
+<li><p>now sum-up the exons sizes per transcript since genes have usually more than one transcript. Save as <code>transcript_length</code></p></li>
+<li><p>plot the density of the exon sum from <code>transcript_length</code></p></li>
+<li><p>do the distributions of exon sum appear different for the 4 meta-categories?</p></li>
+</ul>
+</div>
+<div id="intron-sizes" class="section level3">
+<h3>Intron sizes</h3>
+<p>What can make the protein coding bigger then? Maybe the introns. This computation is challenging since we don’t have an easy <strong>intron</strong> item in the <code>type</code> column associated with the <code>width</code> column that directly provide the length. The idea is then to work per transcript, and subtract the sum of all exons to the transcript length.</p>
+<p>Your workflow could be:</p>
+<ol style="list-style-type: decimal">
+<li>select relevant columns, that makes the process easier to control</li>
+<li>keep per transcript the lines of exons and transcript</li>
+<li>compute the sum of exons (could add the transcript length, but we have on transcript entry per <code>transcript_id</code>)</li>
+<li>move from long to wide format</li>
+<li>compute the difference transcript_length - sum(exon_length)</li>
+</ol>
+<ul>
+<li><p>plot the density of the intron sums</p></li>
+<li><p>do the distributions of exon sum appear different for the 4 meta-categories?</p></li>
+</ul>
+</div>
+<div id="exon-numbers" class="section level3">
+<h3>Exon numbers</h3>
+<ul>
+<li><p>compute the number of exons per genes, still colored by the meta-categories</p></li>
+<li><p>what can you conclude?</p></li>
+</ul>
+</div>
+</div>
+
+<div class = "footer">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="http://bio.uni.lu" target="_blank"><img src="img/lsru.png"></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      Copyright © <a href="http://www.uni.lu" target="_blank">Université du Luxembourg</a> 2017. All rights reserved.
+    </div>
+    <div class="col-md-4">
+      <!-- <a href="http://bio.uni.lu"><img src ="LSRU.png"></a> -->
+      <ul class="social-links">
+        <li><a href="https://www.facebook.com/uni.lu"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/uni_lu"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="https://www.linkedin.com/school/166650"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="http://www.youtube.com/user/luxuni"><i class="fa fa-youtube"></i></a></li>
+        <li></li>
+      </ul>
+    </div>    
+  </div>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

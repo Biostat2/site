@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Biostat2 - Introduction</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+  <meta name="date" content="2017-09-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Biostat2 - Introduction',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture01_intro_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Aurélien Ginolhac' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  /* bg-orange colour */
+  
+  .bg-orange {
+    background-color: #FF8C00;
+    color: #000000;
+  }
+  
+  .bg-orange a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-orange a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-orange {
+    border: 2px solid #7F4600;
+  }
+  
+  .box.bg-orange > h3:first-child {
+    background-color: #7F4600;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-orange::before {
+    color : #7F4600;
+  }
+   
+  blockquote.bg-orange {
+    color: #000000;
+    border-color: #7F4600;
+  }
+  
+  .box.bg-orange > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-orange > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-orange > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-orange > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-orange > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-orange code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-slate colour */
+  
+  .bg-slate {
+    background-color: #7A67EE;
+    color: #FFFFFF;
+  }
+  
+  .bg-slate a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-slate a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-slate {
+    border: 2px solid #3D3377;
+  }
+  
+  .box.bg-slate > h3:first-child {
+    background-color: #3D3377;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-slate::before {
+    color : #3D3377;
+  }
+   
+  blockquote.bg-slate {
+    color: #FFFFFF;
+    border-color: #3D3377;
+  }
+  
+  .box.bg-slate > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-slate > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-slate > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-slate > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-slate > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-slate code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  /* bg-grgold colour */
+  
+  .bg-grgold {
+    background-color: #008B45;
+    color: #FFFFFF;
+  }
+  
+  .bg-grgold a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-grgold a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-grgold {
+    border: 2px solid #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child {
+    background-color: #004522;
+    color: #FFD700;
+  }
+                          
+  blockquote.bg-grgold::before {
+    color : #004522;
+  }
+   
+  blockquote.bg-grgold {
+    color: #FFFFFF;
+    border-color: #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-grgold > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-grgold > h3:first-child > a:hover {
+    color: #FFD700 !important;
+  }
+    
+  slide.bg-grgold > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-grgold > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-grgold code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  /* bg-red colour */
+  
+  .bg-red {
+    background-color: #FFAD99;
+    color: #000000;
+  }
+  
+  .bg-red a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-red a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-red {
+    border: 2px solid #991F00;
+  }
+  
+  .box.bg-red > h3:first-child {
+    background-color: #991F00;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-red::before {
+    color : #991F00;
+  }
+   
+  blockquote.bg-red {
+    color: #000000;
+    border-color: #991F00;
+  }
+  
+  .box.bg-red > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-red > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-red > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-red > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-red > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-red code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-green colour */
+  
+  .bg-green {
+    background-color: #ADEBAD;
+    color: #000000;
+  }
+  
+  .bg-green a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-green a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-green {
+    border: 2px solid #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child {
+    background-color: #1F7A1F;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-green::before {
+    color : #1F7A1F;
+  }
+   
+  blockquote.bg-green {
+    color: #000000;
+    border-color: #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-green > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-green > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-green > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-green > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-green code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-blue colour */
+  
+  .bg-blue {
+    background-color: #99D6FF;
+    color: #000000;
+  }
+  
+  .bg-blue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-blue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-blue {
+    border: 2px solid #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child {
+    background-color: #005C99;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-blue::before {
+    color : #005C99;
+  }
+   
+  blockquote.bg-blue {
+    color: #000000;
+    border-color: #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-blue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-blue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-blue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-blue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-blue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-yellow colour */
+  
+  .bg-yellow {
+    background-color: #FFEC8B;
+    color: #000000;
+  }
+  
+  .bg-yellow a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow {
+    border: 2px solid #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child {
+    background-color: #EEB422;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow::before {
+    color : #EEB422;
+  }
+   
+  blockquote.bg-yellow {
+    color: #000000;
+    border-color: #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-gray colour */
+  
+  .bg-gray {
+    background-color: #FAFAFA;
+    color: #000000;
+  }
+  
+  .bg-gray a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-gray a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-gray {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-gray::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-gray {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-gray > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-gray > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-gray > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-gray > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-gray code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-white colour */
+  
+  .bg-white {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  
+  .bg-white a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-white a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-white {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-white::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-white {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-white > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-white > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-white > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-white > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-white code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-cobalt colour */
+  
+  .bg-cobalt {
+    background-color: #2B557A;
+    color: #FFFFFF;
+  }
+  
+  .bg-cobalt a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-cobalt a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-cobalt {
+    border: 2px solid #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child {
+    background-color: #002240;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-cobalt::before {
+    color : #002240;
+  }
+   
+  blockquote.bg-cobalt {
+    color: #FFFFFF;
+    border-color: #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-cobalt > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-cobalt > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-cobalt code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture01_intro_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">18 september 2017</p>
+          </hgroup>
+  </slide>
+
+<div id="unnamed-chunk-1">
+<style type="text/css">
+.vembedr {
+  border-radius: 25px; /* adjust it to your needs */
+  overflow: hidden;
+}
+
+.vembedr iframe {
+  display: block;
+  border: none;
+}
+</style></div>
+
+<slide class=''><hgroup class = 'title-bar'><h2>Overview</h2></hgroup><article  id="overview" class="smaller vs1 build">
+
+<p>The goal is to learn statistics applied to biology using <img src='img/01/Rlogo_90.png' title=''/></p>
+
+<p>This course of ~ 60 hours is composed of:</p>
+
+<div class = 'col col-4 box bg-green stretch'><h3>lectures</h3><div class = 'box-body'>
+
+<ul>
+<li>slides, formal lecure</li>
+<li>quick exercices inserted</li>
+<li>unprepared live demo</li>
+</ul>
+
+</div></div><div class = 'box col col-4 bg-yellow stretch'><h3>practical sessions</h3><div class = 'box-body'>
+
+<ul>
+<li>detailed exercices</li>
+<li>solutions are available</li>
+<li>2 people to help</li>
+</ul>
+
+</div></div><div class = 'box col col-4 bg-orange stretch'><h3>project</h3><div class = 'box-body'>
+
+<ul>
+<li>team up with a student</li>
+<li>due date: end of December</li>
+<li>defend in January</li>
+</ul>
+
+</div></div><div class = 'col col-4 box bg-green stretch'><h3>3 ECTS</h3><div class = 'box-body'>
+
+<ul>
+<li>written exam</li>
+<li>2 hours</li>
+<li><strong>no</strong> document allowed</li>
+</ul>
+
+</div></div><div class = 'box col col-4 bg-yellow stretch'><h3>3 ECTS</h3><div class = 'box-body'>
+
+<ul>
+<li>practical exam, <code>Rmd</code> file</li>
+<li>2 hours</li>
+<li><strong>all</strong> document allowed</li>
+<li>internet allowed</li>
+</ul>
+
+</div></div><div class = 'box col col-4 bg-orange stretch'><h3>1 ECTS</h3><div class = 'box-body'>
+
+<ul>
+<li>home work</li>
+<li>questions at anytime</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Contents</h2></hgroup><article  id="contents" class="smaller vs1">
+
+<div class = 'box col col-8 bg-green'><h3>lectures</h3><div class = 'box-body'>
+
+<ul>
+<li>Introduction to programming, basic concepts of algorithm building, <strong>R</strong> language using the <em>tidyverse</em></li>
+<li>Descriptive statistics with R, examples of large dataset analysis</li>
+<li>Hypothesis testing, concepts <em>of p-value</em> and confidence intervals</li>
+<li>Data fitting, estimations of goodness of fit</li>
+<li>Non-parametric tests</li>
+<li>Linear regression models, simple or + predictors</li>
+<li>Generalized linear models</li>
+<li>Count data</li>
+<li>Unsupervised learning using principal component analysis</li>
+</ul>
+
+</div></div><div class = 'box col col-4 bg-slate stretch'><h3>content from</h3><div class = 'box-body'>
+
+<ul>
+<li>Eric Koncina</li>
+<li>Roland Krause</li>
+<li>Charandeep Singh</li>
+<li>Dylan Childs</li>
+<li>Sean Sapcariu</li>
+<li>Tatiana Baumuratova</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Reading</h2></hgroup><article  id="reading" class="smaller ">
+
+<div class = 'box col col-11 stretch'><h3>books</h3><div class = 'box-body'>
+
+<ul>
+<li><a href='http://r4ds.had.co.nz/' title=''>R for data science</a> by Hadley Wickham</li>
+<li><a href='http://ggplot2.org/book/' title=''>ggplot2 - book</a> by Hadley Wickham</li>
+<li><a href='http://rmarkdown.rstudio.com/' title=''>Rmarkdown</a> by Rstudio</li>
+<li><a href='http://adv-r.had.co.nz/' title=''>Advanced in R</a> by Hadley Wickham</li>
+<li><a href='http://r-pkgs.had.co.nz/' title=''>R packages</a> by Hadley Wickham</li>
+<li><a href='http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf' title=''>R introduction</a> (in French) by <a href='http://egallic.fr/' title=''>Ewen Gallic</a></li>
+<li><a href='http://onlinelibrary.wiley.com/book/10.1002/9781119941750' title=''>Statistics. An introduction using R</a> by Michael J. Crawley</li>
+<li><a href='http://www-bcf.usc.edu/~gareth/ISL/' title=''>An Introduction to Statistical Learning</a> by James, Witten, Hastie &amp; Tibshirani (free pdf)</li>
+<li><a href='http://www.ievbras.ru/ecostat/Kiril/R/Biblio/R_eng/Logan%20Biostatistical.pdf' title=''>Biostatistic Design and Analysis Using R</a> by Murray Logan (free pdf)</li>
+<li><a href='https://leanpub.com/datascience_and_R' title=''>Introduction to data science and statistical programming with R</a> by <a href='http://www.mailund.dk/' title=''>Thomas Mailund</a> (<a href='https://github.com/mailund/introduction-to-data-science' title=''>free text on github</a>)</li>
+<li><a href='https://leanpub.com/functional_programming_in_R' title=''>Functional Programming in R</a> by Thomas Mailund (<a href='https://github.com/mailund/functional-programming-in-R' title=''>free text on github</a>)</li>
+</ul>
+
+</div></div><div class = 'col col-1'>
+
+<div id="unnamed-chunk-2">
+<p><img src="https://raw.githubusercontent.com/hadley/r4ds/master/cover.png" width="100%" /></p></div>
+
+<div id="unnamed-chunk-3">
+<p><img src="https://pictures.abebooks.com/isbn/9780470022979-us.jpg" width="100%" /></p></div>
+
+<div id="unnamed-chunk-4">
+<p><img src="https://images.springer.com/sgw/books/medium/9781461471370.jpg" width="100%" /></p></div>
+
+<div id="unnamed-chunk-5">
+<p><img src="https://images-na.ssl-images-amazon.com/images/I/61AupT0Y2AL._SX345_BO1,204,203,200_.jpg" width="100%" /></p></div>
+
+<div id="unnamed-chunk-6">
+<p><img src="https://s3.amazonaws.com/titlepages.leanpub.com/datascience_and_R/hero?1467461198" width="100%" /></p></div>
+
+<div id="unnamed-chunk-7">
+<p><img src="https://s3.amazonaws.com/titlepages.leanpub.com/functional_programming_in_R/hero?1470512054" width="100%" /></p></div>
+
+</div><div class = 'offset-2 col col-10'>
+
+<p>list on <a href='http://biostat2.uni.lu/misc.html' title=''>http://biostat2.uni.lu/</a> <strong>new hosting pending</strong></p>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Teachers</h2></hgroup><article  id="teachers" class="smaller vs2">
+
+<div class = 'box col col-4 stretch'><h3>Aurélien Ginolhac</h3><div class = 'box-body'>
+
+<img src='https://wwwen.uni.lu/var/storage/images/recherche/fstc/life_sciences_research_unit/people/aurelien_ginolhac/1136275-1-eng-GB/aurelien_ginolhac.jpg' title='fig:'/>
+
+<ul>
+<li>bioinformatician <a href='http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/people/aurelien_ginolhac' title=''>core unit</a></li>
+<li>work at <a href='http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit' title=''>LSRU</a></li>
+<li><a href='mailto:aurelien.ginolhac@uni.lu' title=''>aurelien.ginolhac@uni.lu</a></li>
+<li>+352 466644 6560</li>
+</ul>
+
+</div></div><div class = 'box col col-4 stretch'><h3>Eric Koncina</h3><div class = 'box-body'>
+
+<img src='https://wwwen.uni.lu/var/ULcache/ldapphotos/457269632e4b6f6e63696e614b4f4e43455233313830.jpg' title='fig:'/>
+
+<ul>
+<li>Research associate <a href='https://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation' title=''>LNB</a></li>
+<li>work at <a href='http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit' title=''>LSRU</a></li>
+</ul>
+
+</div></div><div class = 'box col col-4 stretch'><h3>Julia Forster</h3><div class = 'box-body'>
+
+<img src='https://wwwen.uni.lu/var/storage/images/media/images/julia_forster/914907-1-fre-FR/julia_forster.jpg' title='fig:'/>
+
+<ul>
+<li>PhD candidate <a href='https://wwwen.uni.lu/lcsb/research/experimental_neurobiol' title=''>Experimental Neuro</a></li>
+<li>work at <a href='https://wwwen.uni.lu/lcsb' title=''>LCSB</a></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>R</h2></hgroup><article  id="r" class="smaller ">
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>What is R?</h2></hgroup><article  id="what-is-r" class="smaller vs2">
+
+<p><strong>R</strong> is shorthand for <a href='https://www.r-project.org' title=''>&quot;GNU R&quot;</a>:</p>
+
+<ul>
+<li>An interactive programming language derived from <strong>S</strong> (<strong>J. Chambers</strong>, Bell Lab, 1976)</li>
+<li>Appeared in 1993, created by <strong>R. Ihaka</strong> and <strong>R. Gentleman</strong>, University of Auckland</li>
+<li>Focus on data analysis and plotting</li>
+<li><strong>R</strong> is also shorthand for the ecosystem around this language
+
+<ul>
+<li>Book authors</li>
+<li>Package developers</li>
+<li>Ordinary useRs</li>
+</ul></li>
+</ul>
+
+<p>Learning to use <strong>R</strong> will make you <strong>more efficient</strong> and <strong>facilitate the use</strong> of advanced data analysis tools</p>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Why use R?</h2></hgroup><article  id="why-use-r" class="smaller vs2">
+
+<ul>
+<li>It&#39;s <em>free!</em></li>
+<li>easy to install / maintain</li>
+<li>easy to process big files and analyse huge amounts of data</li>
+<li>integrated data visualization tools, <em>even dynamic</em></li>
+<li>fast, and even faster with <em>C++</em> integration via <a href='http://dirk.eddelbuettel.com/code/rcpp/Rcpp-attributes.pdf' title=''>Rcpp</a>.</li>
+<li>easy to get help
+
+<ul>
+<li><a href='https://support.rstudio.com/hc/en-us/articles/200552336-Getting-Help-with-R' title=''>huge R community in the web</a></li>
+<li><a href='http://stackoverflow.com/questions/tagged/r' title=''>stackoverflow</a> with a lot of tags like <strong>tidyverse</strong>, <strong>dplyr</strong>, <strong>ggplot2</strong> etc.</li>
+<li><a href='http://www.r-bloggers.com' title=''>rbloggers</a></li>
+</ul></li>
+</ul>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Twitter R community</h2></hgroup><article  id="twitter-r-community" class="smaller ">
+
+<p><a href='https://twitter.com/search?q=%23rstats' title=''><code>#rstats</code></a> on twitter</p>
+
+<img src='img/01/r_community.jpg' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Constant trend</h2></hgroup><article  id="constant-trend" class="smaller vs1">
+
+<div class = 'col col-8 offset-2'>
+
+<img src='img/01/r_progression.png' title='fig:'/>
+
+<p><span class="small">
+Source: <a href='http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full' title=''>Touchon &amp; McCoy. <em>Ecosphere</em>. 2016</a></span></p>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Packages </h2><h3> +10,000 in Jan 2017</h3></hgroup><article  id="packages-10000-in-jan-2017" class="smaller build">
+
+<div class = 'box col col-4 bg-yellow stretch'><h3><a href='https://cran.r-project.org/web/packages/available_packages_by_date.html' title=''>CRAN</a></h3><div class = 'box-body'>
+
+<p><strong>reliable</strong>: package is checked during submission process</p>
+
+<p><a href='https://mran.microsoft.com/packages/' title=''>MRAN</a> for Windows users</p>
+
+</div></div><div class = 'box col col-4 bg-yellow stretch'><h3><a href='https://www.bioconductor.org/' title=''>bioconductor</a></h3><div class = 'box-body'>
+
+<p>dedicated to biology. <a href='https://www.bioconductor.org/packages/release/bioc/html/limma.html' title=''>status</a></p>
+
+<p>typical install:</p>
+
+<div id="unnamed-chunk-8" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>source(&quot;https://bioconductor.org/biocLite.R&quot;)
+biocLite(&quot;limma&quot;)</pre></div>
+
+</div></div><div class = 'box col col-4 bg-white stretch'><h3><a href='https://github.com/' title=''>GitHub</a></h3><div class = 'box-body'>
+
+<p>easy install thanks to <a href='https://github.com/hadley/devtools' title=''>devtools</a>. <a href='https://github.com/hadley/readr' title=''>status</a></p>
+
+<div id="unnamed-chunk-9" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;tidyverse/readr&quot;)</pre></div>
+
+<p>could be a security issue</p>
+
+</div></div><div class = 'col col-6 bg-white'><h3>CRAN install from Rstudio</h3>
+
+<img src='img/01/packages_install_cran.jpg' title='fig:'/>
+
+</div><div class = 'col col-6'><h3>github install from Rstudio&#39; console</h3>
+
+<img src='img/01/packages_install_devtools.jpg' title='fig:'/>
+
+<p>more in the article from <a href='http://blog.revolutionanalytics.com/2017/01/cran-10000.html' title=''>David Smith</a></p>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Help pages</h2></hgroup><article  id="help-pages" class="smaller ">
+
+<div id="unnamed-chunk-10">
+<style type="text/css">
+.to_right > p {
+  text-align: right;
+}
+</style></div>
+
+<div class = 'col col-6 middle to_right'>
+
+<p>2 possibilities for manual pages.</p>
+
+</div><div class = 'col col-6'>
+
+<div id="unnamed-chunk-11" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>?log
+help(log)</pre></div>
+
+</div>
+
+<p>In <strong>Rstudio</strong>, the help page can be viewed in the bottom right pane</p>
+
+<div class = 'col col-8'>
+
+<img src='img/01/help_RStudio.png' title='fig:'/>
+
+</div><div class = 'box col col-4 bg-orange'><h3>Sadly</h3><div class = 'box-body'>
+
+<p>manpages are often unhelpful, now <strong>vignettes</strong> (and <a href='http://readxl.tidyverse.org/articles/sheet-geometry.html' title=''><strong>articles</strong></a> on tidyverse) are better and described workflows.</p>
+
+</div></div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Drawback: Steep learning curve </h2><h3> Period of much suckiness</h3></hgroup><article  id="drawback-steep-learning-curve-period-of-much-suckiness" class="smaller ">
+
+<div id="unnamed-chunk-12">
+<div class="vembedr">
+<iframe src="https://www.youtube.com/embed/8SGif63VW6E?start=252" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
+</div></div>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><a href='http://tidyverse.org/' title=''>Tidyverse</a> </h2><h3> why</h3></hgroup><article  id="tidyverse-why" class="smaller vs1">
+
+<p><strong>R base</strong> is complex, has a long history and many contributors</p>
+
+<div class = 'bg-yellow box col col-11'><h3>Why R is hard to learn</h3><div class = 'box-body'>
+
+<ul class = 'build'>
+<li>Unhelpful help <code>?print</code></li>
+<li>generic methods <code>print.data.frame</code></li>
+<li>too many commands <code>colnames, names</code></li>
+<li>inconsistent names <code>read.csv, load, readRDS</code></li>
+<li>inconsistent syntax <code>rowSums rowsums</code></li>
+<li>too many ways to select variables <code>df$x, df$&quot;x&quot;, df[,&quot;x&quot;], df[[1]]</code></li>
+<li>[&#8230;] see <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>r4stats&#39; post</a> for the full list</li>
+<li>the tidyverse curse</li>
+</ul>
+
+</div></div><div class = 'col col-8 offset-4'>
+
+<p><span class="small">
+source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>Robert A. Muenchen&#39; blog</a></span></p>
+
+</div>
+
+<div class = 'col col-12 build'>
+
+<blockquote class = "bg-orange">
+<p>Navigating the balance between base R and the tidyverse is a challenge to learn <cite> Robert A. Muenchen </p></cite>
+</blockquote>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> rationale</h3></hgroup><article  id="tidyverse-rationale" class="smaller vs2">
+
+<p>We think the <a href='http://tidyverse.org/' title=''><strong>tidyverse</strong></a> is better, especially for beginners (<a href='http://varianceexplained.org/r/teach-tidyverse/' title=''>David Robinson</a>)</p>
+
+<ul>
+<li>recent (both an issue and an advantage)</li>
+<li>unified</li>
+<li>consistent, <a href='http://varianceexplained.org/r/teach-tidyverse/' title=''>There’s only one way to do it</a></li>
+<li><a href='http://varianceexplained.org/r/teach-tidyverse/' title=''>get students doing powerful things quickly</a></li>
+<li><a href='http://varianceexplained.org/r/teach-tidyverse/' title=''>%&gt;% isn’t too hard for beginners</a></li>
+</ul>
+
+<div class = 'box col col-8 bg-white'><h3>Hadley Wickham</h3><div class = 'box-body'>
+
+<p><a href='http://had.co.nz' title=''>Hadley</a></p>
+
+<ul>
+<li>chief scientist at <strong>Rstudio</strong></li>
+<li>coined the <em>tidyverse</em> at <a href='https://twitter.com/drob/status/748196885307920385' title=''>userR meeting in 2016</a>.</li>
+<li>developed and maintains most of the core <em>tidyverse</em> packages</li>
+</ul>
+
+</div></div><div class = 'col col-4'>
+
+<div id="unnamed-chunk-13">
+<p><img src="https://avatars3.githubusercontent.com/u/4196?v=4&s=460" width="75%" /></p></div>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> core packages</h3></hgroup><article  id="tidyverse-core-packages" class="smaller vs1">
+
+<img src='img/01/tidyverse_components.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> packages in processes</h3></hgroup><article  id="tidyverse-packages-in-processes" class="smaller ">
+
+<img src='img/01/tidyverse_data_science.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Tidyverse </h2><h3> workflow</h3></hgroup><article  id="tidyverse-workflow" class="smaller ">
+
+<div class = 'col col-9'><h3>Pipeline</h3>
+
+<img src='img/01/drob_r_pipeline_600.png' title='fig:'/>
+
+</div><div class = 'col col-3'><h3>David Robinson</h3>
+
+<p><span class="cite">@drob</span> on twitter</p>
+
+<img src='https://avatars2.githubusercontent.com/u/994718?v=4&amp;s=460' title='fig:'/>
+
+<img src='img/00/logo_broom.png' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>RStudio</h2></hgroup><article  id="rstudio" class="smaller ">
+
+<img src='img/00/logo_rstudio.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rstudio </h2><h3> What is it?</h3></hgroup><article  id="rstudio-what-is-it" class="smaller ">
+
+<p><a href='https://www.rstudio.com/products/RStudio/' title=''>RStudio</a> is an Integrated Development Environment.<br/>It makes working with R much easier</p>
+
+<div class = 'box col col-9 bg-green build'><h3>Features</h3><div class = 'box-body'>
+
+<ul class = 'build'>
+<li><em>Console</em> to run <strong>R</strong>, with syntax highlighter</li>
+<li><em>Editor</em> to work with scripts</li>
+<li><em>Viewer</em> for data / plots / website</li>
+<li><em>Package management</em> (including building)</li>
+<li><em>Autocompletion</em> using <kbd>TAB</kbd></li>
+<li><a href='https://www.rstudio.com/resources/cheatsheets/' title=''><em>Cheatsheets</em></a></li>
+<li><em>Git</em> integration for versioning</li>
+<li><em>Inline</em> outputs (&gt;= v1.03)</li>
+<li><em>Keyboard shortcuts</em></li>
+<li><a href='https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/' title=''><em>Notebooks</em></a></li>
+</ul>
+
+</div></div><div class = 'box col col-3 bg-orange build'><h3>Warning</h3><div class = 'box-body'>
+
+<p>Don&#39;t mix up <strong>R</strong> and <strong>RStudio</strong>.<br/><strong>R</strong> needs to be installed first.</p>
+
+</div></div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rstudio </h2><h3> The 4 panels layout</h3></hgroup><article  id="rstudio-the-4-panels-layout" class="smaller ">
+
+<img src='img/01/rstudio_layout.jpg' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Four panels</h2></hgroup><article  id="four-panels" class="smaller vs2">
+
+<div class = 'col col-6 box bg-green stretch'><h3>scripting</h3><div class = 'box-body'>
+
+<ul>
+<li>could be your main window</li>
+<li>should be a <strong>Rmarkdown</strong> doc</li>
+<li>tabs are great</li>
+</ul>
+
+</div></div><div class = 'col col-6 box bg-yellow stretch'><h3>Environment</h3><div class = 'box-body'>
+
+<ul>
+<li>Environment, display loaded objects and their <code>str()</code></li>
+<li>History is useless IMO</li>
+<li>nice <code>git</code> integration</li>
+<li>database <strong>connections</strong> interface</li>
+</ul>
+
+</div></div><div class = 'col col-6 box stretch'><h3>Console</h3><div class = 'box-body'>
+
+<ul>
+<li>could be hidden with <strong>inline</strong> outputs</li>
+<li><code>rmarkdown</code> output logs</li>
+<li>optional, embed a nice <code>terminal</code> tab</li>
+</ul>
+
+</div></div><div class = 'col col-6 box bg-yellow stretch'><h3>Files / Plots / Help</h3><div class = 'box-body'>
+
+<ul>
+<li>necessary package management tab</li>
+<li>unessary plots panel when using <strong>inline</strong> outputs</li>
+<li>useful help tab</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>For reproducibility, options to activate / deactivate</h2></hgroup><article  id="for-reproducibility-options-to-activate-deactivate" class="smaller ">
+
+<img src='img/01/rstudio_repro.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Code diagnostics, highly recommended</h2></hgroup><article  id="code-diagnostics-highly-recommended" class="smaller ">
+
+<p>using <code>Global Options -&gt; Code -&gt; Diagnostics</code> editing pane:</p>
+
+<div class = 'col col-6'>
+
+<p><img src='img/01/diag_rstudio.png' title=''/> <span class="small">
+source: <a href='https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics?version=1.1.133&amp;mode=desktop' title=''>Kevin Ushey&#39; article</a></span></p>
+
+</div><div class = 'col col-6'>
+
+<ul>
+<li>check argument calls</li>
+</ul>
+
+<img src='img/01/rstudio_check_args.png' title='fig:'/>
+
+<ul>
+<li>missing arguments</li>
+</ul>
+
+<img src='img/01/rstudio_check_missing.png' title='fig:'/>
+
+<ul>
+<li>variable definitions</li>
+</ul>
+
+<img src='img/01/rstudio_check_vars.png' title='fig:'/>
+
+<ul>
+<li>unused variables &amp; style recommendations</li>
+</ul>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Getting started</h2></hgroup><article  id="getting-started" class="smaller ">
+
+<p>Let&#39;s get ready to use <strong>R</strong> and <strong>RStudio</strong>. Do the following:</p>
+
+<ul>
+<li>Open up RStudio</li>
+<li>Maximise the RStudio window</li>
+<li>Click the Console pane, at the prompt (<code>&gt;</code>) type in <code>3 + 2</code> and hit enter</li>
+</ul>
+
+<div id="unnamed-chunk-14" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>&gt; 3 + 2</pre></div>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Arithmetic operations</h2></hgroup><article  id="arithmetic-operations" class="smaller ">
+
+<p>You will not be surprised that <strong>R</strong> is very good at sums. It has all the arithmetic operators you would expect to see:</p>
+
+<ul>
+<li><code>+</code>: addition<br/></li>
+<li><code>-</code>: subtraction<br/></li>
+<li><code>*</code>: multiplication<br/></li>
+<li><code>/</code>: division<br/></li>
+<li><code>^</code> or <code>**</code>: exponentiation</li>
+<li><code>%%</code>: modulo (remainder after division)</li>
+<li><code>%/%</code>: integer division</li>
+</ul>
+
+<p><strong>Remember</strong> that <strong>R</strong> will:</p>
+
+<ul>
+<li>first perform <strong>exponentiation</strong></li>
+<li>then multiplications and/or divisions</li>
+<li>and finally additions and/or subtractions.</li>
+</ul>
+
+<p>If you need to change the priority during the evaluation, use parentheses – <em>i.e.</em> <code>(</code> and <code>)</code> – to group calculations.</p>
+
+</article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Rstudio </h2><h3> Working directory and projects</h3></hgroup><article  id="rstudio-working-directory-and-projects" class="smaller ">
+
+<p>It is where <strong>R</strong> is looking for files (read or write).<br/>Using the console, try:</p>
+
+<div class = 'col col-4'>
+
+<div id="unnamed-chunk-15" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>&gt; getwd()</pre></div>
+
+</div><div class = 'col col-8 box bg-red'><h3>setwd() or relative paths</h3><div class = 'box-body'>
+
+<ul>
+<li>It is possible to change the location using <code>setwd()</code> (in the console or interactively in <em>RStudio</em>)</li>
+<li>A better way is to use projects in Rstudio</li>
+</ul>
+
+</div></div><div class = 'box col col-8 bg-green'><h3>Projects</h3><div class = 'box-body'>
+
+<p>They solve most issues with working directories: get rid of <code>setwd()</code></p>
+
+</div></div><div class = 'col col-4'>
+
+<img src='img/01/rstudio_project.jpg' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Hexbins</h2></hgroup><article  id="hexbins" class="smaller ">
+
+<p>After David Robinson&#39; laptop, see and get inspired!</p>
+
+<div class = 'col col-6'><h3>Hadley Wickham</h3>
+
+<img src='img/01/hexbin_hadley.jpg' title='fig:'/>
+
+</div><div class = 'col col-6'><h3>Bob Rudis</h3>
+
+<img src='img/01/hexbin_hrbrmstr.jpg' title='fig:'/></article><div class = "footer"><img src="lecture01_intro_files/logo.png"><a href='index.html'>biostat2</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

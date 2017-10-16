@@ -1,0 +1,1 @@
+\DeclareUnicodeCharacter{2206}{\ensuremath{\Delta}}

@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Eric Koncina" />
+
+<meta name="date" content="2017-02-10" />
+
+<title>TD02 - Using readr to import data</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="shortcut icon" href="favicon.ico">
+<!-- <a href="http://bio.uni.lu/" target="_blank"><img class="img-responsive center-block header-image" src="LSRU_uni_extern.jpg"></a> -->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/site.css" type="text/css" />
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="img/uni-logo.png"></a><a class="navbar-brand" href="index.html"><img src="img/bs2.png"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="details.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Details
+  </a>
+</li>
+<li>
+  <a href="lectures.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+  </a>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="exam.html">Exams</a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Tips
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="schedule.html">
+    <span class="fa fa-calendar"></span>
+     
+    Schedule
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TD02 - Using <code>readr</code> to import data</h1>
+<h4 class="author"><em>Eric Koncina</em></h4>
+<h4 class="date"><em>02/10/2017</em></h4>
+
+</div>
+
+
+<style type="text/css">
+.bonus {
+  border-left: 10px solid rgba(188, 143, 143, 1);
+  padding: 1em 0 1em 1em;
+}
+</style>
+<blockquote>
+<p>During this practical session you will put your recently acquired knowledge into practice and import different datasets. The aim of this practical is to show you some of the common pitfalls you might face.</p>
+</blockquote>
+<div id="are-you-up-to-the-challenge" class="section level3">
+<h3>Are you up to the challenge?</h3>
+<p>For this exercise, download the challenge dataset from <a href="data/challenge.csv">this link</a>.</p>
+<ul>
+<li>What kind of file is it? Use the appropriate <code>readr</code> function to import the data.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-4">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-4" class="panel-collapse collapse">
+<div class="panel-body">
+According to the file extension, the file is a <strong>comma separated value</strong> file (Which you can confirm using Rstudio’s lower right <code>File</code> panel and selecting “View File” after a left click on the file <code>challenge.csv</code>).
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Store the data in an object called <code>challenge</code></li>
+<li>What are the types of the columns <code>x</code> and <code>y</code>?</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-5">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-5" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>challenge &lt;- read_csv(&quot;data/challenge.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   x = col_integer(),
+##   y = col_character()
+## )</code></pre>
+<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
+## a multiple of vector length (arg 1)</code></pre>
+<pre><code>## Warning: 1000 parsing failures.
+## row # A tibble: 5 x 5 col     row   col               expected             actual expected   &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;              &lt;chr&gt; actual 1  1001     x no trailing characters .23837975086644292 file 2  1002     x no trailing characters .41167997173033655 row 3  1003     x no trailing characters  .7460716762579978 col 4  1004     x no trailing characters   .723450553836301 expected 5  1005     x no trailing characters   .614524137461558 actual # ... with 1 more variables: file &lt;chr&gt;
+## ... ................. ... ....................................................... ........ ....................................................... ...... ....................................................... .... ....................................................... ... ....................................................... ... ....................................................... ........ ....................................................... ...... .......................................
+## See problems(...) for more details.</code></pre>
+<pre class="r"><code>str(challenge)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    2000 obs. of  2 variables:
+##  $ x: int  404 4172 3004 787 37 2332 2489 1449 3665 3863 ...
+##  $ y: chr  NA NA NA NA ...
+##  - attr(*, &quot;problems&quot;)=Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 1000 obs. of  5 variables:
+##   ..$ row     : int  1001 1002 1003 1004 1005 1006 1007 1008 1009 1010 ...
+##   ..$ col     : chr  &quot;x&quot; &quot;x&quot; &quot;x&quot; &quot;x&quot; ...
+##   ..$ expected: chr  &quot;no trailing characters&quot; &quot;no trailing characters&quot; &quot;no trailing characters&quot; &quot;no trailing characters&quot; ...
+##   ..$ actual  : chr  &quot;.23837975086644292&quot; &quot;.41167997173033655&quot; &quot;.7460716762579978&quot; &quot;.723450553836301&quot; ...
+##   ..$ file    : chr  &quot;&#39;data/challenge.csv&#39;&quot; &quot;&#39;data/challenge.csv&#39;&quot; &quot;&#39;data/challenge.csv&#39;&quot; &quot;&#39;data/challenge.csv&#39;&quot; ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..$ cols   :List of 2
+##   .. ..$ x: list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
+##   .. ..$ y: list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+##   ..$ default: list()
+##   .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_guess&quot; &quot;collector&quot;
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</code></pre>
+<pre class="r"><code># We see that x is detected as being integer
+# and y as being text</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Did everything run fine?</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<p>Watch out for warning or error messages that might be generated by the functions you are using. In particular when using Rstudio with the inline chunk output you might miss the multiple output tabs (the first <code>R Console tab</code> in addition to the <code>tbl_df</code> tab).</p>
+In addition, <code>readr</code> provides the function <code>problems()</code> that lets you test objects imported by <code>readr</code>: <code>problems(my_imported_object)</code>
+</div>
+</div>
+</div>
+<ul>
+<li>According to the message, what is the problem?</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-7">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-7" class="panel-collapse collapse">
+<div class="panel-body">
+We know that <code>readr::read_csv()</code> guesses the column types by analysing the first 1000 rows. Here <code>problems(challenge)</code> shows us that starting on row 1001, <code>read_csv()</code> tries to fill a non-integer number (double) into the column <code>x</code> which accepts only integers.
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Don’t let <code>read_csv()</code> guess the columns and use the <code>col_types</code> argument to specify the types of each column yourself.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-8">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-8" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code># We use the col_types argument to tell read_csv() that:
+#  x contains double (non-integer numbers)
+#  y contains characters
+
+challenge &lt;- read_csv(&quot;data/challenge.csv&quot;,
+                      col_types = cols(x = col_double(),
+                                       y = col_character()))
+problems(challenge)</code></pre>
+<pre><code>## # tibble [0 x 4]
+## # ... with 4 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;</code></pre>
+<pre class="r"><code># Nothing is listed in problem(challenge): Everything seems fine</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Now, we were able to load the data without any warning. Nevertheless, we would like to inspect the <code>challenge</code> tibble around the critical row 1000.</p>
+<ul>
+<li>Extract and show the rows 996 to 1005 from the tibble <code>challenge</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+You can have a look at a subset of a data frame (or tibble) by using brackets and the row indices. Every cell in a data frame can be accessed using its 2D coordinates: the row <code>row</code> and column <code>col</code>. Just use square brackets like this: <code>my_df[row, col]</code>.<br />
+To extract a complete row, just leave the column coordinate empty like this: <code>my_df[row,]</code>.
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+Think about using <code>:</code> to generate the number sequence.
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-11">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-11" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>challenge[996:1005,]</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##               x          y
+##           &lt;dbl&gt;      &lt;chr&gt;
+##  1 4971.0000000       &lt;NA&gt;
+##  2 1843.0000000       &lt;NA&gt;
+##  3 1687.0000000       &lt;NA&gt;
+##  4 4569.0000000       &lt;NA&gt;
+##  5 4548.0000000       &lt;NA&gt;
+##  6    0.2383798 2015-01-16
+##  7    0.4116800 2018-05-18
+##  8    0.7460717 2015-09-05
+##  9    0.7234506 2012-11-28
+## 10    0.6145241 2020-01-13</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Do you think that the guessed data types are still optimal? Could you enhance the import of the challenge dataset?</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-12">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-12" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code># Yes, we can enhance the import and force read_csv to detect y as being a date
+challenge &lt;- read_csv(&quot;data/challenge.csv&quot;,
+                      col_types = cols(
+                        x = col_double(),
+                        y = col_date()
+                      ))
+
+challenge[996:1005,]</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##               x          y
+##           &lt;dbl&gt;     &lt;date&gt;
+##  1 4971.0000000         NA
+##  2 1843.0000000         NA
+##  3 1687.0000000         NA
+##  4 4569.0000000         NA
+##  5 4548.0000000         NA
+##  6    0.2383798 2015-01-16
+##  7    0.4116800 2018-05-18
+##  8    0.7460717 2015-09-05
+##  9    0.7234506 2012-11-28
+## 10    0.6145241 2020-01-13</code></pre>
+<pre class="r"><code># The tibble header shows us that x is imported as double and y as date
+# We could confirm this using `str(challenge)`</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>In general, <code>read_csv()</code> is able to detect the types accurately analysing the first 1000 rows. It is possible to adjust the number of analysed rows in the <code>read_csv()</code> function.</p>
+<ul>
+<li>Adjust the <code>guess_max</code> argument in <code>read_csv()</code> to increase the chances of guessing the column types correctly.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-13">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-13" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>read_csv(&quot;data/challenge.csv&quot;, guess_max = 1001) %&gt;%
+  readr::spec()</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   x = col_double(),
+##   y = col_date(format = &quot;&quot;)
+## )</code></pre>
+<pre><code>## cols(
+##   x = col_double(),
+##   y = col_date(format = &quot;&quot;)
+## )</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Now let’s consider that the first 1000 data entries are corrupt and that we are not interested in importing them.</p>
+<ul>
+<li>Read the file again omitting these entries and watch out the column names.</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(188, 143, 143, 0.3); border:2px solid rgba(188, 143, 143, 1);">
+<div class="panel-heading" style="background-color:rgba(188, 143, 143, 1);">
+<h4 class="panel-title">
+Bonus question
+</h4>
+</div>
+<div class="panel-body">
+In order to keep the the column names found in the original dataset (which are still valid), you might want to use <code>names()</code> to extract them from your tibble.
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-15">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-15" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>read_csv(&quot;data/challenge.csv&quot;, skip = 1001, col_names = c(&quot;x&quot;, &quot;y&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   x = col_double(),
+##   y = col_date(format = &quot;&quot;)
+## )</code></pre>
+<pre><code>## # A tibble: 1,000 x 2
+##            x          y
+##        &lt;dbl&gt;     &lt;date&gt;
+##  1 0.2383798 2015-01-16
+##  2 0.4116800 2018-05-18
+##  3 0.7460717 2015-09-05
+##  4 0.7234506 2012-11-28
+##  5 0.6145241 2020-01-13
+##  6 0.4739806 2016-04-17
+##  7 0.5784610 2011-05-14
+##  8 0.2415937 2020-07-18
+##  9 0.1143787 2011-04-30
+## 10 0.2983446 2010-05-11
+## # ... with 990 more rows</code></pre>
+<pre class="r"><code># Or for the &quot;Bonus&quot; question:
+read_csv(&quot;data/challenge.csv&quot;, skip = 1001, col_names = names(challenge))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   x = col_double(),
+##   y = col_date(format = &quot;&quot;)
+## )</code></pre>
+<pre><code>## # A tibble: 1,000 x 2
+##            x          y
+##        &lt;dbl&gt;     &lt;date&gt;
+##  1 0.2383798 2015-01-16
+##  2 0.4116800 2018-05-18
+##  3 0.7460717 2015-09-05
+##  4 0.7234506 2012-11-28
+##  5 0.6145241 2020-01-13
+##  6 0.4739806 2016-04-17
+##  7 0.5784610 2011-05-14
+##  8 0.2415937 2020-07-18
+##  9 0.1143787 2011-04-30
+## 10 0.2983446 2010-05-11
+## # ... with 990 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="motor-trend-car-road-tests" class="section level3">
+<h3>Motor Trend Car Road Tests</h3>
+<p>Download the <a href="data/car_road_test.csv"><code>car_road_test.csv</code></a> dataset to your project folder.</p>
+<ul>
+<li>It seems that the file is a <em>comma separated values</em> file. Let’s try to open it using <code>read_csv()</code> again. What do you see?</li>
+<li>Use the function <code>read_delim()</code> and adjust its <code>delim</code> argument to import the file.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-16">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-16" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code># read_file(&quot;data/car_road_test.csv&quot;)
+read_csv(&quot;data/car_road_test.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   `mpg;cyl;disp;hp;drat;wt;qsec;vs;am;gear;carb` = col_character()
+## )</code></pre>
+<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
+## a multiple of vector length (arg 1)</code></pre>
+<pre><code>## Warning: 32 parsing failures.
+## row # A tibble: 5 x 5 col     row   col  expected    actual                     file expected   &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;                    &lt;chr&gt; actual 1     1  &lt;NA&gt; 1 columns 4 columns &#39;data/car_road_test.csv&#39; file 2     2  &lt;NA&gt; 1 columns 4 columns &#39;data/car_road_test.csv&#39; row 3     3  &lt;NA&gt; 1 columns 5 columns &#39;data/car_road_test.csv&#39; col 4     4  &lt;NA&gt; 1 columns 5 columns &#39;data/car_road_test.csv&#39; expected 5     5  &lt;NA&gt; 1 columns 5 columns &#39;data/car_road_test.csv&#39;
+## ... ................. ... .......................................................... ........ .......................................................... ...... .......................................................... .... .......................................................... ... .......................................................... ... .......................................................... ........ ..........................................................
+## See problems(...) for more details.</code></pre>
+<pre><code>## # A tibble: 32 x 1
+##    `mpg;cyl;disp;hp;drat;wt;qsec;vs;am;gear;carb`
+##                                             &lt;chr&gt;
+##  1                                 21;6;160;110;3
+##  2                                 21;6;160;110;3
+##  3                                             22
+##  4                                             21
+##  5                                             18
+##  6                                             18
+##  7                                             14
+##  8                                             24
+##  9                                             22
+## 10                                             19
+## # ... with 22 more rows</code></pre>
+<pre class="r"><code># We can see that read_csv() fails and that the values are separated by semi-columns (;)
+
+read_delim(&quot;data/car_road_test.csv&quot;, delim = &quot;;&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   mpg = col_number(),
+##   cyl = col_integer(),
+##   disp = col_number(),
+##   hp = col_integer(),
+##   drat = col_number(),
+##   wt = col_number(),
+##   qsec = col_number(),
+##   vs = col_integer(),
+##   am = col_integer(),
+##   gear = col_integer(),
+##   carb = col_integer()
+## )</code></pre>
+<pre><code>## # A tibble: 32 x 11
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1    21     6   160   110    39   262  1646     0     1     4     4
+##  2    21     6   160   110    39  2875  1702     0     1     4     4
+##  3   228     4   108    93   385   232  1861     1     1     4     1
+##  4   214     6   258   110   308  3215  1944     1     0     3     1
+##  5   187     8   360   175   315   344  1702     0     0     3     2
+##  6   181     6   225   105   276   346  2022     1     0     3     1
+##  7   143     8   360   245   321   357  1584     0     0     3     4
+##  8   244     4  1467    62   369   319    20     1     0     4     2
+##  9   228     4  1408    95   392   315   229     1     0     4     2
+## 10   192     6  1676   123   392   344   183     1     0     4     4
+## # ... with 22 more rows</code></pre>
+<pre class="r"><code># It seems that we were able to import the semi-column separated values file</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>The first column <code>mpg</code> contains the distance in U.S. miles the car can travel for each gallon (<em>miles per gallon</em>).
+<ul>
+<li>Use the <code>summarise()</code> function you already know to calculate the mean <em>miles per gallon</em> for all cars.</li>
+<li>What do you think about the mean value?</li>
+</ul></li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-17">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-17" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>read_delim(&quot;data/car_road_test.csv&quot;, delim = &quot;;&quot;) %&gt;%
+  summarise(mean_mpg = mean(mpg))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   mpg = col_number(),
+##   cyl = col_integer(),
+##   disp = col_number(),
+##   hp = col_integer(),
+##   drat = col_number(),
+##   wt = col_number(),
+##   qsec = col_number(),
+##   vs = col_integer(),
+##   am = col_integer(),
+##   gear = col_integer(),
+##   carb = col_integer()
+## )</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   mean_mpg
+##      &lt;dbl&gt;
+## 1 177.5625</code></pre>
+<pre class="r"><code># 177.5 mpg seems too much and not accurate (1 U.S. Gallon = 3.7 l; 1 mile = 1,6 km).</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p><code>readr</code> tries to detect the appropriate column types. Under the hood, it is 1) reading in the data as text values, 2) trying to guess the type and 3) coercing the text values to the detected types. You can use the function <code>parse_guess()</code> from the <code>readr</code> package to test how a character sequence is processed.</p>
+<div id="testing-parse_guess-quickly" class="section level4">
+<h4>Testing <code>parse_guess()</code> quickly</h4>
+<ul>
+<li>Try to see how <code>parse_guess()</code> detects the following character sequences (surrounded by <code>&quot;</code>).
+<ul>
+<li>A first encoding a non-integer number using a <strong>comma</strong> as a decimal separator (like <code>&quot;1,2&quot;</code>)</li>
+<li>A second encoding a non-integer number using a <strong>dot</strong> as a decimal separator <code>&quot;1.2&quot;</code></li>
+</ul></li>
+<li>Are both results of the same type?</li>
+<li>Are both results identical?</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+The function <code>typeof()</code> is able to tell you the type of your resulting vector
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-19">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-19" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>parse_guess(&quot;1,2&quot;)</code></pre>
+<pre><code>## [1] 12</code></pre>
+<pre class="r"><code>typeof(parse_guess(&quot;1,2&quot;))</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="r"><code>parse_guess(&quot;1.2&quot;)</code></pre>
+<pre><code>## [1] 1.2</code></pre>
+<pre class="r"><code>typeof(parse_guess(&quot;1.2&quot;))</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="r"><code># Both sequences are detected as numbers (double) but only the dot decimal separator is recognized.
+# When using a comma, &quot;1,2&quot; is recognized as being 12. </code></pre>
+</div>
+</div>
+</div>
+</div>
+<p><em>You can skip the bonus question and continue with the question <a href="#locale-question">introducing the <code>locale()</code> function</a></em></p>
+</div>
+<div id="alternative-bonus-question-testing-parse_guess-on-a-subset-of-the-mpg-column" class="section level4 bonus">
+<h4>Alternative bonus question: Testing <code>parse_guess()</code> on a subset of the <code>mpg</code> column</h4>
+<p>Instead of testing <code>parse_guess()</code> on a simple character sequence we can extract a subset of our real data contained in the column <code>mpg</code>.</p>
+<ul>
+<li>read the file again importing the <code>mpg</code> column <strong>as text</strong></li>
+<li>read the file again importing <strong>all columns as text</strong> (instead of defining each single column you can use the column name <code>.default</code> to define the default column type). Store the result in an object called <code>car_data_text</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+Importing a data set as text values can often help you in figuring out possible problems: it is the first step the readr function will do and stopping any further processing allows you to access the “raw data”.
+</div>
+</div>
+</div>
+<ul>
+<li>extract the <code>mpg</code> column as a vector (columns can be accessed using the <code>$</code> sign: <code>object$column</code>) and store the result in an object called <code>v_mpg</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-21">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-21" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>read_delim(&quot;data/car_road_test.csv&quot;, delim = &quot;;&quot;,
+           col_types = cols(mpg = &quot;c&quot;))</code></pre>
+<pre><code>## # A tibble: 32 x 11
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##    &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1    21     6   160   110    39   262  1646     0     1     4     4
+##  2    21     6   160   110    39  2875  1702     0     1     4     4
+##  3  22,8     4   108    93   385   232  1861     1     1     4     1
+##  4  21,4     6   258   110   308  3215  1944     1     0     3     1
+##  5  18,7     8   360   175   315   344  1702     0     0     3     2
+##  6  18,1     6   225   105   276   346  2022     1     0     3     1
+##  7  14,3     8   360   245   321   357  1584     0     0     3     4
+##  8  24,4     4  1467    62   369   319    20     1     0     4     2
+##  9  22,8     4  1408    95   392   315   229     1     0     4     2
+## 10  19,2     6  1676   123   392   344   183     1     0     4     4
+## # ... with 22 more rows</code></pre>
+<pre class="r"><code>car_data_text &lt;- read_delim(&quot;data/car_road_test.csv&quot;, delim = &quot;;&quot;,
+           col_types = cols(.default = &quot;c&quot;))
+
+v_mpg &lt;- car_data_text$mpg</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Create 2 vectors <code>v1</code> and <code>v2</code> that will contain the first 4 text values of the <code>mpg</code> column:
+<ul>
+<li>Select the 4 first entries of <code>v_mpg</code> and store them in <code>v1</code></li>
+<li>Create a vector <code>v2</code> containing the same text elements but changing the commas to dots.</li>
+</ul></li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<p>R base provides a function <code>sub()</code> allowing you to substitute text: For example, if you would like to replace <em>pink</em> by <em>green</em> in the sentence <code>apples are pink</code>, you can use <code>sub()</code>:</p>
+<code>sub(&quot;pink&quot;, &quot;green&quot;, &quot;apples are pink&quot;)</code>
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-23">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-23" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>v1 &lt;- v_mpg[1:4]
+v1</code></pre>
+<pre><code>## [1] &quot;21&quot;   &quot;21&quot;   &quot;22,8&quot; &quot;21,4&quot;</code></pre>
+<pre class="r"><code>v2 &lt;- sub(&quot;,&quot;, &quot;.&quot;, v1)
+v2</code></pre>
+<pre><code>## [1] &quot;21&quot;   &quot;21&quot;   &quot;22.8&quot; &quot;21.4&quot;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Use the function <code>parse_guess()</code> to test the detection on both vectors <code>v1</code> and <code>v2</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-24">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-24" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>parse_guess(v1)</code></pre>
+<pre><code>## [1]  21  21 228 214</code></pre>
+<pre class="r"><code>typeof(parse_guess(v1))</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="r"><code>parse_guess(v2)</code></pre>
+<pre><code>## [1] 21.0 21.0 22.8 21.4</code></pre>
+<pre class="r"><code>typeof(parse_guess(v2))</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<pre class="r"><code># Both sequences are detected as numbers (double) but only the dot decimal separator is recognized.
+# When using a comma, &quot;22,8&quot; is recognized as being 228. </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="locale-question" class="section level4">
+<h4>Setting the <code>locale</code> argument</h4>
+<ul>
+<li>We need to tell <code>parse_guess()</code> that our numbers are encoded using <strong>commas as a decimal separator</strong> (a notation common in Europe). Look at the help of <code>parse_guess()</code> (type in <code>?parse_guess</code>) and check which <strong>argument</strong> you should adjust.</li>
+<li>You just read that <code>readr</code> is configured to be US-centric by default (the decimal separator being <code>.</code> and thousands being grouped using <code>,</code>). You can override these settings with the help of the <code>locale()</code> function.
+<ul>
+<li>To test the <code>locale()</code> function, simply execute it and see how the numbers are formatted. Look at the help page <code>?locale</code> to identify how to adjust the decimal separator.</li>
+<li>Adjust the <code>locale</code> argument in <code>parse_guess()</code> to the function <code>locale()</code> (with the configured setting) and decode a character containing a comma separated decimal value (for example <code>&quot;1,2&quot;</code> or use <code>v1</code> if you did the bonus question).</li>
+</ul></li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-25">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-25" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>locale()</code></pre>
+<pre><code>## &lt;locale&gt;
+## Numbers:  123,456.78
+## Formats:  %AD / %AT
+## Timezone: UTC
+## Encoding: UTF-8
+## &lt;date_names&gt;
+## Days:   Sunday (Sun), Monday (Mon), Tuesday (Tue), Wednesday (Wed),
+##         Thursday (Thu), Friday (Fri), Saturday (Sat)
+## Months: January (Jan), February (Feb), March (Mar), April (Apr), May
+##         (May), June (Jun), July (Jul), August (Aug), September
+##         (Sep), October (Oct), November (Nov), December (Dec)
+## AM/PM:  AM/PM</code></pre>
+<pre class="r"><code>locale(decimal_mark = &quot;,&quot;)</code></pre>
+<pre><code>## &lt;locale&gt;
+## Numbers:  123.456,78
+## Formats:  %AD / %AT
+## Timezone: UTC
+## Encoding: UTF-8
+## &lt;date_names&gt;
+## Days:   Sunday (Sun), Monday (Mon), Tuesday (Tue), Wednesday (Wed),
+##         Thursday (Thu), Friday (Fri), Saturday (Sat)
+## Months: January (Jan), February (Feb), March (Mar), April (Apr), May
+##         (May), June (Jun), July (Jul), August (Aug), September
+##         (Sep), October (Oct), November (Nov), December (Dec)
+## AM/PM:  AM/PM</code></pre>
+<pre class="r"><code>parse_guess(&quot;1,2&quot;)</code></pre>
+<pre><code>## [1] 12</code></pre>
+<pre class="r"><code>parse_guess(v1)</code></pre>
+<pre><code>## [1]  21  21 228 214</code></pre>
+<pre class="r"><code>parse_guess(&quot;1,2&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+<pre><code>## [1] 1.2</code></pre>
+<pre class="r"><code>parse_guess(v1, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+<pre><code>## [1] 21.0 21.0 22.8 21.4</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>The help page of the <code>readr</code> functions (<em>e.g.</em> <code>?read_delim</code>) instructs you that you can also override a <code>locale</code> argument. Adjust it as you did for <code>parse_guess()</code> and import the <code>car_data</code> object again.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-26">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-26" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>car_data &lt;- read_delim(&quot;data/car_road_test.csv&quot;, delim = &quot;;&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   mpg = col_double(),
+##   cyl = col_integer(),
+##   disp = col_double(),
+##   hp = col_integer(),
+##   drat = col_double(),
+##   wt = col_double(),
+##   qsec = col_double(),
+##   vs = col_integer(),
+##   am = col_integer(),
+##   gear = col_integer(),
+##   carb = col_integer()
+## )</code></pre>
+<pre class="r"><code>car_data</code></pre>
+<pre><code>## # A tibble: 32 x 11
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  21.0     6 160.0   110  3.90 2.620 16.46     0     1     4     4
+##  2  21.0     6 160.0   110  3.90 2.875 17.02     0     1     4     4
+##  3  22.8     4 108.0    93  3.85 2.320 18.61     1     1     4     1
+##  4  21.4     6 258.0   110  3.08 3.215 19.44     1     0     3     1
+##  5  18.7     8 360.0   175  3.15 3.440 17.02     0     0     3     2
+##  6  18.1     6 225.0   105  2.76 3.460 20.22     1     0     3     1
+##  7  14.3     8 360.0   245  3.21 3.570 15.84     0     0     3     4
+##  8  24.4     4 146.7    62  3.69 3.190 20.00     1     0     4     2
+##  9  22.8     4 140.8    95  3.92 3.150 22.90     1     0     4     2
+## 10  19.2     6 167.6   123  3.92 3.440 18.30     1     0     4     4
+## # ... with 22 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Now that you managed to use <code>read_delim()</code> to import this dataset, try to use <code>read_csv2()</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(188, 143, 143, 0.3); border:2px solid rgba(188, 143, 143, 1);">
+<div class="panel-heading" style="background-color:rgba(188, 143, 143, 1);">
+<h4 class="panel-title">
+Bonus question
+</h4>
+</div>
+<div class="panel-body">
+<p>To keep track of this exercise and remind you the equivalence between <code>read_csv2()</code> and <code>read_delim()</code>, insert an <em>R</em> code chunk and write down how you would call <code>read_delim()</code> to behave like <code>read_csv2()</code>.<br />
+You can use <code>#</code> in your <em>R</em> code to write down additional comments to describe your reminder.</p>
+Here we <strong>don’t want to execute this chunk</strong> but just <strong>show the source code</strong> as a reminder in our output document. Adjust the chunk options accordingly.
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-28">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-28" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>read_csv2(my_file)
+# is equivalent to
+read_delim(my_file, delim = &quot;;&quot;, locale = locale(decimal_mark = &quot;,&quot;))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>read the file again and skip all columns except <em>miles per gallon</em>, <em>cylinder</em> and the <em>weight</em> (<code>mpg</code>, <code>cyl</code> and <code>wt</code>).</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+Instead of skipping multiple columns you can replace <code>cols()</code> by <code>cols_only()</code> to import only the specified columns.
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-30">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-30" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>read_delim(&quot;data/car_road_test.csv&quot;,
+           delim = &quot;;&quot;,
+           locale = locale(decimal_mark = &quot;,&quot;),
+           col_types = cols_only(mpg = col_double(),
+                                 cyl = col_integer(),
+                                 wt = col_double()))</code></pre>
+<pre><code>## # A tibble: 32 x 3
+##      mpg   cyl    wt
+##    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  21.0     6 2.620
+##  2  21.0     6 2.875
+##  3  22.8     4 2.320
+##  4  21.4     6 3.215
+##  5  18.7     8 3.440
+##  6  18.1     6 3.460
+##  7  14.3     8 3.570
+##  8  24.4     4 3.190
+##  9  22.8     4 3.150
+## 10  19.2     6 3.440
+## # ... with 22 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class = "footer">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="http://bio.uni.lu" target="_blank"><img src="img/lsru.png"></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      Copyright © <a href="http://www.uni.lu" target="_blank">Université du Luxembourg</a> 2017. All rights reserved.
+    </div>
+    <div class="col-md-4">
+      <!-- <a href="http://bio.uni.lu"><img src ="LSRU.png"></a> -->
+      <ul class="social-links">
+        <li><a href="https://www.facebook.com/uni.lu"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/uni_lu"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="https://www.linkedin.com/school/166650"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="http://www.youtube.com/user/luxuni"><i class="fa fa-youtube"></i></a></li>
+        <li></li>
+      </ul>
+    </div>    
+  </div>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

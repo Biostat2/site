@@ -1,0 +1,2579 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data transformation</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+  <meta name="date" content="2017-10-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Data transformation',
+                        subtitle: 'dplyr',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture06_dplyr_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  /* bg-pink2 colour */
+  
+  .bg-pink2 {
+    background-color: #EEA9B8;
+    color: #000000;
+  }
+  
+  .bg-pink2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-pink2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-pink2 {
+    border: 2px solid #77545C;
+  }
+  
+  .box.bg-pink2 > h3:first-child {
+    background-color: #77545C;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-pink2::before {
+    color : #77545C;
+  }
+   
+  blockquote.bg-pink2 {
+    color: #000000;
+    border-color: #77545C;
+  }
+  
+  .box.bg-pink2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-pink2 > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-pink2 > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-pink2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-pink2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-pink2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-aquamarine2 colour */
+  
+  .bg-aquamarine2 {
+    background-color: #76EEC6;
+    color: #000000;
+  }
+  
+  .bg-aquamarine2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-aquamarine2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-aquamarine2 {
+    border: 2px solid #3B7763;
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child {
+    background-color: #3B7763;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-aquamarine2::before {
+    color : #3B7763;
+  }
+   
+  blockquote.bg-aquamarine2 {
+    color: #000000;
+    border-color: #3B7763;
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-aquamarine2 > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-aquamarine2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-aquamarine2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-aquamarine2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-grayblue colour */
+  
+  .bg-grayblue {
+    background-color: #BFCCD7;
+    color: #000000;
+  }
+  
+  .bg-grayblue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-grayblue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-grayblue {
+    border: 2px solid #5F666B;
+  }
+  
+  .box.bg-grayblue > h3:first-child {
+    background-color: #5F666B;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-grayblue::before {
+    color : #5F666B;
+  }
+   
+  blockquote.bg-grayblue {
+    color: #000000;
+    border-color: #5F666B;
+  }
+  
+  .box.bg-grayblue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-grayblue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-grayblue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-grayblue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-grayblue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-grayblue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-grgold colour */
+  
+  .bg-grgold {
+    background-color: #008B45;
+    color: #FFFFFF;
+  }
+  
+  .bg-grgold a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-grgold a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-grgold {
+    border: 2px solid #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child {
+    background-color: #004522;
+    color: #FFD700;
+  }
+                          
+  blockquote.bg-grgold::before {
+    color : #004522;
+  }
+   
+  blockquote.bg-grgold {
+    color: #FFFFFF;
+    border-color: #004522;
+  }
+  
+  .box.bg-grgold > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-grgold > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-grgold > h3:first-child > a:hover {
+    color: #FFD700 !important;
+  }
+    
+  slide.bg-grgold > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-grgold > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-grgold code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  /* bg-yellow2 colour */
+  
+  .bg-yellow2 {
+    background-color: #EEB422;
+    color: #000000;
+  }
+  
+  .bg-yellow2 a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow2 a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow2 {
+    border: 2px solid #EEB422;
+  }
+  
+  .box.bg-yellow2 > h3:first-child {
+    background-color: #EEB422;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow2::before {
+    color : #EEB422;
+  }
+   
+  blockquote.bg-yellow2 {
+    color: #000000;
+    border-color: #EEB422;
+  }
+  
+  .box.bg-yellow2 > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow2 > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow2 > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow2 > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow2 > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow2 code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-orange colour */
+  
+  .bg-orange {
+    background-color: #FFA500;
+    color: #000000;
+  }
+  
+  .bg-orange a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-orange a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-orange {
+    border: 2px solid #7F5200;
+  }
+  
+  .box.bg-orange > h3:first-child {
+    background-color: #7F5200;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-orange::before {
+    color : #7F5200;
+  }
+   
+  blockquote.bg-orange {
+    color: #000000;
+    border-color: #7F5200;
+  }
+  
+  .box.bg-orange > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-orange > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-orange > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-orange > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-orange > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-orange code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-red colour */
+  
+  .bg-red {
+    background-color: #FFAD99;
+    color: #000000;
+  }
+  
+  .bg-red a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-red a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-red {
+    border: 2px solid #991F00;
+  }
+  
+  .box.bg-red > h3:first-child {
+    background-color: #991F00;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-red::before {
+    color : #991F00;
+  }
+   
+  blockquote.bg-red {
+    color: #000000;
+    border-color: #991F00;
+  }
+  
+  .box.bg-red > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-red > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-red > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-red > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-red > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-red code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-green colour */
+  
+  .bg-green {
+    background-color: #ADEBAD;
+    color: #000000;
+  }
+  
+  .bg-green a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-green a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-green {
+    border: 2px solid #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child {
+    background-color: #1F7A1F;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-green::before {
+    color : #1F7A1F;
+  }
+   
+  blockquote.bg-green {
+    color: #000000;
+    border-color: #1F7A1F;
+  }
+  
+  .box.bg-green > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-green > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-green > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-green > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-green > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-green code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-blue colour */
+  
+  .bg-blue {
+    background-color: #99D6FF;
+    color: #000000;
+  }
+  
+  .bg-blue a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-blue a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-blue {
+    border: 2px solid #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child {
+    background-color: #005C99;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-blue::before {
+    color : #005C99;
+  }
+   
+  blockquote.bg-blue {
+    color: #000000;
+    border-color: #005C99;
+  }
+  
+  .box.bg-blue > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-blue > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-blue > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-blue > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-blue > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-blue code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-yellow colour */
+  
+  .bg-yellow {
+    background-color: #FFEC8B;
+    color: #000000;
+  }
+  
+  .bg-yellow a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-yellow a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-yellow {
+    border: 2px solid #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child {
+    background-color: #EEB422;
+    color: #000000;
+  }
+                          
+  blockquote.bg-yellow::before {
+    color : #EEB422;
+  }
+   
+  blockquote.bg-yellow {
+    color: #000000;
+    border-color: #EEB422;
+  }
+  
+  .box.bg-yellow > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-yellow > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-yellow > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-yellow > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-yellow > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-yellow code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-gray colour */
+  
+  .bg-gray {
+    background-color: #FAFAFA;
+    color: #000000;
+  }
+  
+  .bg-gray a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-gray a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-gray {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-gray::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-gray {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-gray > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-gray > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-gray > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-gray > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-gray > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-gray code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-white colour */
+  
+  .bg-white {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  
+  .bg-white a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .bg-white a:hover {
+    color: #000000 !important;
+  }
+  
+  .box.bg-white {
+    border: 2px solid #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child {
+    background-color: #CECECE;
+    color: #000000;
+  }
+                          
+  blockquote.bg-white::before {
+    color : #CECECE;
+  }
+   
+  blockquote.bg-white {
+    color: #000000;
+    border-color: #CECECE;
+  }
+  
+  .box.bg-white > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  
+  .box.bg-white > h3:first-child > a {
+    color: rgb(42, 124, 223);
+    border-bottom: 1px solid rgba(42, 124, 223, 0.5);
+  }
+  
+  .box.bg-white > h3:first-child > a:hover {
+    color: #000000 !important;
+  }
+    
+  slide.bg-white > hgroup > h2 {
+    color: rgba(0, 0, 0, 0.8);
+  }
+  
+  slide.bg-white > hgroup > h3 {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .bg-white code {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  /* bg-cobalt colour */
+  
+  .bg-cobalt {
+    background-color: #2B557A;
+    color: #FFFFFF;
+  }
+  
+  .bg-cobalt a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .bg-cobalt a:hover {
+    color: #FFFFFF !important;
+  }
+  
+  .box.bg-cobalt {
+    border: 2px solid #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child {
+    background-color: #002240;
+    color: #FFFFFF;
+  }
+                          
+  blockquote.bg-cobalt::before {
+    color : #002240;
+  }
+   
+  blockquote.bg-cobalt {
+    color: #FFFFFF;
+    border-color: #002240;
+  }
+  
+  .box.bg-cobalt > h3:first-child > code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a {
+    color: rgb(200, 240, 250);
+    border-bottom: 1px solid rgba(200, 240, 250, 0.5);
+  }
+  
+  .box.bg-cobalt > h3:first-child > a:hover {
+    color: #FFFFFF !important;
+  }
+    
+  slide.bg-cobalt > hgroup > h2 {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  slide.bg-cobalt > hgroup > h3 {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .bg-cobalt code {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture06_dplyr_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">11 October 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup class = 'title-bar'><h2>Data transformation </h2><h3> Introduction</h3></hgroup><article  id="data-transformation-introduction" class="smaller build">
+
+<div class = 'box col col-10 offset-1 bg-yellow2'><h3>Preparing data is the most time consuming part of of data analysis</h3><div class = 'box-body'>
+
+</div></div><div class = 'box col col-10 offset-1 bg-blue icon'><h3><code>dplyr</code> is a tool box for working with data in tibbles/data frames</h3><div class = 'box-body'>
+
+<img src='img/00/logo_dplyr.png' title='fig:'/>
+
+<ul>
+<li>The most import data manipulation operations are covered
+
+<ul>
+<li>Selection and manipulation of observation, variables and values</li>
+<li>Summarizing</li>
+<li>Grouping</li>
+<li>Joining and intersecting tibbles</li>
+</ul></li>
+<li>In a workflow typically follows reshaping operations from <code>tidyr</code></li>
+<li>Fast, by writing key pieces in C++ (using Rcpp)</li>
+<li>Standard interfaces to database (<a href='https://github.com/tidyverse/dbplyr' title=''><code>dbplyr</code></a>) or <code>data.table</code> (<a href='https://github.com/hadley/dtplyr' title=''><code>dtplyr</code></a>).</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs3">
+
+<div class = 'box col col-10 offset-1 bg-red icon'><h3>You will learn to:</h3><div class = 'box-body'>
+
+<img src='img/00/kt.png' title='fig:'/>
+
+<ul>
+<li>Learn the basic vocabulary of <code>dplyr</code></li>
+<li>Exercise commands</li>
+<li>Translating questions into data manipulation statements</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>dplyr <a href='https://www.rstudio.com/resources/cheatsheets/' title=''>cheatsheets</a></h2></hgroup><article  id="dplyr-cheatsheets" class="smaller nvs2">
+
+<img src='img/06/dplyr_cheatsheet.png' title='fig:'/>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>dplyr <a href='https://www.rstudio.com/resources/cheatsheets/' title=''>cheatsheets</a></h2></hgroup><article  id="dplyr-cheatsheets-1" class="smaller nvs2">
+
+<img src='img/06/dplyr_cheatsheet_p2.png' title='fig:'/>
+
+<p><a href='http://perso.ens-lyon.fr/lise.vaudor/dplyr/' title=''>http://perso.ens-lyon.fr/lise.vaudor/dplyr/</a></p>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Installation</h2></hgroup><article  id="installation" class="smaller vs2">
+
+<div id="unnamed-chunk-1" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+<code>dplyr</code> is included in the <code>tidyverse</code> package
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>install.packages(&quot;dplyr&quot;)
+# OR
+install.packages(&quot;tidyverse&quot;)</pre></div>
+
+<div id="unnamed-chunk-2" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+<code>biomaRt</code> is part of bioconductor
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>source(&quot;https://bioconductor.org/biocLite.R&quot;)
+biocLite(&quot;biomaRt&quot;)</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Retrieving sample data</h2></hgroup><article  id="retrieving-sample-data" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-blue'><h3>Gene from chromosome 21 from biomaRt</h3><div class = 'box-body'>
+
+<div id="biomart_library" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'># Load the library
+library(biomaRt)
+gene_mart &lt;- useMart(biomart = &quot;ENSEMBL_MART_ENSEMBL&quot;,
+                     host = &quot;www.ensembl.org&quot;)
+gene_set &lt;- useDataset(gene_mart , dataset = &quot;hsapiens_gene_ensembl&quot;)
+
+gene_by_exon &lt;- getBM(mart = gene_set,
+                      attributes = c(&quot;ensembl_gene_id&quot;,
+                                     &quot;ensembl_transcript_id&quot;,
+                                     &quot;chromosome_name&quot;,
+                                     &quot;start_position&quot;,
+                                     &quot;end_position&quot;,
+                                     &quot;hgnc_symbol&quot;,
+                                     &quot;hgnc_id&quot;,
+                                     &quot;strand&quot;,
+                                     &quot;gene_biotype&quot;
+                      ), 
+                      filters = &quot;chromosome_name&quot;,
+                      values = &quot;21&quot;
+)</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>as_tibble()</code> from the tibble package</h2></hgroup><article  id="as_tibble-from-the-tibble-package" class="smaller vs2">
+
+<div class = 'box col col-11 bg-aquamarine2 icon compact-output'><h3>Important with large tables</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-4" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>gene_by_exon &lt;- as_tibble(gene_by_exon)
+gene_by_exon</pre>
+
+<pre ># A tibble: 2,436 x 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+ 1 ENSG00000251972       ENST00000516163              21       25943044
+ 2 ENSG00000274046       ENST00000617336              21        7092616
+ 3 ENSG00000278618       ENST00000621412              21       13724189
+ 4 ENSG00000284448       ENST00000290239              21       33550662
+ 5 ENSG00000275708       ENST00000615959              21        8208473
+ 6 ENSG00000202339       ENST00000365469              21       22205192
+ 7 ENSG00000207098       ENST00000384370              21       32841861
+ 8 ENSG00000283300       ENST00000637157              21       28743208
+ 9 ENSG00000160185       ENST00000635189              21       42403447
+10 ENSG00000160185       ENST00000291535              21       42403447
+# ... with 2,426 more rows, and 5 more variables: end_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</div></div><div class = 'col col-1 middle'>
+
+<img src='img/00/logo_tibble.png' title='fig:'/>
+
+</div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>glimpse()</code> </h2><h3> inspect data frames / tibbles</h3></hgroup><article  id="glimpse-inspect-data-frames-tibbles" class="smaller vs2">
+
+<ul>
+<li>Use <code>glimpse()</code> to show some values and types per column.</li>
+<li>The <em>Environment</em> tab in RStudio tab does it too</li>
+</ul>
+
+<div id="unnamed-chunk-5" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+column&#39; types and glance
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>glimpse(gene_by_exon)</pre>
+
+<pre >Observations: 2,436
+Variables: 9
+$ ensembl_gene_id       &lt;chr&gt; &quot;ENSG00000251972&quot;, &quot;ENSG00000274046&quot;, &quot;E...
+$ ensembl_transcript_id &lt;chr&gt; &quot;ENST00000516163&quot;, &quot;ENST00000617336&quot;, &quot;E...
+$ chromosome_name       &lt;int&gt; 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, ...
+$ start_position        &lt;int&gt; 25943044, 7092616, 13724189, 33550662, 8...
+$ end_position          &lt;int&gt; 25943145, 7092716, 13724274, 33550728, 8...
+$ hgnc_symbol           &lt;chr&gt; &quot;RNU6-123P&quot;, &quot;&quot;, &quot;MIR8069-2&quot;, &quot;MIR6501&quot;,...
+$ hgnc_id               &lt;chr&gt; &quot;HGNC:47086&quot;, &quot;&quot;, &quot;HGNC:50836&quot;, &quot;HGNC:50...
+$ strand                &lt;int&gt; -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1,...
+$ gene_biotype          &lt;chr&gt; &quot;snRNA&quot;, &quot;misc_RNA&quot;, &quot;miRNA&quot;, &quot;miRNA&quot;, &quot;...</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Pipes in R </h2><h3> magrittr</h3></hgroup><article  id="pipes-in-r-magrittr" class="smaller vs1">
+
+<img src='img/06/piping.png' title='fig:'/>
+
+<p>from <a href='https://twitter.com/ParisRaddict/status/781267225420435461' title=''>Romain François</a></p>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>select()</code> </h2><h3> selecting specific <em>columns</em></h3></hgroup><article  id="select-selecting-specific-columns" class="smaller vs2">
+
+<p><code>select()</code> is part of the <code>biomaRt</code> package, need to address <code>dplyr</code>-package with <code>::</code>!</p>
+
+<div id="unnamed-chunk-6" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+select example
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  dplyr::select(hgnc_symbol, chromosome_name, start_position, end_position)</pre>
+
+<pre ># A tibble: 2,436 x 4
+   hgnc_symbol chromosome_name start_position end_position
+         &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
+ 1   RNU6-123P              21       25943044     25943145
+ 2                          21        7092616      7092716
+ 3   MIR8069-2              21       13724189     13724274
+ 4     MIR6501              21       33550662     33550728
+ 5   MIR3648-1              21        8208473      8208652
+ 6    RNU4-45P              21       22205192     22205332
+ 7                          21       32841861     32841995
+ 8                          21       28743208     28743291
+ 9     UBASH3A              21       42403447     42447681
+10     UBASH3A              21       42403447     42447681
+# ... with 2,426 more rows</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>select()</code> </h2><h3> helper functions</h3></hgroup><article  id="select-helper-functions" class="smaller vs2">
+
+<div class = 'box col col-12 bg-blue'><h3><code>select()</code> has many helper functions</h3><div class = 'box-body'>
+
+<ul>
+<li><code>contains()</code>, <code>starts_with()</code>, <code>ends_with()</code> for literal strings</li>
+<li><code>matches()</code> for regex, a future lecture</li>
+<li><code>one_of()</code> variables in a character vector</li>
+<li><code>everything()</code> all remaining variable</li>
+<li>Can be combined</li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>select()</code> </h2><h3> negative selection</h3></hgroup><article  id="select-negative-selection" class="smaller vs1">
+
+<div class = 'box col col-10 offset-1 bg-blue'><h3>Dropping columns</h3><div class = 'box-body'>
+
+<p>We can drop columns by &quot;negating&quot; their names. Since helpers give us column names, we can negate them too.</p>
+
+<div id="unnamed-chunk-7" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  dplyr::select(-strand, -starts_with(&quot;ensembl&quot;),
+                -ends_with(&quot;id&quot;))</pre>
+
+<pre ># A tibble: 2,436 x 5
+   chromosome_name start_position end_position hgnc_symbol   gene_biotype
+             &lt;int&gt;          &lt;int&gt;        &lt;int&gt;       &lt;chr&gt;          &lt;chr&gt;
+ 1              21       25943044     25943145   RNU6-123P          snRNA
+ 2              21        7092616      7092716                   misc_RNA
+ 3              21       13724189     13724274   MIR8069-2          miRNA
+ 4              21       33550662     33550728     MIR6501          miRNA
+ 5              21        8208473      8208652   MIR3648-1          miRNA
+ 6              21       22205192     22205332    RNU4-45P          snRNA
+ 7              21       32841861     32841995                     snoRNA
+ 8              21       28743208     28743291                      snRNA
+ 9              21       42403447     42447681     UBASH3A protein_coding
+10              21       42403447     42447681     UBASH3A protein_coding
+# ... with 2,426 more rows</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>filter()</code> </h2><h3> select <strong>rows</strong></h3></hgroup><article  id="filter-select-rows" class="smaller ">
+
+<ul>
+<li>Take a look at the amyloid precursor protein gene <strong><em>APP</em></strong></li>
+<li><code>everything()</code> is used to place the <code>hgnc_symbol</code> column first</li>
+</ul>
+
+<div class = 'col col-10 compact-output'>
+
+<div id="unnamed-chunk-8" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(hgnc_symbol == &quot;APP&quot;) %&gt;% 
+  dplyr::select(hgnc_symbol, everything())</pre>
+
+<pre ># A tibble: 17 x 9
+   hgnc_symbol ensembl_gene_id ensembl_transcript_id chromosome_name
+         &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;
+ 1         APP ENSG00000142192       ENST00000346798              21
+ 2         APP ENSG00000142192       ENST00000354192              21
+ 3         APP ENSG00000142192       ENST00000348990              21
+ 4         APP ENSG00000142192       ENST00000357903              21
+ 5         APP ENSG00000142192       ENST00000440126              21
+ 6         APP ENSG00000142192       ENST00000439274              21
+ 7         APP ENSG00000142192       ENST00000464867              21
+ 8         APP ENSG00000142192       ENST00000358918              21
+ 9         APP ENSG00000142192       ENST00000448850              21
+10         APP ENSG00000142192       ENST00000415997              21
+11         APP ENSG00000142192       ENST00000491395              21
+12         APP ENSG00000142192       ENST00000474136              21
+13         APP ENSG00000142192       ENST00000463070              21
+14         APP ENSG00000142192       ENST00000548570              21
+15         APP ENSG00000142192       ENST00000462267              21
+16         APP ENSG00000142192       ENST00000466453              21
+17         APP ENSG00000142192       ENST00000359726              21
+# ... with 5 more variables: start_position &lt;int&gt;, end_position &lt;int&gt;,
+#   hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</div><div class = 'box col col-2 bg-yellow2 middle'><h3>Why &gt;1 rows for one gene?</h3><div class = 'box-body'>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>filter()</code> </h2><h3> multiple conditions, AND (<code>&amp;</code>)</h3></hgroup><article  id="filter-multiple-conditions-and" class="smaller vs1">
+
+<ul>
+<li>Comma separated conditions are combined with &#39;&amp;&#39;</li>
+</ul>
+
+<div id="unnamed-chunk-9" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+genes in a particular range
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(start_position &gt; 1.05e7, end_position &lt; 1.1e7) %&gt;% 
+  dplyr::select(hgnc_symbol, start_position, end_position)</pre>
+
+<pre ># A tibble: 9 x 3
+  hgnc_symbol start_position end_position
+        &lt;chr&gt;          &lt;int&gt;        &lt;int&gt;
+1  SLC25A15P4       10612455     10613379
+2     CYCSP41       10576292     10576587
+3 IGHV1OR21-1       10649400     10649835
+4                   10640028     10640338
+5        TPTE       10521553     10606140
+6        TPTE       10521553     10606140
+7        TPTE       10521553     10606140
+8        TPTE       10521553     10606140
+9        TPTE       10521553     10606140</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>filter()</code> </h2><h3> multiple conditions, OR (<code>|</code>)</h3></hgroup><article  id="filter-multiple-conditions-or" class="smaller vs1">
+
+<ul>
+<li>pipe (|) separated conditions are combined with OR</li>
+</ul>
+
+<div id="unnamed-chunk-10" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+genes close to the telomers
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(start_position &lt; 5.02e6 | end_position &gt; 46665124 )</pre>
+
+<pre ># A tibble: 2 x 9
+  ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+            &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+1 ENSG00000212932       ENST00000427757              21       46690764
+2 ENSG00000279493       ENST00000624081              21        5011799
+# ... with 5 more variables: end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;,
+#   hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+<!-- 
+add this example
+
+
+<div id = "unnamed-chunk-11" class = "col col-12 box chunk bg-cobalt  ">
+
+
+```r
+gene_by_exon %>%
+  filter(between(start_position, 1.05e7, 1.1e7)) %>% 
+  dplyr::select(hgnc_symbol, start_position, end_position)
+```
+
+```
+# A tibble: 9 x 3
+  hgnc_symbol start_position end_position
+        <chr>          <int>        <int>
+1  SLC25A15P4       10612455     10613379
+2     CYCSP41       10576292     10576587
+3 IGHV1OR21-1       10649400     10649835
+4                   10640028     10640338
+5        TPTE       10521553     10606140
+6        TPTE       10521553     10606140
+7        TPTE       10521553     10606140
+8        TPTE       10521553     10606140
+9        TPTE       10521553     10606140
+```
+
+
+</div>
+-->
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>filter()</code> </h2><h3> set operations</h3></hgroup><article  id="filter-set-operations" class="smaller vs1">
+
+<ul>
+<li>The two below are equivalent, for larger operations use <code>inner_join()</code></li>
+</ul>
+
+<div class = 'col col-12 compact-output'>
+
+<div id="unnamed-chunk-12" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+is.element()
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(is.element(hgnc_symbol, c(&quot;AATBC&quot;, &quot;AIRE&quot;))) %&gt;%
+  dplyr::select(hgnc_symbol:strand)</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 8 x 3
+  hgnc_symbol    hgnc_id strand
+        &lt;chr&gt;      &lt;chr&gt;  &lt;int&gt;
+1        AIRE   HGNC:360      1
+2        AIRE   HGNC:360      1
+3        AIRE   HGNC:360      1
+4        AIRE   HGNC:360      1
+5        AIRE   HGNC:360      1
+6       AATBC HGNC:51526     -1
+7       AATBC HGNC:51526     -1
+8       AATBC HGNC:51526     -1</pre></div></div>
+
+</div><div class = 'col col-12 compact-output'>
+
+<div id="unnamed-chunk-13" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+infix <code>%in%</code>
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(hgnc_symbol %in% c(&quot;AATBC&quot;, &quot;AIRE&quot;)) %&gt;%
+    dplyr::select(hgnc_symbol:strand)</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 8 x 3
+  hgnc_symbol    hgnc_id strand
+        &lt;chr&gt;      &lt;chr&gt;  &lt;int&gt;
+1        AIRE   HGNC:360      1
+2        AIRE   HGNC:360      1
+3        AIRE   HGNC:360      1
+4        AIRE   HGNC:360      1
+5        AIRE   HGNC:360      1
+6       AATBC HGNC:51526     -1
+7       AATBC HGNC:51526     -1
+8       AATBC HGNC:51526     -1</pre></div></div>
+
+</div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>arrange()</code> </h2><h3> sort columns</h3></hgroup><article  id="arrange-sort-columns" class="smaller ">
+
+<div class = 'box col col-12 bg-yellow compact-output'><h3>perform a nested sorting of all genes:</h3><div class = 'box-body'>
+
+<ol>
+<li>remove empty strings in gene symbols</li>
+<li>hgnc_symbol</li>
+<li>ensembl_transcript</li>
+</ol>
+
+<div id="unnamed-chunk-14" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(hgnc_symbol != &quot;&quot;) %&gt;%
+  arrange(hgnc_symbol, ensembl_transcript_id) %&gt;% 
+  dplyr::select(hgnc_symbol, ensembl_transcript_id, everything())</pre>
+
+<pre ># A tibble: 1,985 x 9
+   hgnc_symbol ensembl_transcript_id ensembl_gene_id chromosome_name
+         &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+ 1       AATBC       ENST00000400385 ENSG00000215458              21
+ 2       AATBC       ENST00000437258 ENSG00000215458              21
+ 3       AATBC       ENST00000448247 ENSG00000215458              21
+ 4      ABCC13       ENST00000429114 ENSG00000243064              21
+ 5      ABCC13       ENST00000463099 ENSG00000243064              21
+ 6      ABCC13       ENST00000467409 ENSG00000243064              21
+ 7      ABCC13       ENST00000471902 ENSG00000243064              21
+ 8      ABCC13       ENST00000481582 ENSG00000243064              21
+ 9      ABCC13       ENST00000482980 ENSG00000243064              21
+10       ABCG1       ENST00000343687 ENSG00000160179              21
+# ... with 1,975 more rows, and 5 more variables: start_position &lt;int&gt;,
+#   end_position &lt;int&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>arrange()</code> </h2><h3> <code>desc</code> to reverse sort columns</h3></hgroup><article  id="arrange-desc-to-reverse-sort-columns" class="smaller vs1">
+
+<ul>
+<li>find the <em>last</em> gene on chromosome 21.</li>
+</ul>
+
+<div id="unnamed-chunk-15" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  arrange(desc(end_position)) %&gt;%
+  dplyr::select(hgnc_symbol, ends_with(&quot;position&quot;))</pre>
+
+<pre ># A tibble: 2,436 x 3
+   hgnc_symbol start_position end_position
+         &lt;chr&gt;          &lt;int&gt;        &lt;int&gt;
+ 1    RPL23AP4       46690764     46691226
+ 2       PRMT2       46635167     46665124
+ 3       PRMT2       46635167     46665124
+ 4       PRMT2       46635167     46665124
+ 5       PRMT2       46635167     46665124
+ 6       PRMT2       46635167     46665124
+ 7       PRMT2       46635167     46665124
+ 8       PRMT2       46635167     46665124
+ 9       PRMT2       46635167     46665124
+10       PRMT2       46635167     46665124
+# ... with 2,426 more rows</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Verbs for inspecting data</h2></hgroup><article  id="verbs-for-inspecting-data" class="smaller vs2">
+
+<div class = 'box col col-10 offset-1 bg-blue'><h3>summary</h3><div class = 'box-body'>
+
+<ul>
+<li><code>as_tibble()</code> to convert to a tibble</li>
+<li><code>glimpse()</code> - some of each column</li>
+<li><code>filter()</code> - subsetting
+
+<ul>
+<li>AND/OR conditions</li>
+</ul></li>
+<li><code>arrange()</code> - sorting (<code>desc</code> to reverse the sort)</li>
+<li><code>select()</code> - picking (and omiting) columns
+
+<ul>
+<li>helpers</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>columns transformation</h2></hgroup><article  id="columns-transformation" class="smaller ">
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>rename()</code> </h2><h3> renaming columns</h3></hgroup><article  id="rename-renaming-columns" class="smaller vs1">
+
+<ul>
+<li>rename columns with <code>rename(new_name = old_name)</code>.
+
+<ul>
+<li>to keep the order correct, read/remember the renaming <code>=</code> as &quot;was&quot;.</li>
+<li>rename will replace column names</li>
+</ul></li>
+</ul>
+
+<div id="unnamed-chunk-16" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  rename(stop = end_position, start = start_position)</pre>
+
+<pre ># A tibble: 2,436 x 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name    start     stop
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+ 1 ENSG00000251972       ENST00000516163              21 25943044 25943145
+ 2 ENSG00000274046       ENST00000617336              21  7092616  7092716
+ 3 ENSG00000278618       ENST00000621412              21 13724189 13724274
+ 4 ENSG00000284448       ENST00000290239              21 33550662 33550728
+ 5 ENSG00000275708       ENST00000615959              21  8208473  8208652
+ 6 ENSG00000202339       ENST00000365469              21 22205192 22205332
+ 7 ENSG00000207098       ENST00000384370              21 32841861 32841995
+ 8 ENSG00000283300       ENST00000637157              21 28743208 28743291
+ 9 ENSG00000160185       ENST00000635189              21 42403447 42447681
+10 ENSG00000160185       ENST00000291535              21 42403447 42447681
+# ... with 2,426 more rows, and 4 more variables: hgnc_symbol &lt;chr&gt;,
+#   hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>mutate()</code> </h2><h3> add columns</h3></hgroup><article  id="mutate-add-columns" class="smaller build">
+
+<div class = 'box col col-12 bg-blue compact-output'><h3>gene length</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-17" class="col col-12 box chunk bg-cobalt">
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  mutate(length = end_position - start_position) %&gt;% 
+  dplyr::select(hgnc_symbol, length)  </pre></div>
+
+<div class="col col-5 r-output">
+<pre ># A tibble: 2,436 x 2
+   hgnc_symbol length
+         &lt;chr&gt;  &lt;int&gt;
+ 1   RNU6-123P    101
+ 2                100
+ 3   MIR8069-2     85
+ 4     MIR6501     66
+ 5   MIR3648-1    179
+ 6    RNU4-45P    140
+ 7                134
+ 8                 83
+ 9     UBASH3A  44234
+10     UBASH3A  44234
+# ... with 2,426 more rows</pre></div></div>
+
+</div></div><div class = 'box col col-12 bg-blue compact-output'><h3>new variables can be used right away</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-18" class="col col-12 box chunk bg-cobalt">
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  mutate(length = end_position - start_position,
+         codons = length %% 3 == 0) %&gt;% 
+  dplyr::select(hgnc_symbol, length, codons)  </pre></div>
+
+<div class="col col-5 r-output">
+<pre ># A tibble: 2,436 x 3
+   hgnc_symbol length codons
+         &lt;chr&gt;  &lt;int&gt;  &lt;lgl&gt;
+ 1   RNU6-123P    101  FALSE
+ 2                100  FALSE
+ 3   MIR8069-2     85  FALSE
+ 4     MIR6501     66   TRUE
+ 5   MIR3648-1    179  FALSE
+ 6    RNU4-45P    140  FALSE
+ 7                134  FALSE
+ 8                 83  FALSE
+ 9     UBASH3A  44234  FALSE
+10     UBASH3A  44234  FALSE
+# ... with 2,426 more rows</pre></div></div>
+
+<!-- add filter(codons) then filter(!codon) -->
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>mutate()</code> </h2><h3> replace columns</h3></hgroup><article  id="mutate-replace-columns" class="smaller vs1">
+
+<div class = 'box col col-12 bg-blue compact-output'><h3>gene coordinates in Mb</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-19" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  mutate(start_position = start_position / 1e6,
+         end_position   = end_position / 1e6) %&gt;% 
+  dplyr::select(hgnc_symbol, ends_with(&quot;position&quot;))  </pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 2,436 x 3
+   hgnc_symbol start_position end_position
+         &lt;chr&gt;          &lt;dbl&gt;        &lt;dbl&gt;
+ 1   RNU6-123P      25.943044    25.943145
+ 2                   7.092616     7.092716
+ 3   MIR8069-2      13.724189    13.724274
+ 4     MIR6501      33.550662    33.550728
+ 5   MIR3648-1       8.208473     8.208652
+ 6    RNU4-45P      22.205192    22.205332
+ 7                  32.841861    32.841995
+ 8                  28.743208    28.743291
+ 9     UBASH3A      42.403447    42.447681
+10     UBASH3A      42.403447    42.447681
+# ... with 2,426 more rows</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>distinct()</code> </h2><h3> unique rows</h3></hgroup><article  id="distinct-unique-rows" class="smaller build">
+
+<div class = 'box col col-12 bg-yellow compact-output'><h3>symbol and length</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-20" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(gene_biotype == &quot;protein_coding&quot;) %&gt;% 
+  mutate(length = end_position - start_position) %&gt;% 
+  dplyr::select(hgnc_symbol, length)</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 1,498 x 2
+   hgnc_symbol length
+         &lt;chr&gt;  &lt;int&gt;
+ 1     UBASH3A  44234
+ 2     UBASH3A  44234
+ 3     UBASH3A  44234
+ 4     UBASH3A  44234
+ 5     UBASH3A  44234
+ 6     UBASH3A  44234
+ 7     UBASH3A  44234
+ 8     UBASH3A  44234
+ 9     UBASH3A  44234
+10     SPATC1L  23328
+# ... with 1,488 more rows</pre></div></div>
+
+</div></div><div class = 'box col col-12 bg-blue compact-output'><h3>symbol and length</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-21" class="col col-12 box chunk bg-cobalt">
+<div class="col col-8 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(gene_biotype == &quot;protein_coding&quot;) %&gt;% 
+  mutate(length = end_position - start_position) %&gt;% 
+  dplyr::select(hgnc_symbol, length) %&gt;% 
+  distinct()</pre></div>
+
+<div class="col col-4 r-output">
+<pre ># A tibble: 233 x 2
+   hgnc_symbol length
+         &lt;chr&gt;  &lt;int&gt;
+ 1     UBASH3A  44234
+ 2     SPATC1L  23328
+ 3              49131
+ 4       CXADR  81197
+ 5        AIRE  12810
+ 6        ETS2  19648
+ 7       USP25 150044
+ 8      MCM3AP  51171
+ 9     TMPRSS3  24956
+10              18173
+# ... with 223 more rows</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>mutate_at(), mutate_all(), mutate_if()</code> </h2><h3> changing many columns</h3></hgroup><article  id="mutate_at-mutate_all-mutate_if-changing-many-columns" class="smaller ">
+
+<div class = 'box col col-12 bg-blue'><h3>usage</h3><div class = 'box-body'>
+
+<ul>
+<li><code>select</code> <strong>helpers</strong> with <code>vars()</code> in <code>mutate_at()</code></li>
+<li>Use column <strong>conditions</strong> for <code>mutate_if()</code></li>
+<li><code>funs()</code> to wrap functions</li>
+</ul>
+
+</div></div>
+
+<ul>
+<li><code>mutate_at()</code>, placeholder <strong>&#39;.&#39;</strong> is the dynamic variable</li>
+</ul>
+
+<div id="unnamed-chunk-22">
+<style type="text/css">
+.smaller_code pre:not(.lang-r) {
+  font-size: 14px;
+  letter-spacing: -0.5px;
+}
+</style></div>
+
+<div id="unnamed-chunk-23" class="col col-12 box chunk bg-cobalt compact-output smaller_code">
+<h3>
+
+coordinate conversion
+
+</h3>
+
+<div class="col col-5 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
+  mutate_at(vars(contains(&quot;position&quot;)),
+            funs(. + 1)) %&gt;%
+   dplyr::select(-ends_with(&quot;id&quot;))</pre></div>
+
+<div class="col col-7 r-output">
+<pre ># A tibble: 2,436 x 6
+   chromosome_name start_position end_position hgnc_symbol strand
+             &lt;int&gt;          &lt;dbl&gt;        &lt;dbl&gt;       &lt;chr&gt;  &lt;int&gt;
+ 1              21       25943045     25943146   RNU6-123P     -1
+ 2              21        7092617      7092717                  1
+ 3              21       13724190     13724275   MIR8069-2      1
+ 4              21       33550663     33550729     MIR6501      1
+ 5              21        8208474      8208653   MIR3648-1      1
+ 6              21       22205193     22205333    RNU4-45P      1
+ 7              21       32841862     32841996                 -1
+ 8              21       28743209     28743292                  1
+ 9              21       42403448     42447682     UBASH3A      1
+10              21       42403448     42447682     UBASH3A      1
+# ... with 2,426 more rows, and 1 more variables: gene_biotype &lt;chr&gt;</pre></div></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>mutate_if()</code> </h2><h3> changing many columns</h3></hgroup><article  id="mutate_if-changing-many-columns" class="smaller vs2 build">
+
+<div id="unnamed-chunk-24" class="col col-12 box chunk bg-cobalt compact-output smaller_code">
+<h3>
+
+Coordinate conversion
+
+</h3>
+
+<div class="col col-5 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
+  mutate_if(is.numeric, funs(. + 1)) %&gt;%
+  dplyr::select(-ends_with(&quot;id&quot;))</pre></div>
+
+<div class="col col-7 r-output">
+<pre ># A tibble: 2,436 x 6
+   chromosome_name start_position end_position hgnc_symbol strand
+             &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;       &lt;chr&gt;  &lt;dbl&gt;
+ 1              22       25943045     25943146   RNU6-123P      0
+ 2              22        7092617      7092717                  2
+ 3              22       13724190     13724275   MIR8069-2      2
+ 4              22       33550663     33550729     MIR6501      2
+ 5              22        8208474      8208653   MIR3648-1      2
+ 6              22       22205193     22205333    RNU4-45P      2
+ 7              22       32841862     32841996                  0
+ 8              22       28743209     28743292                  2
+ 9              22       42403448     42447682     UBASH3A      2
+10              22       42403448     42447682     UBASH3A      2
+# ... with 2,426 more rows, and 1 more variables: gene_biotype &lt;chr&gt;</pre></div></div>
+
+<div class = 'bg-yellow2 offset-3 box col col-6'><h3>oops! chr <strong>22</strong></h3><div class = 'box-body'>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>mutate_all()</code> </h2><h3> changing all columns</h3></hgroup><article  id="mutate_all-changing-all-columns" class="smaller vs1">
+
+<ul>
+<li><strong>replace</strong> all columns by unnamed action in <code>funs()</code></li>
+</ul>
+
+<div id="unnamed-chunk-25" class="col col-12 box chunk bg-cobalt compact-output">
+<h3>
+
+convert iris from cm to inches
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>iris %&gt;%
+  as_tibble() %&gt;%
+  group_by(Species) %&gt;%
+  mutate_all(funs(. / 2.54))</pre>
+
+<pre ># A tibble: 150 x 5
+# Groups:   Species [3]
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;fctr&gt;
+ 1     2.007874    1.377953    0.5511811  0.07874016  setosa
+ 2     1.929134    1.181102    0.5511811  0.07874016  setosa
+ 3     1.850394    1.259843    0.5118110  0.07874016  setosa
+ 4     1.811024    1.220472    0.5905512  0.07874016  setosa
+ 5     1.968504    1.417323    0.5511811  0.07874016  setosa
+ 6     2.125984    1.535433    0.6692913  0.15748031  setosa
+ 7     1.811024    1.338583    0.5511811  0.11811024  setosa
+ 8     1.968504    1.338583    0.5905512  0.07874016  setosa
+ 9     1.732283    1.141732    0.5511811  0.07874016  setosa
+10     1.929134    1.220472    0.5905512  0.03937008  setosa
+# ... with 140 more rows</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>mutate_all()</code> </h2><h3> changing all columns</h3></hgroup><article  id="mutate_all-changing-all-columns-1" class="smaller vs1">
+
+<ul>
+<li><strong>add</strong> columns by naming the action in <code>funs()</code></li>
+</ul>
+
+<div id="unnamed-chunk-26" class="col col-12 box chunk bg-cobalt compact-output">
+<h3>
+
+convert iris from cm to inches
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>iris %&gt;%
+  as_tibble() %&gt;%
+  group_by(Species) %&gt;%
+  mutate_all(funs(inches = . / 2.54))</pre>
+
+<pre ># A tibble: 150 x 9
+# Groups:   Species [3]
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;fctr&gt;
+ 1          5.1         3.5          1.4         0.2  setosa
+ 2          4.9         3.0          1.4         0.2  setosa
+ 3          4.7         3.2          1.3         0.2  setosa
+ 4          4.6         3.1          1.5         0.2  setosa
+ 5          5.0         3.6          1.4         0.2  setosa
+ 6          5.4         3.9          1.7         0.4  setosa
+ 7          4.6         3.4          1.4         0.3  setosa
+ 8          5.0         3.4          1.5         0.2  setosa
+ 9          4.4         2.9          1.4         0.2  setosa
+10          4.9         3.1          1.5         0.1  setosa
+# ... with 140 more rows, and 4 more variables: Sepal.Length_inches &lt;dbl&gt;,
+#   Sepal.Width_inches &lt;dbl&gt;, Petal.Length_inches &lt;dbl&gt;,
+#   Petal.Width_inches &lt;dbl&gt;</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Grouping and summarizing</h2></hgroup><article  id="grouping-and-summarizing" class="smaller ">
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>group_by()</code> </h2><h3> summarise returns 1 row per group</h3></hgroup><article  id="group_by-summarise-returns-1-row-per-group" class="smaller ">
+
+<ul>
+<li>Not a summarising transformation but frequently used in conjunction</li>
+<li>Grouping by more than one or more variables</li>
+<li>Use <code>ungroup()</code> once grouped computing done</li>
+</ul>
+
+
+
+<div id="unnamed-chunk-27" class="col col-12 box chunk bg-cobalt compact-output">
+<h3>
+
+compute the average number of transcripts, <code>n_distinct()</code>
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  group_by(ensembl_gene_id, hgnc_symbol) %&gt;% 
+  summarise(n_trans = n_distinct(ensembl_transcript_id))</pre>
+
+<pre ># A tibble: 861 x 3
+# Groups:   ensembl_gene_id [?]
+   ensembl_gene_id hgnc_symbol n_trans
+             &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;
+ 1 ENSG00000141956      PRDM15      16
+ 2 ENSG00000141959        PFKL      12
+ 3 ENSG00000142149        HUNK       4
+ 4 ENSG00000142156      COL6A1       7
+ 5 ENSG00000142166      IFNAR1       3
+ 6 ENSG00000142168        SOD1       4
+ 7 ENSG00000142173      COL6A2       8
+ 8 ENSG00000142178        SIK1       2
+ 9 ENSG00000142182      DNMT3L       4
+10 ENSG00000142185       TRPM2       8
+# ... with 851 more rows</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>transcripts number per gene </h2><h3> get the gene with highest # transcripts</h3></hgroup><article  id="transcripts-number-per-gene-get-the-gene-with-highest-transcripts" class="smaller build ">
+
+<div id="unnamed-chunk-28" class="col col-12 box chunk bg-cobalt compact-output">
+<h3>
+
+solution: arrange
+
+</h3>
+
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  group_by(ensembl_gene_id, hgnc_symbol) %&gt;% 
+  summarise(n_trans = n_distinct(ensembl_transcript_id)) %&gt;%
+  arrange(desc(n_trans))</pre></div>
+
+<div class="col col-5 r-output">
+<pre ># A tibble: 861 x 3
+# Groups:   ensembl_gene_id [837]
+   ensembl_gene_id hgnc_symbol n_trans
+             &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt;
+ 1 ENSG00000205726       ITSN1      32
+ 2 ENSG00000160191       PDE9A      28
+ 3 ENSG00000182670        TTC3      25
+ 4 ENSG00000160255       ITGB2      24
+ 5 ENSG00000205758      CRYZL1      23
+ 6 ENSG00000157551      KCNJ15      21
+ 7 ENSG00000157578       LCA5L      21
+ 8 ENSG00000183570       PCBP3      21
+ 9 ENSG00000159140         SON      20
+10 ENSG00000205581       HMGN1      20
+# ... with 851 more rows</pre></div></div>
+
+<div class = 'col col-12 bg-orange'>
+
+<div id="unnamed-chunk-29" class="col col-12 box chunk bg-cobalt compact-output">
+<h3>
+
+solution: filter the max
+
+</h3>
+
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  group_by(ensembl_gene_id, hgnc_symbol) %&gt;% 
+  summarise(n_exon = n_distinct(ensembl_transcript_id)) %&gt;%
+  filter(n_exon == max(n_exon))</pre></div>
+
+<div class="col col-5 r-output">
+<pre ># A tibble: 861 x 3
+# Groups:   ensembl_gene_id [837]
+   ensembl_gene_id hgnc_symbol n_exon
+             &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+ 1 ENSG00000141956      PRDM15     16
+ 2 ENSG00000141959        PFKL     12
+ 3 ENSG00000142149        HUNK      4
+ 4 ENSG00000142156      COL6A1      7
+ 5 ENSG00000142166      IFNAR1      3
+ 6 ENSG00000142168        SOD1      4
+ 7 ENSG00000142173      COL6A2      8
+ 8 ENSG00000142178        SIK1      2
+ 9 ENSG00000142182      DNMT3L      4
+10 ENSG00000142185       TRPM2      8
+# ... with 851 more rows</pre></div></div>
+
+</div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='bg-green'><hgroup class = 'title-bar'><h2>transcripts number per gene </h2><h3> get the gene with highest # transcripts</h3></hgroup><article  id="transcripts-number-per-gene-get-the-gene-with-highest-transcripts-1" class="smaller build  vs2">
+
+<div class = 'box col col-8 offset-2 bg-yellow2'><h3>results were still grouped!</h3><div class = 'box-body'>
+
+</div></div>
+
+<div id="unnamed-chunk-30" class="col col-12 box chunk bg-cobalt compact-output">
+<h3>
+
+solution: ungroup + filter the max
+
+</h3>
+
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  group_by(ensembl_gene_id, hgnc_symbol) %&gt;% 
+  summarise(n_exon = n_distinct(ensembl_transcript_id)) %&gt;%
+  ungroup() %&gt;%
+  filter(n_exon == max(n_exon))</pre></div>
+
+<div class="col col-5 r-output">
+<pre ># A tibble: 1 x 3
+  ensembl_gene_id hgnc_symbol n_exon
+            &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+1 ENSG00000205726       ITSN1     32</pre></div></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>count()</code></h2></hgroup><article  id="count" class="smaller build">
+
+<div class = 'box col col-12 bg-yellow'><h3>Replacing calls to <code>table()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-31" class="col col-12 box chunk bg-cobalt">
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>head(as.data.frame(table(gene_by_exon$hgnc_symbol) ))</pre></div>
+
+<div class="col col-5 r-output">
+<pre >     Var1 Freq
+1          451
+2   AATBC    3
+3  ABCC13    6
+4   ABCG1   11
+5 ADAMTS1    6
+6 ADAMTS5    1</pre></div></div>
+
+</div></div><div class = 'box col col-12 bg-cobalt compact-output'><h3><code>count()</code> does the grouping for you and returns a <code>tibble</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-32" class="col col-12 box chunk bg-cobalt">
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  count(hgnc_symbol)</pre></div>
+
+<div class="col col-5 r-output">
+<pre ># A tibble: 529 x 2
+   hgnc_symbol     n
+         &lt;chr&gt; &lt;int&gt;
+ 1               451
+ 2       AATBC     3
+ 3      ABCC13     6
+ 4       ABCG1    11
+ 5     ADAMTS1     6
+ 6     ADAMTS5     1
+ 7      ADARB1    15
+ 8      AGPAT3    18
+ 9        AIRE     5
+10 ANKRD20A11P     6
+# ... with 519 more rows</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>mimic <code>count()</code></h2></hgroup><article  id="mimic-count" class="smaller vs2">
+
+<div class = 'box col col-12 bg-cobalt compact-output'><h3>with <code>summarise()</code> and <code>n()</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-33" class="col col-12 box chunk bg-cobalt">
+<div class="col col-7 r-source">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  group_by(hgnc_symbol) %&gt;%
+  summarise(n = n())</pre></div>
+
+<div class="col col-5 r-output">
+<pre ># A tibble: 529 x 2
+   hgnc_symbol     n
+         &lt;chr&gt; &lt;int&gt;
+ 1               451
+ 2       AATBC     3
+ 3      ABCC13     6
+ 4       ABCG1    11
+ 5     ADAMTS1     6
+ 6     ADAMTS5     1
+ 7      ADARB1    15
+ 8      AGPAT3    18
+ 9        AIRE     5
+10 ANKRD20A11P     6
+# ... with 519 more rows</pre></div></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Non-standard evaluation, great in interactive analysis, tough for prog.</h2></hgroup><article  id="non-standard-evaluation-great-in-interactive-analysis-tough-for-prog." class="smaller build">
+
+<div class = 'box col col-6 bg-yellow stretch'><h3>problem, dplyr in functions</h3><div class = 'box-body'>
+
+<ul>
+<li><code>dplyr</code> functions take unquoted variable names</li>
+</ul>
+
+<div id="unnamed-chunk-34" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>my_summarise &lt;- function(df, group_var) {
+  df %&gt;%
+    group_by(group_var) %&gt;%
+    summarise(mean_mpg = mean(mpg))
+}
+
+my_summarise(mtcars, am)</pre>
+
+<pre >Error in grouped_df_impl(data, unname(vars), drop): Column `group_var` is unknown</pre>
+
+<pre class = 'prettyprint lang-r'>my_summarise(mtcars, carb)</pre>
+
+<pre >Error in grouped_df_impl(data, unname(vars), drop): Column `group_var` is unknown</pre></div>
+
+</div></div><div class = 'box col col-6 bg-grgold stretch'><h3>solution <code>tidyeval</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-35" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>my_summarise &lt;- function(df, group_var) {
+  g_var &lt;- enquo(group_var)
+  df %&gt;%
+    group_by(!! g_var) %&gt;%
+    summarise(mean_mpg = mean(mpg))
+}
+
+my_summarise(mtcars, am)</pre>
+
+<pre ># A tibble: 2 x 2
+     am mean_mpg
+  &lt;dbl&gt;    &lt;dbl&gt;
+1     0 17.14737
+2     1 24.39231</pre>
+
+<pre class = 'prettyprint lang-r'>my_summarise(mtcars, carb)</pre>
+
+<pre ># A tibble: 6 x 2
+   carb mean_mpg
+  &lt;dbl&gt;    &lt;dbl&gt;
+1     1 25.34286
+2     2 22.40000
+3     3 16.30000
+4     4 15.79000
+5     6 19.70000
+6     8 15.00000</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Joining data frames</h2></hgroup><article  id="joining-data-frames" class="smaller ">
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>merge 2 separate tables</h2></hgroup><article  id="merge-2-separate-tables" class="smaller build">
+
+<div class = 'bg-gray box col col-12 compact-output'><h3>UK bands</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-36" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>band_instruments</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 3 x 2
+   name  plays
+  &lt;chr&gt;  &lt;chr&gt;
+1  John guitar
+2  Paul   bass
+3 Keith guitar</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>band_members</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 3 x 2
+   name    band
+  &lt;chr&gt;   &lt;chr&gt;
+1  Mick  Stones
+2  John Beatles
+3  Paul Beatles</pre></div></div>
+
+</div></div><div class = 'bg-grgold box col col-6 compact-output stretch'><h3>join common key</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-37" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>inner_join(band_instruments,
+           band_members)</pre>
+
+<pre >Joining, by = &quot;name&quot;</pre>
+
+<pre ># A tibble: 2 x 3
+   name  plays    band
+  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;
+1  John guitar Beatles
+2  Paul   bass Beatles</pre></div>
+
+</div></div><div class = 'bg-grgold box col col-6 compact-output'><h3>join for all left</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-38" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>left_join(band_instruments,
+           band_members)</pre>
+
+<pre >Joining, by = &quot;name&quot;</pre>
+
+<pre ># A tibble: 3 x 3
+   name  plays    band
+  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;
+1  John guitar Beatles
+2  Paul   bass Beatles
+3 Keith guitar    &lt;NA&gt;</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Relational operations, <strong>mutating</strong> joins</h2></hgroup><article  id="relational-operations-mutating-joins" class="smaller nvs3 build">
+
+<div class = 'box col col-6 bg-aquamarine2 middle'><h3>inner join</h3><div class = 'box-body'>
+
+<img src='img/06/join-inner.png' title='fig:'/>
+
+<p><span class="small">
+credit: <a href='http://r4ds.had.co.nz/relational-data.html' title=''>Hadley Wickham, R for data science</a></span></p>
+
+</div></div><div class = 'box col col-6 bg-aquamarine2'><h3>outer join</h3><div class = 'box-body'>
+
+<img src='img/06/join-outer.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Relational operations, <strong>filtering</strong> joins</h2></hgroup><article  id="relational-operations-filtering-joins" class="smaller build vs1">
+
+<div class = 'box col col-6 bg-red stretch'><h3><code>anti_join()</code></h3><div class = 'box-body'>
+
+<ul>
+<li>extract what does <strong>not</strong> match</li>
+</ul>
+
+<img src='img/06/join-anti.png' title='fig:'/>
+
+<p><span class="small">
+source: Wickam, <a href='http://r4ds.had.co.nz/relational-data.html#filtering-joins' title=''>R for data science</a></span></p>
+
+</div></div><div class = 'box col col-6 bg-orange stretch'><h3><code>semi_join()</code></h3><div class = 'box-body'>
+
+<ul>
+<li>filter matches in x, no duplicates</li>
+</ul>
+
+<img src='img/06/join-semi-many.png' title='fig:'/>
+
+</div></div>
+
+<blockquote class = "bg-yellow2">
+<p>Only the existence of a match is important; it doesn’t matter which observation is matched. This means that filtering joins never duplicate rows like mutating joins do <cite> Hadley Wickam, R for Data Science </p></cite>
+</blockquote>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>semi_join()</code> does not alter original</h2></hgroup><article  id="semi_join-does-not-alter-original" class="smaller build">
+
+<div class = 'compact-output col col-12'>
+
+<div id="unnamed-chunk-39" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+tribble for transposed tibbles
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>(tx &lt;- tribble(~ x, ~val,
+              &quot;x1&quot;, 1,
+              &quot;x2&quot;, 2,
+              &quot;x3&quot;, 2,
+              &quot;x4&quot;, 3))</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 4 x 2
+      x   val
+  &lt;chr&gt; &lt;dbl&gt;
+1    x1     1
+2    x2     2
+3    x3     2
+4    x4     3</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>(ty &lt;- tribble(~ y, ~val,
+              &quot;y1&quot;, 1,
+              &quot;y2&quot;, 2,
+              &quot;y3&quot;, 2,
+              &quot;y4&quot;, 3))</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 4 x 2
+      y   val
+  &lt;chr&gt; &lt;dbl&gt;
+1    y1     1
+2    y2     2
+3    y3     2
+4    y4     3</pre></div></div>
+
+</div><div class = 'bg-cobalt box col col-6 stretch compact-output'><h3>filtering</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-40" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>semi_join(tx, ty)</pre>
+
+<pre >Joining, by = &quot;val&quot;</pre>
+
+<pre ># A tibble: 4 x 2
+      x   val
+  &lt;chr&gt; &lt;dbl&gt;
+1    x1     1
+2    x2     2
+3    x3     2
+4    x4     3</pre></div>
+
+</div></div><div class = 'bg-yellow box col col-6 stretch compact-output'><h3>mutating</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-41" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>inner_join(tx, ty)</pre>
+
+<pre >Joining, by = &quot;val&quot;</pre>
+
+<pre ># A tibble: 6 x 3
+      x   val     y
+  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
+1    x1     1    y1
+2    x2     2    y2
+3    x2     2    y3
+4    x3     2    y2
+5    x3     2    y3
+6    x4     3    y4</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>join columns of different names</h2></hgroup><article  id="join-columns-of-different-names" class="smaller build">
+
+<div class = 'bg-gray box col col-12 compact-output'><h3>UK bands</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-42" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>band_instruments2</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 3 x 2
+  artist  plays
+   &lt;chr&gt;  &lt;chr&gt;
+1   John guitar
+2   Paul   bass
+3  Keith guitar</pre></div>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>band_members</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 3 x 2
+   name    band
+  &lt;chr&gt;   &lt;chr&gt;
+1  Mick  Stones
+2  John Beatles
+3  Paul Beatles</pre></div></div>
+
+</div></div><div class = 'bg-red box col col-6 compact-output stretch'><h3>no common key</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-43" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>inner_join(band_instruments2,
+           band_members)</pre>
+
+<pre >Error: `by` required, because the data sources have no common variables</pre></div>
+
+</div></div><div class = 'bg-grgold box col col-6 compact-output stretch'><h3>specify common key with <code>by</code></h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-44" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>inner_join(band_instruments2,
+           band_members,
+           by = c(artist = &quot;name&quot;))</pre>
+
+<pre ># A tibble: 2 x 3
+  artist  plays    band
+   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;
+1   John guitar Beatles
+2   Paul   bass Beatles</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>helpers</h2></hgroup><article  id="helpers" class="smaller ">
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>pull()</code> </h2><h3> <code>select</code> as a vector</h3></hgroup><article  id="pull-select-as-a-vector" class="smaller build">
+
+<div id="unnamed-chunk-45" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+extract first column
+
+</h3>
+
+<div class="col col-5 r-source">
+<pre class = 'prettyprint lang-r'>pull(gene_by_exon, 2)[1:2]</pre></div>
+
+<div class="col col-7 r-output">
+<pre >[1] &quot;ENST00000516163&quot; &quot;ENST00000617336&quot;</pre></div></div>
+
+<div id="unnamed-chunk-46" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+using negative indexes
+
+</h3>
+
+<div class="col col-5 r-source">
+<pre class = 'prettyprint lang-r'>pull(gene_by_exon, -2)[1:10]</pre></div>
+
+<div class="col col-7 r-output">
+<pre > [1] -1  1  1  1  1  1 -1  1  1  1</pre></div></div>
+
+<div id="unnamed-chunk-47" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+extract unique biotype
+
+</h3>
+
+<div class="col col-5 r-source">
+<pre class = 'prettyprint lang-r'>pull(gene_by_exon, gene_biotype) %&gt;%
+  unique()</pre></div>
+
+<div class="col col-7 r-output">
+<pre > [1] &quot;snRNA&quot;                             
+ [2] &quot;misc_RNA&quot;                          
+ [3] &quot;miRNA&quot;                             
+ [4] &quot;snoRNA&quot;                            
+ [5] &quot;protein_coding&quot;                    
+ [6] &quot;lincRNA&quot;                           
+ [7] &quot;processed_pseudogene&quot;              
+ [8] &quot;rRNA&quot;                              
+ [9] &quot;antisense_RNA&quot;                     
+[10] &quot;pseudogene&quot;                        
+[11] &quot;unprocessed_pseudogene&quot;            
+[12] &quot;TEC&quot;                               
+[13] &quot;sense_intronic&quot;                    
+[14] &quot;sense_overlapping&quot;                 
+[15] &quot;processed_transcript&quot;              
+[16] &quot;transcribed_processed_pseudogene&quot;  
+[17] &quot;transcribed_unprocessed_pseudogene&quot;
+[18] &quot;IG_V_gene&quot;                         
+[19] &quot;3prime_overlapping_ncRNA&quot;          </pre></div></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>near()</code> </h2><h3> deal with float numbers rounding</h3></hgroup><article  id="near-deal-with-float-numbers-rounding" class="smaller vs1 build">
+
+<div class = 'box col col-6 yellow'><h3>predict the outcome of:</h3><div class = 'box-body'>
+
+<p>TRUE or FALSE?</p>
+
+<div id="unnamed-chunk-48" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>sqrt(2) ^ 2 == 2</pre></div>
+
+</div></div><div class = 'box col col-6 orange'><h3>FALSE!</h3><div class = 'box-body'>
+
+<p>TRUE or FALSE?</p>
+
+<div id="unnamed-chunk-49" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>sqrt(2) ^ 2 == 2</pre>
+
+<pre >[1] FALSE</pre></div>
+
+</div></div>
+
+<div id="unnamed-chunk-50" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+Solution, <code>near()</code> that tolerate machine&#39;s precision
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>near(sqrt(2) ^ 2, 2)</pre>
+
+<pre >[1] TRUE</pre>
+
+<pre class = 'prettyprint lang-r'>.Machine$double.eps^0.5</pre>
+
+<pre >[1] 1.490116e-08</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>case_when()</code> </h2><h3> vectorized ifelse</h3></hgroup><article  id="case_when-vectorized-ifelse" class="smaller vs1">
+
+<div id="unnamed-chunk-51" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+nested conditional tests
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  mutate(category = case_when(
+    grepl(&quot;RNA&quot;, gene_biotype) ~ &quot;RNA&quot;,
+    gene_biotype == &quot;protein_coding&quot; &amp; end_position - start_position &gt; 5e5 ~ &quot;large_size_coding&quot;,
+    gene_biotype == &quot;protein_coding&quot; &amp; end_position - start_position &gt; 1e5 ~ &quot;mid_size_coding&quot;,
+    gene_biotype == &quot;protein_coding&quot; ~ &quot;small_size_coding&quot;,
+    TRUE ~ &quot;other&quot;
+  )) %&gt;%
+  dplyr::select(ends_with(&quot;position&quot;), category) %&gt;%
+  count(category)</pre>
+
+<pre ># A tibble: 5 x 2
+           category     n
+              &lt;chr&gt; &lt;int&gt;
+1 large_size_coding    25
+2   mid_size_coding   381
+3             other   290
+4               RNA   648
+5 small_size_coding  1092</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>recode()</code> &quot; vectorized switch&quot;</h2></hgroup><article  id="recode-vectorized-switch" class="smaller ">
+
+<div id="unnamed-chunk-52" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+recode using either backstick or quotes
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  mutate(trans = recode(am, `0` = &quot;manual&quot;,
+                            &quot;1&quot; = &quot;automatic&quot;)) %&gt;%
+  dplyr::select(am, trans) %&gt;%
+  slice(1:5)</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 5 x 2
+     am     trans
+  &lt;dbl&gt;     &lt;chr&gt;
+1     1 automatic
+2     1 automatic
+3     1 automatic
+4     0    manual
+5     0    manual</pre></div></div>
+
+<div id="unnamed-chunk-53" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+for 2 cases, <code>if_else</code>
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  mutate(trans = if_else(am == 0, &quot;manual&quot;, &quot;automatic&quot;)) %&gt;%
+  dplyr::select(am, trans) %&gt;%
+  slice(1:5)</pre></div>
+
+<div class="col col-6 r-output">
+<pre ># A tibble: 5 x 2
+     am     trans
+  &lt;dbl&gt;     &lt;chr&gt;
+1     1 automatic
+2     1 automatic
+3     1 automatic
+4     0    manual
+5     0    manual</pre></div></div>
+
+<ul>
+<li>but with a missing element</li>
+</ul>
+
+<!--
+
+## `top_n()`
+
+
+
+<div id = "unnamed-chunk-54" class = "col col-12 box chunk bg-cobalt  ">
+<h3>first transcript per gene</h3>
+
+```r
+gene_by_exon %>%
+  group_by(ensembl_gene_id) %>%
+  arrange(start_position) %>%
+  top_n(1) %>%
+  dplyr::select(ends_with("id"))
+```
+
+```
+Selecting by gene_biotype
+```
+
+```
+# A tibble: 2,436 x 3
+# Groups:   ensembl_gene_id [837]
+   ensembl_gene_id ensembl_transcript_id hgnc_id
+             <chr>                 <chr>   <chr>
+ 1 ENSG00000279493       ENST00000624081        
+ 2 ENSG00000277117       ENST00000612610        
+ 3 ENSG00000277117       ENST00000623960        
+ 4 ENSG00000277117       ENST00000623903        
+ 5 ENSG00000277117       ENST00000623795        
+ 6 ENSG00000277117       ENST00000620481        
+ 7 ENSG00000279687       ENST00000623188        
+ 8 ENSG00000280071       ENST00000624810        
+ 9 ENSG00000280071       ENST00000625036        
+10 ENSG00000280071       ENST00000620015        
+# ... with 2,426 more rows
+```
+
+
+</div>
+
+
+-->
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>slice()</code></h2></hgroup><article  id="slice" class="smaller ">
+
+<div id="unnamed-chunk-55" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+first transcript per gene
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  group_by(ensembl_gene_id) %&gt;%
+  arrange(start_position) %&gt;%
+  slice(1) %&gt;%
+  dplyr::select(ends_with(&quot;id&quot;))</pre>
+
+<pre ># A tibble: 837 x 3
+# Groups:   ensembl_gene_id [837]
+   ensembl_gene_id ensembl_transcript_id    hgnc_id
+             &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;
+ 1 ENSG00000141956       ENST00000470586 HGNC:13999
+ 2 ENSG00000141959       ENST00000349048  HGNC:8876
+ 3 ENSG00000142149       ENST00000270112 HGNC:13326
+ 4 ENSG00000142156       ENST00000361866  HGNC:2211
+ 5 ENSG00000142166       ENST00000493503  HGNC:5432
+ 6 ENSG00000142168       ENST00000270142 HGNC:11179
+ 7 ENSG00000142173       ENST00000300527  HGNC:2212
+ 8 ENSG00000142178       ENST00000270162 HGNC:11142
+ 9 ENSG00000142182       ENST00000436357  HGNC:2980
+10 ENSG00000142185       ENST00000300482 HGNC:12339
+# ... with 827 more rows</pre></div>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>lead()</code> and <code>lag()</code> </h2><h3> comparing rows above and below</h3></hgroup><article  id="lead-and-lag-comparing-rows-above-and-below" class="smaller vs1">
+
+<div class = 'box col col-12 bg-blue compact-output'><h3>Calculate intergenic distance</h3><div class = 'box-body'>
+
+<ul>
+<li><strong>tip</strong>: renaming in <code>select()</code> call</li>
+</ul>
+
+<div id="unnamed-chunk-56" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  dplyr::select(ensembl_gene_id, start = start_position, end = end_position) %&gt;% 
+  distinct() %&gt;% 
+  arrange(start) %&gt;% 
+  mutate(lag_end = lag(end),
+         intergenic_lg = start - lag(end)) </pre>
+
+<pre ># A tibble: 837 x 5
+   ensembl_gene_id   start     end lag_end intergenic_lg
+             &lt;chr&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;         &lt;int&gt;
+ 1 ENSG00000279493 5011799 5017145      NA            NA
+ 2 ENSG00000277117 5022493 5040666 5017145          5348
+ 3 ENSG00000279687 5073458 5087867 5040666         32792
+ 4 ENSG00000280071 5079294 5128425 5087867         -8573
+ 5 ENSG00000276612 5116343 5133805 5128425        -12082
+ 6 ENSG00000275464 5130871 5154734 5133805         -2934
+ 7 ENSG00000280433 5155499 5165472 5154734           765
+ 8 ENSG00000279669 5232668 5243833 5165472         67196
+ 9 ENSG00000279094 5499151 5502542 5243833        255318
+10 ENSG00000274333 5553637 5614880 5502542         51095
+# ... with 827 more rows</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2><code>ntile()</code> </h2><h3> breaks data into n buckets</h3></hgroup><article  id="ntile-breaks-data-into-n-buckets" class="smaller vs1">
+
+<div id="unnamed-chunk-57" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+finding quartiles
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>tibble(x = rnorm(101)) %&gt;% 
+  mutate(x_quartile = ntile(x, 4)) %&gt;%
+  count(x_quartile)</pre>
+
+<pre ># A tibble: 4 x 2
+  x_quartile     n
+       &lt;int&gt; &lt;int&gt;
+1          1    26
+2          2    25
+3          3    25
+4          4    25</pre></div>
+
+<p><span class="small">
+Nick Strayer&#39; <a href='https://gist.github.com/nstrayer/6b57760c2d089c2d2c281e2393d405a7' title=''>gist</a></span></p>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Summary</h2></hgroup><article  id="summary-1" class="smaller ">
+
+<div class = 'box col col-6 bg-grgold'><h3>Most commonly used - 80%</h3><div class = 'box-body'>
+
+<ul>
+<li><code>select()</code> - columns</li>
+<li><code>filter()</code> - rows meeting condition</li>
+<li><code>arrange()</code> - sort</li>
+<li><code>glimpse()</code> - inspect</li>
+<li><code>rename()</code> - change column name</li>
+<li><code>mutate()</code> - copy manipulated values</li>
+<li><code>group_by()</code>, <code>ungroup()</code></li>
+<li><code>summarise()</code> - group-wise, table-wise summaries</li>
+<li><code>lead()</code> and <code>lag()</code> - Values in other rows</li>
+<li><code>inner_join</code> and friends - Merging tables</li>
+</ul>
+
+</div></div><div class = 'col col-6'><h3>dplyr schema</h3>
+
+<img src='img/06/vaudor_dplyr_schema.png' title='fig:'/>
+
+<p><span class="small">
+source: Lise Vaudor <a href='http://perso.ens-lyon.fr/lise.vaudor/dplyr/' title=''>blog</a></span></p>
+
+</div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Other 20%</h2></hgroup><article  id="other-20" class="smaller nvs2">
+
+<div class = 'box col col-6 bg-blue middle'><h3>Occasionally handy</h3><div class = 'box-body'>
+
+<ul>
+<li>Assembly: <code>bind_rows</code>, <code>bind_cols</code></li>
+<li>Set operations: <code>intersect</code>, <code>union</code>, <code>setdiff</code></li>
+<li>Windows function, <code>min_rank</code>, <code>dense_rank</code>, <code>cumsum</code>. See <a href='https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html' title=''>vignette</a></li>
+</ul>
+
+</div></div><div class = 'col col-6'>
+
+<!-- add a mini example to demosntrate bind_cols(.id = "id") -->
+
+<!-- to be done better and adding the union.png, maybe not -->
+
+<p><img src='img/06/bind_cols.png' title=''/> <img src='img/06/bind_rows.png' title=''/> <img src='img/06/intersect.png' title=''/></p>
+
+</div></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Data base access, when your RAM is not enough</h2></hgroup><article  id="data-base-access-when-your-ram-is-not-enough" class="smaller vs1">
+
+<div class = 'box col col-8 offset-2 bg-gray'><h3>SQL mapping</h3><div class = 'box-body'>
+
+<ul>
+<li><code>dplyr</code> code can be translated into SQL and query databases online (using <code>dbplyr</code>)</li>
+<li>different types of tabular data (<a href='https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html' title=''>dplyr SQL backend</a>, databases,</li>
+</ul>
+
+</div></div>
+
+<div id="unnamed-chunk-58" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+Example
+
+</h3>
+
+<pre class = 'prettyprint lang-r'>library(dbplyr)
+
+con &lt;- DBI::dbConnect(RSQLite::SQLite(), &quot;:memory:&quot;)
+copy_to(con, mtcars)
+
+mtcars2 &lt;- tbl(con, &quot;mtcars&quot;)
+mtcars2
+#&gt; # Source:   table&lt;mtcars&gt; [?? x 11]
+#&gt; # Database: sqlite 3.19.3 [:memory:]
+#&gt;      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1  21.0     6 160.0   110  3.90 2.620 16.46     0     1     4     4
+#&gt;  2  21.0     6 160.0   110  3.90 2.875 17.02     0     1     4     4
+#&gt;  3  22.8     4 108.0    93  3.85 2.320 18.61     1     1     4     1
+#&gt;  4  21.4     6 258.0   110  3.08 3.215 19.44     1     0     3     1
+#&gt;  5  18.7     8 360.0   175  3.15 3.440 17.02     0     0     3     2
+#&gt; # ... with more rows</pre></div>
+
+<p><span class="small">
+README from <a href='https://github.com/tidyverse/dbplyr' title=''>dbplyr on github</a></span></p>
+
+</article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Bigger data, go for <code>data.table</code></h2></hgroup><article  id="bigger-data-go-for-data.table" class="smaller ">
+
+<div class = 'box col col-10 offset-1 bg-blue icon'><div class = 'box-body'>
+
+<img src='img/00/logo_datatable.png' title='fig:'/>
+
+<ul>
+<li>See this interesting <a href='http://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly' title=''>thread</a> about comparing <code>data.table</code> versus <code>dplyr</code></li>
+<li><a href='https://cran.r-project.org/web/packages/data.table/index.html' title=''><code>data.table</code></a>, see <a href='https://github.com/Rdatatable/data.table/wiki' title=''>introduction</a> is very efficient but the syntax is not so easy.</li>
+<li>Main advantage: inline replacement (tidyverse is frequently copying)</li>
+<li>As a summary: <em>tl;dr data.table for speed, dplyr for readability and convenience</em> <a href='https://www.quora.com/Which-is-better-to-use-for-data-manipulation-dplyr-package-or-data-table-library' title=''>Prashanth Sriram</a></li>
+<li>Hadley recommends that for data &gt; 1-2 Gb, if speed is your main matter, go for <code>data.table</code></li>
+<li><code>dtplyr</code> is a <code>dplyr</code> interface to <code>data.table</code> but slower than native <code>data.table</code></li>
+</ul>
+
+</div></div><div class = 'box col col-8 offset-2 vs1 bg-yellow'><h3>Acknowledgments</h3><div class = 'box-body'>
+
+<ul>
+<li>Lise Vaudor</li>
+<li>Hadley Wickam</li>
+</ul></article><div class = "footer"><img src="lecture06_dplyr_files/logo.png"><a href='index.html'>biostat2</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

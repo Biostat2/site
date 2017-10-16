@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Practicals</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="shortcut icon" href="favicon.ico">
+<!-- <a href="http://bio.uni.lu/" target="_blank"><img class="img-responsive center-block header-image" src="LSRU_uni_extern.jpg"></a> -->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/site.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="img/uni-logo.png"></a><a class="navbar-brand" href="index.html"><img src="img/bs2.png"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="details.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Details
+  </a>
+</li>
+<li>
+  <a href="lectures.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+  </a>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="exam.html">Exams</a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Tips
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="schedule.html">
+    <span class="fa fa-calendar"></span>
+     
+    Schedule
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Practicals</h1>
+
+</div>
+
+
+<p>Of note, <em>solutions</em> are embedded in the question as folded boxes.</p>
+<div class="file-list tutorial">
+<ul>
+<li><a href="TD01.html">TD01 - datasauRus</a></li>
+<li><a href="TD02.html">TD02 - Using <code>readr</code> to import data</a></li>
+<li><a href="TD03.html">TD03, programming in R and dplyr</a></li>
+</ul>
+</div>
+<div id="projects" class="section level2">
+<h2>Projects</h2>
+<div id="groups" class="section level3">
+<h3>Groups</h3>
+<ol style="list-style-type: decimal">
+<li>Sabine, Pauline, Colette: <a href="project01_array.html">project 01, microarray colon cancer</a></li>
+<li>Alain, Elisabeth, Jessy: <a href="project02_bauer.html">project 02, yeast transcriptomics</a></li>
+<li>Jeff &amp; Astou: <a href="project03_genome.html">project 03, human genome</a></li>
+</ol>
+</div>
+<div id="schedule" class="section level3">
+<h3>Schedule</h3>
+<ul>
+<li>Deadline for sending the <code>Rmd</code>: <strong>14th of December 2017</strong>. Remember that the <code>Rmd</code> must compile correctly.</li>
+<li>Defenses (10 min per group): <strong>18th of December 2017</strong>. No slides to prepare, material is the Rmarkdown html output.</li>
+</ul>
+</div>
+<div id="advice" class="section level3">
+<h3>Advice</h3>
+<ul>
+<li>For all projects, data must be loaded. Either from a file or querying the NCBI server. In all cases to avoid depending on the internet access, you should download those data on your hard drives and load those local files while testing. Only at the end, you can run the whole workflow using the remote data loading process.</li>
+</ul>
+</div>
+</div>
+
+<div class = "footer">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="http://bio.uni.lu" target="_blank"><img src="img/lsru.png"></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      Copyright © <a href="http://www.uni.lu" target="_blank">Université du Luxembourg</a> 2017. All rights reserved.
+    </div>
+    <div class="col-md-4">
+      <!-- <a href="http://bio.uni.lu"><img src ="LSRU.png"></a> -->
+      <ul class="social-links">
+        <li><a href="https://www.facebook.com/uni.lu"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/uni_lu"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="https://www.linkedin.com/school/166650"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="http://www.youtube.com/user/luxuni"><i class="fa fa-youtube"></i></a></li>
+        <li></li>
+      </ul>
+    </div>    
+  </div>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="A. Ginolhac, R. Krause, E. Koncina" />
+
+
+<title>TD03, programming in R and dplyr</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="shortcut icon" href="favicon.ico">
+<!-- <a href="http://bio.uni.lu/" target="_blank"><img class="img-responsive center-block header-image" src="LSRU_uni_extern.jpg"></a> -->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/site.css" type="text/css" />
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="img/uni-logo.png"></a><a class="navbar-brand" href="index.html"><img src="img/bs2.png"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="details.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Details
+  </a>
+</li>
+<li>
+  <a href="lectures.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+  </a>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="exam.html">Exams</a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Tips
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="schedule.html">
+    <span class="fa fa-calendar"></span>
+     
+    Schedule
+  </a>
+</li>
+<li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">TD03, programming in R and dplyr</h1>
+<h4 class="author"><em>A. Ginolhac, R. Krause, E. Koncina</em></h4>
+<h4 class="date"><em>16/10/2017</em></h4>
+
+</div>
+
+
+<div id="programming" class="section level1">
+<h1>Programming</h1>
+<blockquote>
+<p>Objective: write a R function that takes a vector as an argument and returns the number of odd numbers.</p>
+</blockquote>
+<p>For example, passing the vector <code>c(1, 2, 3, 4)</code> to the function <code>oddcount</code> should output:</p>
+<pre class="r"><code>oddcount(c(1, 2, 3, 4))</code></pre>
+<pre><code>## [1] 2</code></pre>
+<div id="the-structure" class="section level2">
+<h2>1. The structure</h2>
+<ul>
+<li>Here we would like to introduce the use of different programming statements you learned, such as <code>if</code>, <code>else if</code>, <code>else</code> or a <code>for</code> loop.</li>
+<li>Write, in human terms (or pseudocode), how the function could be constructed</li>
+</ul>
+<div class="panel-group">
+<div class = "panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-4">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-4" class="panel-collapse collapse">
+<div class="panel-body">
+<ol style="list-style-type: decimal">
+<li>initialize a counter to zero</li>
+<li>for each element of the argument</li>
+<li>test if the element is an odd number
+<ul>
+<li>if yes -&gt; increment the counter by 1</li>
+<li>if no -&gt; do nothing</li>
+</ul></li>
+<li>return the counter
+</div>
+</div>
+</div>
+</div></li>
+</ol>
+</div>
+<div id="do-it-using-r" class="section level2">
+<h2>2. Do it using R</h2>
+<div id="version-1" class="section level3">
+<h3>Version 1</h3>
+<p>Create a first function returning the expected value.</p>
+<div class="panel-group">
+<div class = "panel" style = "background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tips
+</h4>
+</div>
+<div class="panel-body">
+<ul>
+<li>Remember the modulo operation is <code>a %% b</code> in R and returns the reminder of the division of <code>a/b</code>. If <code>b = 2</code> and the result is different from zero, then <code>a</code> is an odd number.</li>
+<li>Remember to test if <code>a</code> equals <code>b</code> using <code>==</code> and not <code>=</code>. <code>a = b</code> is an assignment leading <code>a</code> to take the value of <code>b</code>!
+</div>
+</div>
+</div></li>
+</ul>
+</div>
+<div id="version-2-making-a-better-function-sanity-check." class="section level3">
+<h3>Version 2: Making a better function, sanity check.</h3>
+<p>What would happen if we provide some characters, or a matrix, as an input to <code>oddcount()</code>? Is your function able to deal with such an input?</p>
+<p>No, but it should. Add a test before doing anything else to check if numbers are provided to the function.</p>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+the <code>stop(&quot;Warning! some conditions are not fulfilled to continue bla bla \n&quot;)</code> should help.
+</div>
+</div>
+</div>
+</div>
+<div id="version-3-customize-the-function-multiple-arguments." class="section level3">
+<h3>Version 3: Customize the function, multiple arguments.</h3>
+<p>Now we would like to count only <strong>unique numbers</strong> that are odd. Change the function so that it takes a second argument <code>uniq</code> changing this behaviour: a boolean (<code>TRUE</code>/<code>FALSE</code>).</p>
+<p>When set to <code>TRUE</code>, only unique numbers should be considered (see the function <code>unique()</code>). When set to <code>FALSE</code> (which we would like to be the default value), the result should be equal to version 2.</p>
+</div>
+<div id="chart-of-outcome" class="section level3">
+<h3>Chart of outcome</h3>
+<p>Please check that your 3 versions have the expected behaviour using the following table:</p>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+input
+</th>
+<th style="text-align:left;">
+version 1
+</th>
+<th style="text-align:left;">
+version 2
+</th>
+<th style="text-align:left;">
+version 3 (unique = TRUE)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+c(0, 1)
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+1
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+1
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+1
+</div>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c(0, 1, 2, ‘A’)
+</td>
+<td style="text-align:left;">
+<div style=" font-weight: bold; font-style: italic; color: red;">
+nasty error
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" font-style: italic; color: green;">
+input not numeric!
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" font-style: italic; color: green;">
+input not numeric!
+</div>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c(0, 1, 2, 3, 5)
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+3
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+3
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+3
+</div>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+c(0, 1, 2, 3, 5, 3)
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+4
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+4
+</div>
+</td>
+<td style="text-align:left;">
+<div style=" color: green;">
+3
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="dplyr" class="section level1">
+<h1><code>dplyr</code></h1>
+<blockquote>
+<p>getting familiar with transforming data with dplyr</p>
+</blockquote>
+<div id="starwars" class="section level2">
+<h2>Starwars</h2>
+<ul>
+<li>load the <code>tidyverse</code> package and explore the <code>starwars</code> dataset.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#sw_glimpse">Solution</a>
+</h4>
+</div>
+<div id="sw_glimpse" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>library(tidyverse)
+glimpse(starwars)</code></pre>
+<pre><code>## Observations: 87
+## Variables: 13
+## $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, ...
+## $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188...
+## $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 8...
+## $ hair_color &lt;chr&gt; &quot;blond&quot;, NA, NA, &quot;none&quot;, &quot;brown&quot;, &quot;brown, grey&quot;, &quot;b...
+## $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;l...
+## $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;,...
+## $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0...
+## $ gender     &lt;chr&gt; &quot;male&quot;, NA, NA, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;,...
+## $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alder...
+## $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human...
+## $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;Th...
+## $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;,...
+## $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Adva...</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>count how many individuals originate from each <code>homeworld</code></li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-8">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-8" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld)</code></pre>
+<pre><code>## # A tibble: 49 x 2
+##         homeworld     n
+##             &lt;chr&gt; &lt;int&gt;
+##  1       Alderaan     3
+##  2    Aleen Minor     1
+##  3         Bespin     1
+##  4     Bestine IV     1
+##  5 Cato Neimoidia     1
+##  6          Cerea     1
+##  7       Champala     1
+##  8      Chandrila     1
+##  9   Concord Dawn     1
+## 10       Corellia     2
+## # ... with 39 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>sort the previous output to highlight the number 1 location</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-9">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-9" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld) %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 49 x 2
+##    homeworld     n
+##        &lt;chr&gt; &lt;int&gt;
+##  1     Naboo    11
+##  2  Tatooine    10
+##  3      &lt;NA&gt;    10
+##  4  Alderaan     3
+##  5 Coruscant     3
+##  6    Kamino     3
+##  7  Corellia     2
+##  8  Kashyyyk     2
+##  9    Mirial     2
+## 10    Ryloth     2
+## # ... with 39 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-10">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-10" class="panel-collapse collapse">
+<div class="panel-body">
+Naboo is the planet that gave most of the starwars chracters, followed by Tatooine
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>in the previous top, the number 3 is unknown with 10 characters, who are they?</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-11">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-11" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>filter(starwars, is.na(homeworld))</code></pre>
+<pre><code>## # A tibble: 10 x 13
+##              name height  mass hair_color  skin_color eye_color birth_year
+##             &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt;      &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt;
+##  1           Yoda     66    17      white       green     brown        896
+##  2          IG-88    200   140       none       metal       red         15
+##  3   Arvel Crynyd     NA    NA      brown        fair     brown         NA
+##  4   Qui-Gon Jinn    193    89      brown        fair      blue         92
+##  5         R4-P17     96    NA       none silver, red red, blue         NA
+##  6           Finn     NA    NA      black        dark      dark         NA
+##  7            Rey     NA    NA      brown       light     hazel         NA
+##  8    Poe Dameron     NA    NA      brown       light     brown         NA
+##  9            BB8     NA    NA       none        none     black         NA
+## 10 Captain Phasma     NA    NA    unknown     unknown   unknown         NA
+## # ... with 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
+## #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>count and sort the number of characters per <code>homeworld</code> and <code>species</code></li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-12">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-12" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld, species) %&gt;%
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 58 x 3
+##    homeworld  species     n
+##        &lt;chr&gt;    &lt;chr&gt; &lt;int&gt;
+##  1  Tatooine    Human     8
+##  2     Naboo    Human     5
+##  3      &lt;NA&gt;    Human     5
+##  4  Alderaan    Human     3
+##  5     Naboo   Gungan     3
+##  6  Corellia    Human     2
+##  7 Coruscant    Human     2
+##  8    Kamino Kaminoan     2
+##  9  Kashyyyk  Wookiee     2
+## 10    Mirial Mirialan     2
+## # ... with 48 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>from the previous output, add a step to filter <strong>out</strong> the
+<ul>
+<li>count of 1</li>
+<li>missing <code>species</code></li>
+<li>missing <code>homeworld</code></li>
+</ul></li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-13">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-13" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld, species) %&gt;%
+  arrange(desc(n)) %&gt;%
+  filter(n &gt; 1, !is.na(species), !is.na(homeworld))</code></pre>
+<pre><code>## # A tibble: 11 x 3
+##    homeworld  species     n
+##        &lt;chr&gt;    &lt;chr&gt; &lt;int&gt;
+##  1  Tatooine    Human     8
+##  2     Naboo    Human     5
+##  3  Alderaan    Human     3
+##  4     Naboo   Gungan     3
+##  5  Corellia    Human     2
+##  6 Coruscant    Human     2
+##  7    Kamino Kaminoan     2
+##  8  Kashyyyk  Wookiee     2
+##  9    Mirial Mirialan     2
+## 10    Ryloth  Twi&#39;lek     2
+## 11  Tatooine    Droid     2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>now convert the long format to the wide one: <em>i. e</em> first column <code>homeworld</code>, then 7 columns of <code>species</code></li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-14">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-14" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld, species) %&gt;%
+  arrange(desc(n)) %&gt;%
+  filter(n &gt; 1, !is.na(species), !is.na(homeworld)) %&gt;%
+  spread(species, n)</code></pre>
+<pre><code>## # A tibble: 9 x 8
+##   homeworld Droid Gungan Human Kaminoan Mirialan `Twi&#39;lek` Wookiee
+## *     &lt;chr&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;    &lt;int&gt;    &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
+## 1  Alderaan    NA     NA     3       NA       NA        NA      NA
+## 2  Corellia    NA     NA     2       NA       NA        NA      NA
+## 3 Coruscant    NA     NA     2       NA       NA        NA      NA
+## 4    Kamino    NA     NA    NA        2       NA        NA      NA
+## 5  Kashyyyk    NA     NA    NA       NA       NA        NA       2
+## 6    Mirial    NA     NA    NA       NA        2        NA      NA
+## 7     Naboo    NA      3     5       NA       NA        NA      NA
+## 8    Ryloth    NA     NA    NA       NA       NA         2      NA
+## 9  Tatooine     2     NA     8       NA       NA        NA      NA</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>you see that many missing data are arising since we look at all combinations. Replace all <code>NA</code> values by <code>0</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<p>You can find at least 3 solutions:</p>
+<ul>
+<li>specifying an option in the <code>spread</code> function</li>
+<li>using a <code>tidyr</code> helper on the <strong>long format</strong> data</li>
+<li>using a <code>dplyr</code> function once in <strong>wide format</strong></li>
+</ul>
+You may try all of them but the first one is the easiest.
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-16">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-16" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld, species) %&gt;%
+  arrange(desc(n)) %&gt;%
+  filter(n &gt; 1, !is.na(species), !is.na(homeworld)) %&gt;%
+  spread(species, n, fill = 0)</code></pre>
+<pre><code>## # A tibble: 9 x 8
+##   homeworld Droid Gungan Human Kaminoan Mirialan `Twi&#39;lek` Wookiee
+## *     &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1  Alderaan     0      0     3        0        0         0       0
+## 2  Corellia     0      0     2        0        0         0       0
+## 3 Coruscant     0      0     2        0        0         0       0
+## 4    Kamino     0      0     0        2        0         0       0
+## 5  Kashyyyk     0      0     0        0        0         0       2
+## 6    Mirial     0      0     0        0        2         0       0
+## 7     Naboo     0      3     5        0        0         0       0
+## 8    Ryloth     0      0     0        0        0         2       0
+## 9  Tatooine     2      0     8        0        0         0       0</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-17">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-17" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld, species) %&gt;%
+  arrange(desc(n)) %&gt;%
+  filter(n &gt; 1, !is.na(species), !is.na(homeworld)) %&gt;%
+  # using tidyr::complete()
+  complete(homeworld, species, fill = list(n = 0)) %&gt;%
+  spread(species, n)</code></pre>
+<pre><code>## # A tibble: 9 x 8
+##   homeworld Droid Gungan Human Kaminoan Mirialan `Twi&#39;lek` Wookiee
+## *     &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1  Alderaan     0      0     3        0        0         0       0
+## 2  Corellia     0      0     2        0        0         0       0
+## 3 Coruscant     0      0     2        0        0         0       0
+## 4    Kamino     0      0     0        2        0         0       0
+## 5  Kashyyyk     0      0     0        0        0         0       2
+## 6    Mirial     0      0     0        0        2         0       0
+## 7     Naboo     0      3     5        0        0         0       0
+## 8    Ryloth     0      0     0        0        0         2       0
+## 9  Tatooine     2      0     8        0        0         0       0</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-18">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-18" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(starwars, homeworld, species) %&gt;%
+  arrange(desc(n)) %&gt;%
+  filter(n &gt; 1, !is.na(species), !is.na(homeworld)) %&gt;%
+  spread(species, n) %&gt;%
+  # using dplyr::mutate_if.
+  # for only columns of integers, apply if_else statement
+  #                                      - is na -&gt; change for 0
+  #                                      - is not na -&gt; get same value
+  mutate_if(is.integer, funs(if_else(is.na(.), 0L, .)))</code></pre>
+<pre><code>## # A tibble: 9 x 8
+##   homeworld Droid Gungan Human Kaminoan Mirialan `Twi&#39;lek` Wookiee
+##       &lt;chr&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;    &lt;int&gt;    &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
+## 1  Alderaan     0      0     3        0        0         0       0
+## 2  Corellia     0      0     2        0        0         0       0
+## 3 Coruscant     0      0     2        0        0         0       0
+## 4    Kamino     0      0     0        2        0         0       0
+## 5  Kashyyyk     0      0     0        0        0         0       2
+## 6    Mirial     0      0     0        0        2         0       0
+## 7     Naboo     0      3     5        0        0         0       0
+## 8    Ryloth     0      0     0        0        0         2       0
+## 9  Tatooine     2      0     8        0        0         0       0</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>compute the <strong>mean</strong>, <strong>median</strong> and <strong>standard deviation</strong> for <code>height</code> and <code>mass</code> per <code>species</code>. Add a column <code>n</code> to know from how many individuals the values were computed. Filter out <code>n</code> values smaller than 2.</li>
+</ul>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+some values are missing, filter them out from both height and mass columns
+</div>
+</div>
+</div>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-20">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-20" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>starwars %&gt;%
+  filter(!is.na(height), !is.na(mass)) %&gt;%
+  group_by(species) %&gt;%
+  mutate(n = n()) %&gt;%
+  filter(n &gt; 1) %&gt;%
+  summarise(height_mean = mean(height),
+            height_med  = median(height),
+            mass_mean = mean(mass),
+            mass_med  = median(mass),
+            n = n())</code></pre>
+<pre><code>## # A tibble: 5 x 6
+##    species height_mean height_med mass_mean mass_med     n
+##      &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;
+## 1    Droid    140.0000        132  69.75000     53.5     4
+## 2   Gungan    210.0000        210  74.00000     74.0     2
+## 3    Human    179.5455        181  82.78182     79.0    22
+## 4 Mirialan    168.0000        168  53.10000     53.1     2
+## 5  Wookiee    231.0000        231 124.00000    124.0     2</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>continuing the workflow, compute
+<ul>
+<li>the difference between <strong>mean</strong> and <strong>median</strong> for <code>height</code>.</li>
+<li>the difference between <strong>mean</strong> and <strong>median</strong> for <code>mass</code>.</li>
+<li>the standard error of the mean (<code>sd / sqrt(n)</code>) for <code>height</code></li>
+<li>the standard error of the mean for <code>mass</code></li>
+<li>select only those four new columns + species.</li>
+<li>save the flow as <code>diff_med_mean</code></li>
+</ul></li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-21">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-21" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>starwars %&gt;%
+  filter(!is.na(height), !is.na(mass)) %&gt;%
+  group_by(species) %&gt;%
+  mutate(n = n()) %&gt;%
+  filter(n &gt; 1) %&gt;%
+  summarise(height_mean = mean(height),
+            height_med  = median(height),
+            mass_mean = mean(mass, na.rm = TRUE),
+            mass_med  = median(mass, na.rm = TRUE),
+            height_sd = sd(height, na.rm = TRUE),
+            mass_sd = sd(mass, na.rm = TRUE),
+            n = n()) %&gt;%
+  mutate(diff_height = height_mean - height_med,
+         diff_mass   = mass_mean - mass_med,
+         sem_height  = height_sd / sqrt(n), 
+         sem_mass    = mass_sd / sqrt(n)) %&gt;%
+  select(species, starts_with(&quot;diff&quot;), starts_with(&quot;sem&quot;)) -&gt; diff_med_mean</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>finally, filter out the rows where the absolute difference between the mean and median is greater than the <strong>sem</strong> in any of <code>height</code> or <code>mass</code>.</li>
+</ul>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-22">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-22" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>filter(diff_med_mean, abs(diff_height) &gt; sem_height | abs(diff_mass) &gt; sem_mass)</code></pre>
+<pre><code>## # A tibble: 0 x 5
+## # ... with 5 variables: species &lt;chr&gt;, diff_height &lt;dbl&gt;, diff_mass &lt;dbl&gt;,
+## #   sem_height &lt;dbl&gt;, sem_mass &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="biomart" class="section level2">
+<h2><code>biomaRt</code></h2>
+<div class="panel-group">
+<div class="panel" style="background-color:rgba(173, 216, 230, 0.3); border:2px solid rgba(173, 216, 230, 1);">
+<div class="panel-heading" style="background-color:rgba(173, 216, 230, 1);">
+<h4 class="panel-title">
+Tip
+</h4>
+</div>
+<div class="panel-body">
+<p>If you are missing <code>biomaRt</code>, install it with:</p>
+<p><code>source(&quot;https://bioconductor.org/biocLite.R&quot;)</code><br />
+<code>biocLite(&quot;biomaRt&quot;)</code></p>
+</div>
+</div>
+</div>
+<ol class="example" style="list-style-type: decimal">
+<li>Get the data for chromosome 21 from biomaRt. Set the chunk option <code>cache = TRUE</code>.</li>
+</ol>
+<pre class="r"><code>library(biomaRt)
+gene_mart &lt;- useMart(biomart = &quot;ENSEMBL_MART_ENSEMBL&quot;,
+                     host = &quot;www.ensembl.org&quot;)
+gene_set &lt;- useDataset(gene_mart , dataset = &quot;hsapiens_gene_ensembl&quot;)
+
+gene_by_exon &lt;- as_tibble(getBM(
+  mart = gene_set,
+  attributes = c(
+    &quot;ensembl_gene_id&quot;,
+    &quot;ensembl_transcript_id&quot;,
+    &quot;ensembl_exon_id&quot;,
+    &quot;chromosome_name&quot;,
+    &quot;start_position&quot;,
+    &quot;end_position&quot;,
+    &quot;hgnc_symbol&quot;,
+    &quot;hgnc_id&quot;,
+    &quot;strand&quot;,
+    &quot;gene_biotype&quot;,
+    &quot;phenotype_description&quot;
+    ), 
+  filter = &quot;chromosome_name&quot;,
+  value = &quot;21&quot;
+  ))</code></pre>
+<ol start="2" class="example" style="list-style-type: decimal">
+<li>Extract the processed pseudogenes from the <code>genes_by_exon</code> data set. Convert the <code>genes_by_exon</code> data set to a <code>tibble</code>. Use <code>glimpse()</code> to find the correct columns and <code>distinct()</code> to identify how pseudogenes are coded. Store the results in a tibble called <code>pseudogenes</code>.</li>
+</ol>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-25">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-25" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>gene_by_exon &lt;- gene_by_exon %&gt;% 
+  as_tibble()
+
+pseudogenes &lt;- gene_by_exon %&gt;% 
+  filter(gene_biotype == &quot;processed_pseudogene&quot;)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="3" class="example" style="list-style-type: decimal">
+<li>Count the number of pseudogenes in the set (without referring to <code>table()</code> obviously)</li>
+</ol>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-26">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-26" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>count(pseudogenes)</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1   170</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="4" class="example" style="list-style-type: decimal">
+<li>Extract a unique set of gene ids without redundancy of transcripts and exon information. Store the results in a tibble called <code>genes</code></li>
+</ol>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-27">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-27" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>gene_by_exon %&gt;% 
+  dplyr::select(-ensembl_transcript_id, -ensembl_exon_id) %&gt;% 
+  distinct() -&gt; genes</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="5" class="example" style="list-style-type: decimal">
+<li>Sort the genes by their length.</li>
+</ol>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-28">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-28" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>gene_by_exon %&gt;%
+  mutate(length = end_position - start_position) %&gt;% 
+  arrange(length)</code></pre>
+<pre><code>## # A tibble: 19,936 x 12
+##    ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+##              &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+##  1 ENSG00000266692       ENST00000581669 ENSE00002724833              21
+##  2 ENSG00000275523       ENST00000611656 ENSE00003745719              21
+##  3 ENSG00000275167       ENST00000611994 ENSE00003717901              21
+##  4 ENSG00000264063       ENST00000577708 ENSE00002724720              21
+##  5 ENSG00000277437       ENST00000614492 ENSE00003754026              21
+##  6 ENSG00000283904       ENST00000385060 ENSE00001500066              21
+##  7 ENSG00000284448       ENST00000290239 ENSE00003729123              21
+##  8 ENSG00000275166       ENST00000622292 ENSE00003738277              21
+##  9 ENSG00000201025       ENST00000364155 ENSE00001438918              21
+## 10 ENSG00000263681       ENST00000582241 ENSE00002698395              21
+## # ... with 19,926 more rows, and 8 more variables: start_position &lt;int&gt;,
+## #   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+## #   gene_biotype &lt;chr&gt;, phenotype_description &lt;chr&gt;, length &lt;int&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="6" class="example" style="list-style-type: decimal">
+<li>Calculate the average length per gene by <code>gene_biotype</code>.</li>
+</ol>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-29">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-29" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>gene_by_exon %&gt;%
+  mutate(length = end_position - start_position) %&gt;% 
+  group_by(gene_biotype) %&gt;% 
+  summarize(mean_length = mean(length))</code></pre>
+<pre><code>## # A tibble: 19 x 2
+##                          gene_biotype  mean_length
+##                                 &lt;chr&gt;        &lt;dbl&gt;
+##  1           3prime_overlapping_ncRNA   3643.00000
+##  2                      antisense_RNA  34548.40100
+##  3                          IG_V_gene    435.00000
+##  4                            lincRNA 105778.34571
+##  5                              miRNA     86.62069
+##  6                           misc_RNA    145.29167
+##  7               processed_pseudogene   1006.31765
+##  8               processed_transcript  72905.43262
+##  9                     protein_coding 137033.40488
+## 10                         pseudogene    103.00000
+## 11                               rRNA    146.78788
+## 12                     sense_intronic  12055.28571
+## 13                  sense_overlapping  40989.40741
+## 14                             snoRNA    118.33333
+## 15                              snRNA    116.28571
+## 16                                TEC   1400.33333
+## 17   transcribed_processed_pseudogene  97124.11111
+## 18 transcribed_unprocessed_pseudogene  84268.25258
+## 19             unprocessed_pseudogene  12495.97122</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="7" class="example" style="list-style-type: decimal">
+<li>Calculate the total number of genes and their average length by <code>gene_biotype</code>.</li>
+</ol>
+<div class="panel-group">
+<div class="panel solution">
+<div class="panel-heading">
+<h4 class="panel-title">
+<a class = "collapsed" data-toggle="collapse" href="#unnamed-chunk-30">Solution</a>
+</h4>
+</div>
+<div id="unnamed-chunk-30" class="panel-collapse collapse">
+<div class="panel-body">
+<pre class="r"><code>genes %&gt;%
+  mutate(length = end_position - start_position) %&gt;% 
+  group_by(gene_biotype) %&gt;% 
+  summarize(mean_length = mean(length),
+            n_gene = n_distinct(ensembl_gene_id))</code></pre>
+<pre><code>## # A tibble: 19 x 3
+##                          gene_biotype mean_length n_gene
+##                                 &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;
+##  1           3prime_overlapping_ncRNA  3643.00000      1
+##  2                      antisense_RNA 16870.23750     80
+##  3                          IG_V_gene   435.00000      1
+##  4                            lincRNA 27413.84456    193
+##  5                              miRNA    86.62069     29
+##  6                           misc_RNA   145.29167     24
+##  7               processed_pseudogene   818.26950    141
+##  8               processed_transcript 83106.71429      7
+##  9                     protein_coding 81890.03883    234
+## 10                         pseudogene   103.00000      1
+## 11                               rRNA   146.78788      9
+## 12                     sense_intronic  6817.64706     17
+## 13                  sense_overlapping 27095.75000      8
+## 14                             snoRNA   118.33333     15
+## 15                              snRNA   116.28571     21
+## 16                                TEC  1400.33333     15
+## 17   transcribed_processed_pseudogene 49814.66667      3
+## 18 transcribed_unprocessed_pseudogene 65976.66667      6
+## 19             unprocessed_pseudogene  6128.93750     32</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class = "footer">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="http://bio.uni.lu" target="_blank"><img src="img/lsru.png"></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      Copyright © <a href="http://www.uni.lu" target="_blank">Université du Luxembourg</a> 2017. All rights reserved.
+    </div>
+    <div class="col-md-4">
+      <!-- <a href="http://bio.uni.lu"><img src ="LSRU.png"></a> -->
+      <ul class="social-links">
+        <li><a href="https://www.facebook.com/uni.lu"><i class="fa fa-facebook"></i></a></li>
+        <li><a href="https://twitter.com/uni_lu"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="https://www.linkedin.com/school/166650"><i class="fa fa-linkedin"></i></a></li>
+        <li><a href="http://www.youtube.com/user/luxuni"><i class="fa fa-youtube"></i></a></li>
+        <li></li>
+      </ul>
+    </div>    
+  </div>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
