@@ -1924,7 +1924,7 @@ force factor to convert continuous -&gt; discrete
 <div class="col col-6 r-output">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-43-1.png' title=''/><!-- --></p></div></div>
 
-<div class = 'box col col-8 bg-grgold'><h3>Complete</h3><div class = 'box-body'>
+<div class = 'box col col-8 bg-grgold offset-2'><h3>Complete</h3><div class = 'box-body'>
 
 <p>the combination <code>gear</code> 4 / <code>cyl</code> 8 is missing. Using <code>tidyr::complete()</code> to avoid bars with different widths.</p>
 
@@ -1986,6 +1986,33 @@ force factor to convert continuous -&gt; discrete
 <div class="col col-6 r-output">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-47-1.png' title=''/><!-- --></p></div></div>
 
+</article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Boxplots are unreliable </h2><h3> n = 2!</h3></hgroup><article  id="boxplots-are-unreliable-n-2" class="smaller ">
+
+<div id="unnamed-chunk-48" class="col col-12 box chunk bg-cobalt">
+<h3>
+
+ggbeeswarm
+
+</h3>
+
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  ggbeeswarm::geom_quasirandom(aes(x = factor(cyl),
+                   y = mpg,
+                   colour = factor(am)))</pre></div>
+
+<div class="col col-6 r-output">
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-48-1.png' title=''/><!-- --></p></div></div>
+
+<div id="unnamed-chunk-49" class="col col-12 box chunk bg-cobalt">
+<div class="col col-6 r-source">
+<pre class = 'prettyprint lang-r'>ggplot(iris, aes(x = Species, y = Petal.Length)) +
+  geom_violin() +
+  ggbeeswarm::geom_quasirandom()</pre></div>
+
+<div class="col col-6 r-output">
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-49-1.png' title=''/><!-- --></p></div></div>
+
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Custom colors</h2></hgroup><article  id="custom-colors" class="smaller nvs1">
 
 <div class = 'box col col-12 bg-gray'><h3>manual entry</h3><div class = 'box-body'>
@@ -1995,39 +2022,39 @@ force factor to convert continuous -&gt; discrete
 <li>not handy as you <strong>must</strong> provide as much colours as groups</li>
 </ul>
 
-<div id="unnamed-chunk-48" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-50" class="col col-12 box chunk bg-cobalt">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_boxplot(aes(x = factor(cyl), y = mpg,
                    fill = factor(am), color = factor(am))) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;lightblue&quot;)) +
   scale_color_manual(values = c(&quot;purple&quot;, &quot;blue&quot;))</pre>
 
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-48-1.png' title=''/><!-- --></p></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-50-1.png' title=''/><!-- --></p></div>
 
 </div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Predefined color palettes</h2></hgroup><article  id="predefined-color-palettes" class="smaller ">
 
-<div id="unnamed-chunk-49" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-51" class="col col-12 box chunk bg-cobalt">
 <pre class = 'prettyprint lang-r'>library(RColorBrewer)
 display.brewer.all()</pre>
 
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-49-1.png' title=''/><!-- --></p></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-51-1.png' title=''/><!-- --></p></div>
 
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Custom colors </h2><h3> using brewer</h3></hgroup><article  id="custom-colors-using-brewer" class="smaller ">
 
-<div id="unnamed-chunk-50" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-52" class="col col-12 box chunk bg-cobalt">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_boxplot(aes(x = factor(cyl), y = mpg,
                    fill = factor(am), colour = factor(am))) +
   scale_fill_brewer(palette = &quot;Pastel2&quot;) +
   scale_colour_brewer(palette = &quot;Set1&quot;)</pre>
 
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-50-1.png' title=''/><!-- --></p></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-52-1.png' title=''/><!-- --></p></div>
 
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>colour gradient </h2><h3> ggplot2 default is ugly</h3></hgroup><article  id="colour-gradient-ggplot2-default-is-ugly" class="smaller build">
 
 <div class = 'bg-blue box col col-6'><h3>default</h3><div class = 'box-body'>
 
-<div id="unnamed-chunk-51" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-53" class="col col-12 box chunk bg-cobalt">
 <div class="col col-6 r-source">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
   ggplot(aes(x = wt,
@@ -2036,11 +2063,11 @@ display.brewer.all()</pre>
   geom_point(size = 3)</pre></div>
 
 <div class="col col-6 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-51-1.png' title=''/><!-- --></p></div></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-53-1.png' title=''/><!-- --></p></div></div>
 
 </div></div><div class = 'bg-grgold box col col-6'><h3>viridis</h3><div class = 'box-body'>
 
-<div id="unnamed-chunk-52" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-54" class="col col-12 box chunk bg-cobalt">
 <div class="col col-6 r-source">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
   ggplot(aes(x = wt,
@@ -2050,7 +2077,7 @@ display.brewer.all()</pre>
   viridis::scale_colour_viridis()</pre></div>
 
 <div class="col col-6 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-52-1.png' title=''/><!-- --></p></div></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-54-1.png' title=''/><!-- --></p></div></div>
 
 </div></div><div class = 'box col col-12 bg-pink2 icon'><h3>viridis</h3><div class = 'box-body'>
 
@@ -2062,9 +2089,9 @@ display.brewer.all()</pre>
 <li>default in <code>ggplot2</code> dev version</li>
 </ul>
 
-</div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>aesthetic trick</h2></hgroup><article  id="aesthetic-trick" class="smaller vs1">
+</div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>aesthetic trick</h2></hgroup><article  id="aesthetic-trick" class="smaller ">
 
-<div class = 'col col-12 bg-aquamarine2'><h3>using strings</h3>
+<div class = 'box col col-12 bg-aquamarine2'><h3>using strings</h3><div class = 'box-body'>
 
 <ul>
 <li>use a plain character inside <code>aes()</code></li>
@@ -2072,7 +2099,7 @@ display.brewer.all()</pre>
 <li>only for few layers when lazy enough to create the variable in the dataframe.</li>
 </ul>
 
-<div id="unnamed-chunk-53" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-55" class="col col-12 box chunk bg-cobalt">
 <div class="col col-6 r-source">
 <pre class = 'prettyprint lang-r'>set.seed(123)
 dens &lt;- tibble(x = c(rnorm(500), 
@@ -2088,48 +2115,32 @@ ggplot(dens) +
 p</pre></div>
 
 <div class="col col-6 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-53-1.png' title=''/><!-- --></p></div></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-55-1.png' title=''/><!-- --></p></div></div>
 
-</div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>the data argument </h2><h3> each layer can get its own</h3></hgroup><article  id="the-data-argument-each-layer-can-get-its-own" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>the data argument </h2><h3> each layer can get its own</h3></hgroup><article  id="the-data-argument-each-layer-can-get-its-own" class="smaller ">
 
-<div id="unnamed-chunk-54" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-56" class="col col-12 box chunk bg-cobalt">
 <pre class = 'prettyprint lang-r'>dens_mode &lt;- tibble(mode = density(dens$x)$x[which.max(density(dens$x)$y)])
 p + geom_vline(data = dens_mode,
                aes(xintercept = mode, colour = &quot;mode&quot;), size = 1.1) +
   theme(legend.position = &quot;top&quot;) +
   scale_colour_hue(name = NULL) # could be: labs(colour = NULL)</pre>
 
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-54-1.png' title=''/><!-- --></p></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-56-1.png' title=''/><!-- --></p></div>
 
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Facets </h2><h3> facet_wrap()</h3></hgroup><article  id="facets-facet_wrap" class="smaller ">
 
-<p>the easiest way to create facet is to provide <code>facet_wrap()</code> with a column name</p>
+<div id="unnamed-chunk-57" class="col col-12 box chunk bg-cobalt">
+<h3>
 
-<div id="unnamed-chunk-55" class="col col-12 box chunk bg-cobalt">
+easiest way to create facet with a column name
+
+</h3>
+
 <div class="col col-5 r-source">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_wrap(~ cyl)</pre></div>
-
-<div class="col col-7 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-55-1.png' title=''/><!-- --></p></div></div>
-
-<div id="unnamed-chunk-56" class="col col-12 box chunk bg-cobalt">
-<div class="col col-5 r-source">
-<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
-  geom_point(aes(x = wt, y = mpg)) +
-  facet_wrap(~ cyl, ncol = 2)</pre></div>
-
-<div class="col col-7 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-56-1.png' title=''/><!-- --></p></div></div>
-
-</article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Facets </h2><h3> free scales</h3></hgroup><article  id="facets-free-scales" class="smaller ">
-
-<div id="unnamed-chunk-57" class="col col-12 box chunk bg-cobalt">
-<div class="col col-5 r-source">
-<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
-  geom_point(aes(x = wt, y = mpg)) +
-  facet_wrap(~ cyl, scales = &quot;free_x&quot;)</pre></div>
 
 <div class="col col-7 r-output">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-57-1.png' title=''/><!-- --></p></div></div>
@@ -2138,10 +2149,30 @@ p + geom_vline(data = dens_mode,
 <div class="col col-5 r-source">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
-  facet_wrap(~ cyl, scales = &quot;free&quot;)</pre></div>
+  facet_wrap(~ cyl, ncol = 2)</pre></div>
 
 <div class="col col-7 r-output">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-58-1.png' title=''/><!-- --></p></div></div>
+
+</article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Facets </h2><h3> free scales</h3></hgroup><article  id="facets-free-scales" class="smaller ">
+
+<div id="unnamed-chunk-59" class="col col-12 box chunk bg-cobalt">
+<div class="col col-5 r-source">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, scales = &quot;free_x&quot;)</pre></div>
+
+<div class="col col-7 r-output">
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-59-1.png' title=''/><!-- --></p></div></div>
+
+<div id="unnamed-chunk-60" class="col col-12 box chunk bg-cobalt">
+<div class="col col-5 r-source">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, scales = &quot;free&quot;)</pre></div>
+
+<div class="col col-7 r-output">
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-60-1.png' title=''/><!-- --></p></div></div>
 
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Facets </h2><h3> <code>facet_grid()</code> to lay out panels in a grid</h3></hgroup><article  id="facets-facet_grid-to-lay-out-panels-in-a-grid" class="smaller ">
 
@@ -2151,14 +2182,14 @@ p + geom_vline(data = dens_mode,
 
 </div></div>
 
-<div id="unnamed-chunk-59" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-61" class="col col-12 box chunk bg-cobalt">
 <div class="col col-4 r-source">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_grid(am ~ cyl)</pre></div>
 
 <div class="col col-8 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-59-1.png' title=''/><!-- --></p></div></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-61-1.png' title=''/><!-- --></p></div></div>
 
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Facets </h2><h3> <code>facet_grid()</code> cont.</h3></hgroup><article  id="facets-facet_grid-cont." class="smaller ">
 
@@ -2168,20 +2199,20 @@ p + geom_vline(data = dens_mode,
 
 </div></div>
 
-<div id="unnamed-chunk-60" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-62" class="col col-12 box chunk bg-cobalt">
 <div class="col col-4 r-source">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_grid(. ~ cyl)</pre></div>
 
 <div class="col col-8 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-60-1.png' title=''/><!-- --></p></div></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-62-1.png' title=''/><!-- --></p></div></div>
 
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Facets </h2><h3> labeller</h3></hgroup><article  id="facets-labeller" class="smaller vs1">
 
 <p>Add the column names with <code>labeller</code></p>
 
-<div id="unnamed-chunk-61" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-63" class="col col-12 box chunk bg-cobalt">
 <div class="col col-5 r-source">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
@@ -2189,7 +2220,7 @@ p + geom_vline(data = dens_mode,
              labeller = label_both)</pre></div>
 
 <div class="col col-7 r-output">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-61-1.png' title=''/><!-- --></p></div></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-63-1.png' title=''/><!-- --></p></div></div>
 
 </article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Exporting </h2><h3> interactive or passive mode</h3></hgroup><article  id="exporting-interactive-or-passive-mode" class="smaller nvs1 build">
 
@@ -2223,7 +2254,7 @@ p + geom_vline(data = dens_mode,
 <li>guess the type of graphics by the extension</li>
 </ul>
 
-<div id="unnamed-chunk-62" class="col col-12 box chunk bg-cobalt">
+<div id="unnamed-chunk-64" class="col col-12 box chunk bg-cobalt">
 <pre class = 'prettyprint lang-r'>ggsave(&quot;aes_trick.png&quot;, p,
        width = 60, height = 30, units = &quot;mm&quot;)
 ggsave(&quot;aes_trick.pdf&quot;, p,
@@ -2266,7 +2297,7 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
 
 </blockquote>
 
-<div id="unnamed-chunk-63">
+<div id="unnamed-chunk-65">
 <style type="text/css">
 .vembedr {
   border-radius: 25px; /* adjust it to your needs */
@@ -2279,7 +2310,7 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
 }
 </style></div>
 
-<div id="unnamed-chunk-64">
+<div id="unnamed-chunk-66">
 <div class="vembedr">
 <iframe src="https://www.youtube.com/embed/DQiKHlpy70Q" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
 </div></div>
@@ -2290,7 +2321,7 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
 
 <ul>
 <li><code>geom_tile()</code> heatmap</li>
-<li><code>geom_bind2()</code> 2D binning</li>
+<li><code>geom_bind2d()</code> 2D binning</li>
 <li><code>geom_abline()</code> slope</li>
 </ul>
 
@@ -2313,6 +2344,7 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
 
 <ul>
 <li><code>position_jitter()</code> random shift</li>
+<li><code>quasirandom()</code> is better</li>
 </ul>
 
 </div></div><div class = 'box col col-6 bg-blue stretch'><h3>coordinate / transform</h3><div class = 'box-body'>
@@ -2335,11 +2367,65 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
 <li>strip positions</li>
 </ul>
 
-</div></div><div class = 'box col col-12 bg-yellow'><h3>programming</h3><div class = 'box-body'>
+</div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>programming</h2></hgroup><article  id="programming" class="smaller build">
 
-<ul>
-<li><code>aes_string()</code> for plotting inside <code>function</code></li>
-</ul></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide>
+<div class = 'box col col-6 bg-red'><h3><code>Sepal.Length</code> is not exposed</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-67" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>iris_plot &lt;- function(flower) {
+  ggplot(iris, aes(x = Species, y = flower)) +
+  geom_violin() +
+  ggbeeswarm::geom_quasirandom()
+}
+iris_plot(flower = Sepal.Length)</pre>
+
+<pre >Warning in FUN(X[[i]], ...): restarting interrupted promise evaluation</pre>
+
+<pre >Error in FUN(X[[i]], ...): object &#39;Sepal.Length&#39; not found</pre>
+
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-67-1.png' title=''/><!-- --></p></div>
+
+</div></div><div class = 'box col col-6 bg-red'><h3>strings does not help</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-68" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>iris_plot &lt;- function(flower) {
+  ggplot(iris, aes(x = Species, y = flower)) +
+  geom_violin() +
+  ggbeeswarm::geom_quasirandom()
+}
+iris_plot(flower = &quot;Sepal.Length&quot;)</pre>
+
+<pre >Warning in f(...): The default behavior of beeswarm has changed in version
+0.6.0. In versions &lt;0.6.0, this plot would have been dodged on the y-
+axis. In versions &gt;=0.6.0, grouponX=FALSE must be explicitly set to group
+on y-axis. Please set grouponX=TRUE/FALSE to avoid this warning and ensure
+proper axis choice.</pre>
+
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-68-1.png' title=''/><!-- --></p></div>
+
+</div></div><div class = 'box col col-6 bg-grgold'><h3><code>aes_string()</code> expects strings</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-69" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>iris_plot &lt;- function(flower) {
+  ggplot(iris, aes_string(x = &quot;Species&quot;, y = flower)) +
+  geom_violin() +
+  ggbeeswarm::geom_quasirandom()
+}
+iris_plot(flower = &quot;Sepal.Length&quot;)</pre>
+
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-69-1.png' title=''/><!-- --></p></div>
+
+</div></div><div class = 'box col col-6 bg-grgold'><h3><code>aes_string()</code> expects strings</h3><div class = 'box-body'>
+
+<div id="unnamed-chunk-70" class="col col-12 box chunk bg-cobalt">
+<pre class = 'prettyprint lang-r'>iris_plot &lt;- function(flower) {
+  ggplot(iris, aes_string(x = &quot;Species&quot;, y = flower)) +
+  geom_violin() +
+  ggbeeswarm::geom_quasirandom()
+}
+iris_plot(flower = &quot;Petal.Length&quot;)</pre>
+
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-70-1.png' title=''/><!-- --></p></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide>
 
 
   <slide class="backdrop"></slide>
