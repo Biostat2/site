@@ -1815,7 +1815,7 @@ adjust the group aesthetic?</pre>
 <li><code>geom</code> uses a <code>stat</code> function to transform the data:
 
 <ul>
-<li><code>geom_histogram()</code> uses <code>stat_bin()</code> to divide the data into <em>bins</em> and count the number of observations in each <em>bin</em>.</li>
+<li><code>geom_histogram()</code> uses <code>stat_bin()</code> divide and count values into <em>bins</em></li>
 <li><code>stat_bin()</code> computes for example: <code>..count..</code>, <code>..density..</code>, <code>..ncount..</code> and <code>..ndensity..</code> (see <code>?stat_bin()</code>)</li>
 <li>stat variable for density plot: <code>..density..</code></li>
 <li><code>stat_identity</code> is used for scatter plots or <code>geom_col()</code>, no transformation</li>
@@ -1825,23 +1825,24 @@ adjust the group aesthetic?</pre>
 </div></div><div class = 'box col col-4 bg-yellow'><h3>1D</h3><div class = 'box-body'>
 
 <ul>
-<li><code>stat_count</code></li>
-<li><code>stat_bin</code></li>
+<li><code>stat_count()</code></li>
+<li><code>stat_bin()</code></li>
+<li><code>stat_density()</code></li>
 </ul>
 
 </div></div><div class = 'box col col-4 bg-yellow'><h3>2D</h3><div class = 'box-body'>
 
 <ul>
-<li><code>stat_density_2d</code></li>
-<li><code>stat_bin_2d</code></li>
-<li><code>stat_ellipse</code></li>
+<li><code>stat_density_2d()</code></li>
+<li><code>stat_bin_2d()</code></li>
+<li><code>stat_ellipse()</code></li>
 </ul>
 
 </div></div><div class = 'box col col-4 bg-yellow'><h3>3D</h3><div class = 'box-body'>
 
 <ul>
-<li><code>stat_contour</code></li>
-<li><code>stat_summary_hex</code></li>
+<li><code>stat_contour()</code></li>
+<li><code>stat_summary_hex()</code></li>
 </ul>
 
 <p><span class="small">
@@ -1852,8 +1853,8 @@ source: ggplot2 cheatsheet by Rstudio</span></p>
 <div class = 'box col col-12 bg-gray'><h3>definitions</h3><div class = 'box-body'>
 
 <ul>
-<li>By default, <code>geom_bar()</code> counts the number of occurences for each values of a categorical variable.</li>
-<li><code>geom_bar()</code> uses <code>stat_count()</code> to compute these values (creating a new <code>count</code> column)</li>
+<li><code>geom_bar()</code> counts the number of values in each categories.</li>
+<li><code>geom_bar()</code> uses <code>stat_count()</code> to compute (creating a new <code>count</code> column)</li>
 </ul>
 
 <div id="unnamed-chunk-39" class="col col-12 box chunk bg-cobalt">
@@ -1864,7 +1865,7 @@ source: ggplot2 cheatsheet by Rstudio</span></p>
 
 <pre class = 'prettyprint lang-r'># or: geom_bar(aes(x = Species, y = ..count..))</pre></div>
 
-</div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Barcharts </h2><h3> categorical variables</h3></hgroup><article  id="barcharts-categorical-variables-1" class="smaller vs1 build">
+</div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Barcharts </h2><h3> categorical variables</h3></hgroup><article  id="barcharts-categorical-variables-1" class="smaller build">
 
 <div class = 'box col col-12 bg-gray'><h3>map a continous variable on <code>y</code> axis</h3><div class = 'box-body'>
 
@@ -1882,7 +1883,7 @@ source: ggplot2 cheatsheet by Rstudio</span></p>
 <div class="col col-6 r-output">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-40-1.png' title=''/><!-- --></p></div></div>
 
-</div></div><div class = 'box col col-6 bg-grgold'><h3>Update v2.1</h3><div class = 'box-body'>
+</div></div><div class = 'box col col-6 bg-grgold stretch'><h3>Update v2.1</h3><div class = 'box-body'>
 
 <p>since version 2.1, thanks to Bob Rudis, <code>geom_col()</code> does require a <strong>y</strong> variable</p>
 
@@ -1890,7 +1891,8 @@ source: ggplot2 cheatsheet by Rstudio</span></p>
 
 <div id="unnamed-chunk-41" class="col col-12 box chunk bg-cobalt">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
-  geom_col(aes(x = Species, y = Petal.Length))</pre></div>
+  geom_col(aes(x = Species,
+               y = Petal.Length))</pre></div>
 
 </div></div></article><div class = "footer"><img src="lecture07_plotting_files/logo.png"><a href='index.html'>biostat2</a></div></slide><slide class=''><hgroup class = 'title-bar'><h2>Stacked barchart </h2><h3> categorical variables</h3></hgroup><article  id="stacked-barchart-categorical-variables" class="smaller ">
 
